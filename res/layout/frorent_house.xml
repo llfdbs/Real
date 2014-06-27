@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:listViewAttr="http://schemas.android.com/apk/res/com.yikang.real"
+    android:id="@+id/zhu"
+    android:layout_height="match_parent"
+    android:background="@color/background_holo_light"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/house_topbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+             android:id="@+id/house_topbar1"
+	         style="@style/top_bar_linear" >
+
+            <CheckBox
+                android:button="@null"
+                android:id="@+id/top_bar1"
+                
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+          style="@style/top_bar_limit"
+            />
+
+        <LinearLayout
+            android:id="@+id/house_topbar2"
+            style="@style/top_bar_linear" >
+
+            <CheckBox
+                 android:id="@+id/top_bar2"
+                android:button="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/top_bar_limit" />
+
+        <LinearLayout
+            android:id="@+id/house_topbar3"
+            style="@style/top_bar_linear" >
+
+            <CheckBox
+                android:button="@null"
+                 android:id="@+id/top_bar3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <cn.trinea.android.common.view.DropDownListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:drawSelectorOnTop="false"
+        android:paddingBottom="40dip"
+        listViewAttr:isDropDownStyle="true"
+        listViewAttr:isOnBottomStyle="true"
+        listViewAttr:isAutoLoadOnBottom="true" />
+    
+  <!--   <include  layout="@layout/refreshview"/> -->
+</LinearLayout>
