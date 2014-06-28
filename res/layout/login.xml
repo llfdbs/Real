@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/background_light"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/login_topline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/holo_blue_bright" />
+
+    <LinearLayout style="@style/login_input_style" >
+
+        <EditText
+            android:id="@+id/login_username"
+			style="@style/login_input_edite"
+            android:hint="@string/loginname"
+             />
+
+        <EditText
+            android:id="@+id/login_pwd"
+            style="@style/login_input_edite"
+            android:hint="@string/loginpwd" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login"
+        style="@style/login_input_style"
+        android:layout_height="40dp"
+        android:background="@drawable/shape_login"
+        android:text="@string/login_button" />
+
+    <LinearLayout 
+        
+       style="@style/login_input_style"
+       android:layout_marginTop="0dp"
+       android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/login_text_regist"
+            style="@style/login_text"
+            android:text="@string/login_regist"
+             />
+
+        <TextView
+            android:id="@+id/login_text_qa"
+          	style="@style/login_text"
+          	  android:text="@string/login_qa"
+			android:gravity="right"
+           />
+        
+    </LinearLayout>
+    
+</LinearLayout>
