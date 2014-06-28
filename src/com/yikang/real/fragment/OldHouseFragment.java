@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
@@ -24,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import cn.Bean.util.Area;
 import cn.Bean.util.SecondHandHouse;
 import cn.Bean.util.SecondHandHouseDetails;
 import cn.Bean.util.SecondHouseValue;
@@ -38,6 +40,7 @@ import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.bean.House;
 import com.yikang.real.control.GetNewHouseControl;
+import com.yikang.real.imp.PopWindowCallBack;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.PopStatus;
 import com.yikang.real.until.PupowindowUtil;
@@ -46,7 +49,8 @@ import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
 public class OldHouseFragment extends MainFragment implements
-		OnCheckedChangeListener, OnClickListener, OnFocusChangeListener {
+		OnCheckedChangeListener, OnClickListener, OnFocusChangeListener,
+		PopWindowCallBack {
 
 	public int Model = 0;
 	@ViewById
@@ -67,55 +71,84 @@ public class OldHouseFragment extends MainFragment implements
 	private PopupWindow popMore;
 	private LinearLayout zhu;
 
-	
-	/**参数*/
-	private String area=""; //区域
-	private String lng="";
-	private String lat="";
-	private String businesscCircle="";
-	private String price="";
-	private int rType=0;
-	private String MJ="";
-	private String age="";
-	private int ztype =0;
-	private int desc=0;
-	
-	private int requestMode=0;
-	private int page =0;
+	/** 参数 */
+	private String area = ""; // 区域
+	private String lng = "";
+	private String lat = "";
+	private String businesscCircle = "";
+	private String price = "";
+	private int rType = 0;
+	private String MJ = "";
+	private String age = "";
+	private int ztype = 0;
+	private int desc = 0;
+
+	private int requestMode = 0;
+	private int page = 0;
+
+	PopupWindow pop_area = null;
+	PopupWindow pop_price = null;
+	PopupWindow pop_more = null;
+
+	public Handler getAreaReult = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			int result = msg.what;
+			Responds<Area> responde = (Responds<Area>) msg.obj;
+			switch (result) {
+			case 0:
+				break;
+			default:
+				datas = responde.getRESPONSE_BODY().get("list");
+				break;
+			}
+			listview.onDropDownComplete();
+		}
+
+	};
+
 	public Handler getDataResult = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			int result = msg.what;
-			Responds<SecondHouseValue> responde =(Responds<SecondHouseValue>) msg.obj;
+			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
 			switch (result) {
 			case 0:
-				((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
 				break;
 
 			default:
-				if(responde.getRESPONSE_CODE_INFO().equals("成功")){
-					
-					List<SecondHouseValue> data= responde.getRESPONSE_BODY().get(Container.RESULT);
-					if(requestMode==Container.REFRESH){
+				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+
+					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
+							.get(Container.RESULT);
+					if (requestMode == Container.REFRESH) {
 						data_newHouse.clear();
-					}else if(!responde.isRESPONSE_NEXTPAGE()){
+					} else if (!responde.isRESPONSE_NEXTPAGE()) {
 						listview.setOnBottomStyle(false);
 					}
 					data_newHouse.addAll(data);
-					
-				}else {
-					((BaseActivity)act).showToast("请求失败，请重试", 3000);
+
+				} else {
+					((BaseActivity) act).showToast("请求失败，请重试", 3000);
 				}
 				break;
 			}
 			adapter.notifyDataSetChanged();
+			if (datas == null) {
+				getArea();
+				return;
+			}
 			listview.onDropDownComplete();
 			listview.onBottomComplete();
 		}
 
 	};
+	private List<Area> datas;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -144,6 +177,7 @@ public class OldHouseFragment extends MainFragment implements
 		top_bar3.setOnFocusChangeListener(this);
 
 		AfterView();
+		listview.onDropDown();
 	}
 
 	@Override
@@ -185,7 +219,7 @@ public class OldHouseFragment extends MainFragment implements
 			public void onDropDown() {
 				// TODO Auto-generated method stub
 				listview.setOnBottomStyle(true);
-				requestMode =Container.REFRESH;
+				requestMode = Container.REFRESH;
 				getData();
 			}
 		});
@@ -195,38 +229,42 @@ public class OldHouseFragment extends MainFragment implements
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				requestMode =Container.GETMORE;
+				requestMode = Container.GETMORE;
 				page++;
 				getData();
 			}
 		});
 	}
 
-	//
+	// 生成pop
 	private PopupWindow createPop(PopStatus status) {
-		PopupWindow pop = null;
+
 		PupowindowUtil util = new PupowindowUtil(act, act);
 		switch (status) {
 		case Location:
-			pop = util.getListPopu(act,
-					((RealApplication) act.getApplication())
-							.getPicese(R.array.new_picese), loction);
-
-			break;
+			if (pop_area == null) {
+				// pop_area = util.getListPopu(act,
+				// ((RealApplication) act.getApplication())
+				// .getPicese(R.array.old_house), loction);
+				pop_area = util.getAreaPop(datas, this);
+			}
+			return pop_area;
 		case Picese:
-
-			break;
+			if (pop_price == null) {
+				pop_price = util.getListPopu(act, ((RealApplication) act
+						.getApplication()).getPicese(R.array.old_house),
+						loction);
+			}
+			return pop_price;
 		case More:
-			pop = util.getListPopu(act,
-					((RealApplication) act.getApplication())
-							.getPicese(R.array.new_picese), loction);
-			break;
+			if (pop_more == null) {
+				pop_more = util.getListPopu(act, ((RealApplication) act
+						.getApplication()).getPicese(R.array.old_house),
+						loction);
+			}
+			return pop_more;
 		}
-		return pop;
-	}
-
-	private void validatePop() {
-
+		return null;
 	}
 
 	// 刷新数据
@@ -235,7 +273,7 @@ public class OldHouseFragment extends MainFragment implements
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub	
+				// TODO Auto-generated method stub
 				Request request = new Request();
 				request.setCommandcode("102");
 				HashMap<String, String> body = new HashMap<String, String>();
@@ -256,7 +294,7 @@ public class OldHouseFragment extends MainFragment implements
 						.httpUrlConnection(request,
 								new TypeToken<Responds<SecondHouseValue>>() {
 								}.getType());
-				if(response!=null){
+				if (response != null) {
 					getDataResult.obtainMessage(1, response).sendToTarget();
 				}
 				getDataResult.obtainMessage(0).sendToTarget();
@@ -265,17 +303,31 @@ public class OldHouseFragment extends MainFragment implements
 		getdata.start();
 	}
 
+	private void getArea() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Request request = new Request();
+				request.setCommandcode("101");
+				HashMap<String, String> body = new HashMap<String, String>();
+				body.put("city", "昆明");
+				request.setREQUEST_BODY(body);
+				Responds<Area> response = (Responds<Area>) new HttpConnect()
+						.httpUrlConnection(request, new TypeToken<Responds<Area>>() {
+						}.getType());
+				if (response != null) {
+					getAreaReult.obtainMessage(1, response).sendToTarget();
+				}
+				getAreaReult.obtainMessage(0).sendToTarget();
+			}
+		}).start();
+		
+	}
+
 	private void initData() {
 		data_newHouse = new ArrayList<SecondHouseValue>();
-//		for (int i = 0; i < 6; i++) {
-//			House house = new House();
-//			house.setId(String.valueOf(i));
-//			house.setAddress("郑州市金水去黄河路" + i);
-//			house.setMuch(String.valueOf(10 + i) + "万");
-//			house.setName("现房好卖" + i);
-//			house.setSize(String.valueOf(30 + i) + "平米");
-//			data_newHouse.add(house);
-//		}
 		adapter = new NewHouseAdapter(act, data_newHouse);
 	}
 
@@ -308,14 +360,17 @@ public class OldHouseFragment extends MainFragment implements
 				break;
 			}
 			popLocation = createPop(PopStatus.Location);
+//			popLocation.setAnimationStyle(R.style.popwin_anim_style);
 			popLocation.showAsDropDown(zhu);
 			break;
 
 		case R.id.top_bar2:
-			popLocation = createPop(PopStatus.Location);
+			popLocation = createPop(PopStatus.Picese);
 			if (!isChecked) {
 				break;
 			}
+//			popLocation.setAnimationStyle(R.style.popwin_anim_style);
+			popLocation.showAsDropDown(zhu);
 			break;
 
 		case R.id.top_bar3:
@@ -323,7 +378,8 @@ public class OldHouseFragment extends MainFragment implements
 				break;
 			}
 			popLocation = createPop(PopStatus.More);
-			popLocation.showAtLocation(zhu, Gravity.BOTTOM, 0, 0);
+//			popLocation.setAnimationStyle(R.style.popwin_anim_style);
+			popLocation.showAsDropDown(zhu);
 			break;
 		}
 
@@ -334,7 +390,7 @@ public class OldHouseFragment extends MainFragment implements
 
 		switch (view.getId()) {
 		case R.id.top_bar1:
-		
+
 			break;
 
 		default:
@@ -360,6 +416,54 @@ public class OldHouseFragment extends MainFragment implements
 			box3.setChecked(false);
 			break;
 		}
+	}
+
+	@Override
+	public void clickArea(String area) {
+		// TODO Auto-generated method stub
+		pop_area.dismiss();
+		if (area.equals("不限")) {
+			this.area = "";
+			top_bar1.setText("区域");
+		} else{
+			this.area = area;
+			top_bar1.setText(area);
+		}
+		listview.onDropDown();
+	}
+
+	@Override
+	public void clickPrice(String price) {
+		// TODO Auto-generated method stub
+		pop_price.dismiss();
+		if (price.equals("不限")) {
+			this.price = "";
+			top_bar2.setText("售价");
+		} else{
+			this.price = price;
+			top_bar2.setText(price+"万");
+		}
+		listview.onDropDown();
+	}
+
+	@Override
+	public void clickMore(String more) {
+		// TODO Auto-generated method stub
+		pop_more.dismiss();
+		if (more.equals("不限")) {
+			
+			top_bar3.setText("区域");
+		} else{
+			
+			top_bar3.setText(area);
+		}
+		listview.onDropDown();
+	}
+
+	@Override
+	public void closePop() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

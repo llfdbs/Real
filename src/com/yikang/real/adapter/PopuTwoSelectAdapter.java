@@ -57,15 +57,15 @@ public class PopuTwoSelectAdapter extends BaseAdapter{
 			convertView=LayoutInflater.from(context).inflate(R.layout.popu2list_item, null);
 		}
 		TextView text =(TextView) convertView.findViewById(R.id.popu2list_item_title);
-		ImageView icon =(ImageView) convertView.findViewById(R.id.line);
+//		ImageView icon =(ImageView) convertView.findViewById(R.id.line);
 		
 		text.setText(data.get(postions));
 		if(postions==selected){
 			text.setTextColor(R.color.holo_blue_bright);
-			icon .setVisibility(View.VISIBLE);
+//			icon .setVisibility(View.VISIBLE);
 		}else{
 			text.setTextColor(R.color.black);
-			icon .setVisibility(View.GONE);
+//			icon .setVisibility(View.GONE);
 		}
 		
 		return convertView;
