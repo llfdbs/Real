@@ -13,6 +13,10 @@ public class Container {
 	public static City city =null;
 	
 	final public static String RESULT="list";
+	
+	final public static int REFRESH=0;
+	
+	final public static int GETMORE=1;
 	public static City getCity() {
 		return city;
 	}

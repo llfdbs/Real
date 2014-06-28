@@ -29,7 +29,7 @@ public abstract class BaseActivity extends ActionBarActivity{
 	 * @param pMsg
 	 *            消息内容
 	 */
-	protected void showToast(String pMsg, int duration) {
+	public void showToast(String pMsg, int duration) {
 		ToastTools.showToast(this, pMsg, duration);
 	}
 

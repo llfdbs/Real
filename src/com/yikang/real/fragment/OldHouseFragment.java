@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.adapter.NewHouseAdapter;
+import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.bean.House;
 import com.yikang.real.control.GetNewHouseControl;
@@ -65,6 +67,21 @@ public class OldHouseFragment extends MainFragment implements
 	private PopupWindow popMore;
 	private LinearLayout zhu;
 
+	
+	/**参数*/
+	private String area=""; //区域
+	private String lng="";
+	private String lat="";
+	private String businesscCircle="";
+	private String price="";
+	private int rType=0;
+	private String MJ="";
+	private String age="";
+	private int ztype =0;
+	private int desc=0;
+	
+	private int requestMode=0;
+	private int page =0;
 	public Handler getDataResult = new Handler() {
 
 		@Override
@@ -81,9 +98,13 @@ public class OldHouseFragment extends MainFragment implements
 				if(responde.getRESPONSE_CODE_INFO().equals("成功")){
 					
 					List<SecondHouseValue> data= responde.getRESPONSE_BODY().get(Container.RESULT);
-					data_newHouse.clear();
+					if(requestMode==Container.REFRESH){
+						data_newHouse.clear();
+					}
 					data_newHouse.addAll(data);
 					
+				}else {
+					((BaseActivity)act).showToast("请求失败，请重试", 3000);
 				}
 				break;
 			}
@@ -162,6 +183,7 @@ public class OldHouseFragment extends MainFragment implements
 			public void onDropDown() {
 				// TODO Auto-generated method stub
 //				listview.onDropDownComplete();
+				requestMode =Container.REFRESH;
 				getData();
 			}
 		});
@@ -171,7 +193,9 @@ public class OldHouseFragment extends MainFragment implements
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				listview.onBottomComplete();
+				requestMode =Container.GETMORE;
+				page++;
+				getData();
 			}
 		});
 	}
@@ -209,13 +233,23 @@ public class OldHouseFragment extends MainFragment implements
 
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub	
 				Request request = new Request();
 				request.setCommandcode("102");
 				HashMap<String, String> body = new HashMap<String, String>();
 				body.put("city", "昆明");
-				body.put("desc", "1");
-				body.put("p", "10");
+				body.put("desc", String.valueOf(desc));
+				body.put("price", price);
+				body.put("area", area);
+				Log.v(Thread.currentThread().getName(), String.valueOf(page));
+				body.put("p", String.valueOf(page));
+				body.put("age", age);
+				body.put("ztype", String.valueOf(ztype));
+				body.put("rType", String.valueOf(rType));
+				body.put("businesscCircle", businesscCircle);
+				body.put("lat", lat);
+				body.put("lng", lng);
+				request.setREQUEST_BODY(body);
 				Responds<SecondHouseValue> response = (Responds<SecondHouseValue>) new HttpConnect()
 						.httpUrlConnection(request,
 								new TypeToken<Responds<SecondHouseValue>>() {

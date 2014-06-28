@@ -8,10 +8,15 @@ public class Responds<T> {
 
 	private int RESPONSE_CODE;  //返回code
 	private String RESPONSE_CODE_INFO;//返回信息
+	private String RESPONSE_NEXTPAGE;//是否有下页数据
 	private HashMap<String,List<T>> RESPONSE_BODY; //请求返回值
-	
-	
 
+	public String getRESPONSE_NEXTPAGE() {
+		return RESPONSE_NEXTPAGE;
+	}
+	public void setRESPONSE_NEXTPAGE(String rESPONSE_NEXTPAGE) {
+		RESPONSE_NEXTPAGE = rESPONSE_NEXTPAGE;
+	}
 	public HashMap<String, List<T>> getRESPONSE_BODY() {
 		return RESPONSE_BODY;
 	}
