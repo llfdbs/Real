@@ -20,8 +20,11 @@
             <CheckBox
                 android:button="@null"
                 android:id="@+id/top_bar1"
-                
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:textSize="10pt"
+                android:background="@null"
+                android:text="22"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <ImageView
@@ -37,10 +40,13 @@
             android:id="@+id/house_topbar2"
             style="@style/top_bar_linear" >
 
-            <CheckBox
+            <CheckBox android:text="22"
                  android:id="@+id/top_bar2"
                 android:button="@null"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                 android:textSize="10pt"
+                android:background="@null"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" 
                 
                 />
@@ -57,10 +63,13 @@
             android:id="@+id/house_topbar3"
             style="@style/top_bar_linear" >
 
-            <CheckBox
+            <CheckBox android:text="22"
                 android:button="@null"
                  android:id="@+id/top_bar3"
-                android:layout_width="wrap_content"
+                 android:gravity="center"
+                 android:textSize="10pt"
+                android:background="@null"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <ImageView

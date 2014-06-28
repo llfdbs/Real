@@ -8,7 +8,8 @@ package cn.Bean.util;
 
 public class SecondHouseValue {
 	
-	private int nid;//房源ID
+	private String temprownumber;
+	private String nid;//房源ID
 	private String iconurl;//图片地址
 	private String title;//标题
 	private String housetype;//户型
@@ -17,11 +18,26 @@ public class SecondHouseValue {
 	private String community;//所属小区名称
 	private String cid;//小区ID
 	private String camera;//摄像头
-	public int getNid() {
+	private String simpleadd;
+
+	
+	public String getTemprownumber() {
+		return temprownumber;
+	}
+	public void setTemprownumber(String temprownumber) {
+		this.temprownumber = temprownumber;
+	}
+	public String getNid() {
 		return nid;
 	}
-	public void setNid(int nid) {
+	public void setNid(String nid) {
 		this.nid = nid;
+	}
+	public String getSimpleadd() {
+		return simpleadd;
+	}
+	public void setSimpleadd(String simpleadd) {
+		this.simpleadd = simpleadd;
 	}
 	public String getIconurl() {
 		return iconurl;

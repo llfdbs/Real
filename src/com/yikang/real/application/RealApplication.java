@@ -8,11 +8,13 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import cn.Bean.util.City;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.yikang.real.until.Container;
 import com.yikang.real.until.ToastTools;
 
 public class RealApplication extends Application{
@@ -26,6 +28,9 @@ public class RealApplication extends Application{
 	public void onCreate() {
 		super.onCreate();
 		mSingleton = this;
+		City city =new City();
+		city.setCity("昆明");
+		Container.setCity(city);
 		initImageLoader(getApplicationContext());
 	}
 

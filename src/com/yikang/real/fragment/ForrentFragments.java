@@ -21,7 +21,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import cn.Bean.util.ErFang;
-import cn.Bean.util.RentHouse;
+import cn.Bean.util.SecondHouseValue;
 import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 
@@ -30,7 +30,6 @@ import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.RealApplication;
-import com.yikang.real.bean.House;
 import com.yikang.real.until.Container.PopStatus;
 import com.yikang.real.until.PupowindowUtil;
 import com.yikang.real.web.HttpConnect;
@@ -53,7 +52,7 @@ public class ForrentFragments extends MainFragment implements
 	public CheckBox top_bar3;
 	public CheckBox[] check;
 
-	public ArrayList<House> data_newHouse;
+	public ArrayList<SecondHouseValue> data_newHouse;
 	public NewHouseAdapter adapter;
 	private String[] top_str = { "区域", "价格", "更多" };
 	public int pos;
@@ -215,7 +214,7 @@ public class ForrentFragments extends MainFragment implements
 //	}
 
 	private void initData() {
-		data_newHouse = new ArrayList<House>();
+		data_newHouse = new ArrayList<SecondHouseValue>();
 		
 //		ttp://210.75.3.26:8855/houseapp/apprq?HEAD_INFO=
 //			{"commandcode":108,"REQUEST_BODY":{"city":"昆明","desc":"0" 
@@ -262,15 +261,15 @@ public class ForrentFragments extends MainFragment implements
 		
 		
 		
-		for (int i = 0; i < 6; i++) {
-			House house = new House();
-			house.setId(String.valueOf(i));
-			house.setAddress("郑州市金水去黄河路" + i);
-			house.setMuch(String.valueOf(10 + i) + "万");
-			house.setName("现房好卖" + i);
-			house.setSize(String.valueOf(30 + i) + "平米");
-			data_newHouse.add(house);
-		}
+//		for (int i = 0; i < 6; i++) {
+//			House house = new House();
+//			house.setId(String.valueOf(i));
+//			house.setAddress("郑州市金水去黄河路" + i);
+//			house.setMuch(String.valueOf(10 + i) + "万");
+//			house.setName("现房好卖" + i);
+//			house.setSize(String.valueOf(30 + i) + "平米");
+//			data_newHouse.add(house);
+//		}
 		adapter = new NewHouseAdapter(act, data_newHouse);
 	}
 

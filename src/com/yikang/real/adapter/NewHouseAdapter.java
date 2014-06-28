@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.Bean.util.SecondHouseValue;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,11 +20,11 @@ import com.yikang.real.bean.House;
 public class NewHouseAdapter extends BaseAdapter {
 
 	Context context;
-	ArrayList<House> data;
+	ArrayList<SecondHouseValue> data;
 
-	public NewHouseAdapter(Context context, List<House> data) {
+	public NewHouseAdapter(Context context, List<SecondHouseValue> data) {
 		this.context = context;
-		this.data = (ArrayList<House>) data;
+		this.data = (ArrayList<SecondHouseValue>) data;
 	}
 
 	@Override
@@ -70,10 +71,10 @@ public class NewHouseAdapter extends BaseAdapter {
 			holder = (HouseViewHolder) converView.getTag();
 		}
 
-		holder.getHouseName().setText(data.get(postions).getName());
-		holder.getAddress().setText(data.get(postions).getAddress());
-		holder.getHousePices().setText(data.get(postions).getMuch());
-		holder.getHouseSize().setText(data.get(postions).getSize());
+		holder.getHouseName().setText(data.get(postions).getSimpleadd());
+		holder.getAddress().setText(data.get(postions).getCommunity());
+		holder.getHousePices().setText(data.get(postions).getHousetype()+"    "+data.get(postions).getArea()+"平米");
+		holder.getHouseSize().setText(data.get(postions).getTotalprice()+"万");
 
 		ImageLoader loader = ImageLoader.getInstance();
 
@@ -84,7 +85,7 @@ public class NewHouseAdapter extends BaseAdapter {
 				.showStubImage(R.drawable.ic_launcher).cacheInMemory()// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc().build();// 设置下载的图片是否缓存在SD卡中
 
-		loader.displayImage(data.get(postions).getIcon(), holder.getIcon(),options);
+		loader.displayImage(data.get(postions).getArea(), holder.getIcon(),options);
 
 		return converView;
 	}

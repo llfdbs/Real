@@ -23,7 +23,7 @@ import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
-public class LoginActivity extends BaseActivity implements OnClickListener{
+public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	public Button login;
 
@@ -85,31 +85,35 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 
 		return true;
 	}
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.login:
-			final HttpConnect conn =new HttpConnect();
-			final Request reques =new Request();
+			final HttpConnect conn = new HttpConnect();
+			final Request reques = new Request();
 			reques.setCommandcode("103");
-			HashMap map =new HashMap<String, String>();
+			HashMap map = new HashMap<String, String>();
 			map.put("nid", "100001");
 			reques.setREQUEST_BODY(map);
 			new Thread(new Runnable() {
-				
+
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					Responds<SecondHandHouseDetails> responds =(Responds<SecondHandHouseDetails>) conn.httpUrlConnection(reques,new TypeToken<Responds<SecondHandHouseDetails>>(){}.getType());
+					Responds<SecondHandHouseDetails> responds = (Responds<SecondHandHouseDetails>) conn
+							.httpUrlConnection(
+									reques,
+									new TypeToken<Responds<SecondHandHouseDetails>>() {
+									}.getType());
 					openActivity(CheckedActivity.class);
-					
+
 				}
 			}).start();
-			
 			break;
-		case  R.id.login_text_regist:
+		case R.id.login_text_regist:
 			openActivity(RegisterActivity.class);
-			
+
 			break;
 		default:
 			background();
@@ -124,8 +128,5 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 	public void chance() {
 		login_username.setText("test");
 	}
-
-	
- 
 
 }

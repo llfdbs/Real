@@ -1,10 +1,12 @@
 package com.yikang.real.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +16,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
@@ -21,6 +24,7 @@ import com.yikang.real.fragment.ForrentFragments;
 import com.yikang.real.fragment.NewHouseFragment;
 import com.yikang.real.fragment.OldHouseFragment;
 import com.yikang.real.fragment.PersonCentrol;
+import com.yikang.real.until.Container;
 
 public class CheckedActivity extends BaseActivity implements
 		OnCheckedChangeListener, OnClickListener {
@@ -67,6 +71,18 @@ public class CheckedActivity extends BaseActivity implements
 		localcity = (TextView) findViewById(R.id.topbar_local);
 		map = (TextView) findViewById(R.id.topbar_search);
 		search = (EditText) findViewById(R.id.topbar_search);
+		localcity.setOnClickListener(this);
+		map.setOnClickListener(this);
+		search.setOnClickListener(this);
+		
+		
+		ActionBar acb=getSupportActionBar();
+		acb.hide();
+		setlocation();
+	}
+	
+	private void setlocation(){
+		localcity.setText(Container.getCity().getCity());
 	}
 
 	private void AfterView() {
@@ -165,10 +181,10 @@ public class CheckedActivity extends BaseActivity implements
 		// TODO Auto-generated method stub
 		switch (view.getId()) {
 		case R.id.topbar_local:
-			openActivity(CityList.class);
+			openActivityForResult(CityList.class, null, 501);
 			break;
 		case R.id.topbar_search:
-
+			openActivity(MainActivity.class);
 			break;
 		case R.id.topbar_map:
 
@@ -178,4 +194,24 @@ public class CheckedActivity extends BaseActivity implements
 			break;
 		}
 	}
+
+	@Override
+	protected void onActivityResult(int request, int responds, Intent intent) {
+		// TODO Auto-generated method stub
+		
+		switch (request) {
+		case 501:
+			if(responds==200){
+				setlocation();
+				showToast(intent.getStringExtra("city"), Toast.LENGTH_LONG);
+			}
+			break;
+
+		default:
+			break;
+		}
+		super.onActivityResult(request, responds, intent);
+	}
+	
+	
 }

@@ -23,9 +23,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import cn.Bean.util.SecondHouseValue;
 import cn.trinea.android.common.view.DropDownListView;
-
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
+
 
 //import com.handmark.pulltorefresh.library.PullToRefreshBase;
 //import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
@@ -51,7 +52,7 @@ public class NewHouseFragment extends MainFragment implements
 	public CheckBox top_bar3;
 	public CheckBox[] check;
 
-	public ArrayList<House> data_newHouse;
+	public ArrayList<SecondHouseValue> data_newHouse;
 	public NewHouseAdapter adapter;
 	private String[] top_str = { "区域", "售价", "更多" };
 	public int pos;
@@ -184,16 +185,16 @@ public class NewHouseFragment extends MainFragment implements
 	}
 
 	private void initData() {
-		data_newHouse = new ArrayList<House>();
-		for (int i = 0; i < 6; i++) {
-			House house = new House();
-			house.setId(String.valueOf(i));
-			house.setAddress("郑州市金水去黄河路" + i);
-			house.setMuch(String.valueOf(10 + i) + "万");
-			house.setName("现房好卖" + i);
-			house.setSize(String.valueOf(30 + i) + "平米");
-			data_newHouse.add(house);
-		}
+		data_newHouse = new ArrayList<SecondHouseValue>();
+//		for (int i = 0; i < 6; i++) {
+//			House house = new House();
+//			house.setId(String.valueOf(i));
+//			house.setAddress("郑州市金水去黄河路" + i);
+//			house.setMuch(String.valueOf(10 + i) + "万");
+//			house.setName("现房好卖" + i);
+//			house.setSize(String.valueOf(30 + i) + "平米");
+//			data_newHouse.add(house);
+//		}
 		adapter = new NewHouseAdapter(act, data_newHouse);
 	}
 

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_holo_light"
+    android:orientation="vertical" >
+
+    <!--
+          当之有一个EditText或者AutoCompleteTextView的时候，进入画面时是默认得到焦点的。  
+ 
+          要想去除焦点，可以在auto之前加一个o像素的layout，并设置他先得到焦点。
+    -->
+
+    <LinearLayout
+        android:layout_width="0px"
+        android:layout_height="0px"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+    </LinearLayout>
+
+    <!-- 定义一个自动完成文本框，指定输入一个字符后进行提示 -->
+<LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    
+    >
+    <AutoCompleteTextView
+        android:id="@+id/auto"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:completionHint="最近的12条记录"
+        android:completionThreshold="1"
+        android:dropDownHeight="fill_parent"
+        android:dropDownWidth="fill_parent"
+        android:dropDownHorizontalOffset="-5dp"
+        android:dropDownVerticalOffset="0dp"
+        android:hint="请输入文字进行搜索"
+        android:background="@drawable/shape_login"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="4"
+        android:paddingLeft="10dp"
+        android:textSize="14sp"
+         />
+
+    <!--
+        android:completionHint            设置出现在下拉菜单中的提示标题  
+ 
+        android:completionThreshold       设置用户至少输入多少个字符才会显示提示  
+ 
+        android:dropDownHorizontalOffset  设置下拉菜单于文本框之间的水平偏移。下拉菜单默认与文本框左对齐  
+ 
+        android:dropDownVerticalOffset    设置下拉菜单于文本框之间的垂直偏移。下拉菜单默认紧跟文本框  
+ 
+        android:dropDownHeight               设置下拉菜单的高度  
+ 
+        android:dropDownWidth                设置下拉菜单的宽度    -->
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="搜索" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="5dp"
+         android:layout_weight="2"
+                />
+</LinearLayout>
+    <!--
+         <com.victop.ibs.view.ClearEditText
+        android:id="@+id/filter_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="30dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/search_bar_edit_selector"
+        android:hint="请输入关键字"
+        android:padding="5dip"
+        android:singleLine="true"
+        android:textSize="15.0dip" />
+    -->
+
+</LinearLayout>

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yikang.real.R;
 import com.yikang.real.until.ToastTools;
 
 public abstract class BaseActivity extends ActionBarActivity{
@@ -81,7 +82,7 @@ public abstract class BaseActivity extends ActionBarActivity{
 		startActivity(_Intent);
 //		 overridePendingTransition(R.anim.new_in_from_right,
 //		 R.anim.new_out_to_left);//苹果的效果
-//		overridePendingTransition(R.anim.left_in, R.anim.left_out);
+		overridePendingTransition(R.anim.left_in, R.anim.left_out);
 //		 overridePendingTransition(android.R.anim.fade_in,
 //		 android.R.anim.fade_out); // 淡进淡出
 		// overridePendingTransition(android.R.anim.slide_out_right,
@@ -105,9 +106,9 @@ public abstract class BaseActivity extends ActionBarActivity{
 			_Intent.putExtras(pBundle);
 		}
 		startActivityForResult(_Intent, pRequestCode);
-//		overridePendingTransition(R.anim.left_in, R.anim.left_out);// 左进右出
-		 overridePendingTransition(android.R.anim.fade_in,
-				 android.R.anim.fade_out); // 淡进淡出
+		overridePendingTransition(R.anim.left_in, R.anim.left_out);// 左进右出
+//		 overridePendingTransition(android.R.anim.fade_in,
+//				 android.R.anim.fade_out); // 淡进淡出
 	}
 
 	/**
@@ -162,51 +163,7 @@ public abstract class BaseActivity extends ActionBarActivity{
 		return mShowingDialogID;
 	}
 
-	/******************************************************************
-	 */
-	// public void exitPop() {
-	// LayoutInflater mLayoutInflater = (LayoutInflater)
-	// getSystemService(LAYOUT_INFLATER_SERVICE);
-	// View menuView = (View) mLayoutInflater.inflate(R.layout.exitdialog,
-	// null, true);
-	// no = (ImageButton) menuView.findViewById(R.id.cancel);
-	// yes = (ImageButton) menuView.findViewById(R.id.sure);
-	// no.requestFocus();
-	// no.setOnClickListener(new View.OnClickListener() {
-	//
-	// public void onClick(View v) {
-	// if (popupwindow != null && popupwindow.isShowing()) {
-	// popupwindow.dismiss();
-	// }
-	// }
-	// });
-	// yes.setOnClickListener(new View.OnClickListener() {
-	// public void onClick(View v) {
-	// ibsApplication.getInstance().exit();
-	// if (popupwindow != null && popupwindow.isShowing()) {
-	// popupwindow.dismiss();
-	// }
-	// }
-	// });
-	// popupwindow = new PopupWindow(menuView, LayoutParams.FILL_PARENT,
-	// LayoutParams.FILL_PARENT, true);
-	// popupwindow.showAtLocation(menuView, Gravity.CENTER | Gravity.CENTER,
-	// 0, 0);
-	// popupwindow.update();
-	// }
-	/**
-	 * 退出
-	 */
-//	public void exitPop() {
-//		if ((System.currentTimeMillis() - mLastPressBackTime) > 2000) {
-//			ToastTools.showToast(this, "退出程序",
-//					500);
-//
-//			mLastPressBackTime = System.currentTimeMillis();
-//		} else {
-//			RealApplication.getInstance().exit();
-//		}
-//	}
+
 
 	/**
 	 * 初始化成员变量 本方法应该在子类的onCreate方法中，绑定Layout文件后被调用

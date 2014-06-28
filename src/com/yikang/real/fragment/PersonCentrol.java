@@ -6,7 +6,7 @@ import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 
 import com.yikang.real.R;
-import com.yikang.real.activity.Sa;
+import com.yikang.real.activity.Result;
 import com.yikang.real.adapter.PersonCentrolAdp;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.until.Container;
@@ -81,20 +81,20 @@ public class PersonCentrol extends Fragment {
 		Intent intent = new Intent();
 		switch (postion) {
 		case 0:
-			intent.setClass(act, Sa.class);
+			intent.setClass(act, Result.class);
 			act.startActivity(intent);
 			break;
 		case 1:
-			intent.setClass(act, Sa.class);
+			intent.setClass(act, Result.class);
 			act.startActivity(intent);
 			break;
 		case 2:
-			intent.setClass(act, Sa.class);
+			intent.setClass(act, Result.class);
 			act.startActivity(intent);
 			break;
 
 		default:
-			intent.setClass(act, Sa.class);
+			intent.setClass(act, Result.class);
 			act.startActivity(intent);
 			break;
 		}
