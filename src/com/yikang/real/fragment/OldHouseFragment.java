@@ -78,13 +78,16 @@ public class OldHouseFragment extends MainFragment implements
 				break;
 
 			default:
-				if(responde.getRESPONSE_CODE().equals("200")){
+				if(responde.getRESPONSE_CODE_INFO().equals("成功")){
 					
 					List<SecondHouseValue> data= responde.getRESPONSE_BODY().get(Container.RESULT);
+					data_newHouse.clear();
+					data_newHouse.addAll(data);
+					
 				}
 				break;
 			}
-			
+			adapter.notifyDataSetChanged();
 			listview.onDropDownComplete();
 			listview.onBottomComplete();
 		}

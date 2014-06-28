@@ -12,7 +12,7 @@ public class Container {
 	
 	public static City city =null;
 	
-	final public static String RESULT="200";
+	final public static String RESULT="list";
 	public static City getCity() {
 		return city;
 	}
