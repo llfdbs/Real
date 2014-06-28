@@ -25,6 +25,7 @@ import cn.Bean.util.RentHouse;
 import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 
+import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.adapter.NewHouseAdapter;
@@ -238,7 +239,7 @@ public class ForrentFragments extends MainFragment implements
 				// TODO Auto-generated method stub
 				Responds<ErFang> responds = (Responds<ErFang>) conn
 						.httpUrlConnection(reques,
-								new Responds<ErFang>());
+								new TypeToken<Responds<ErFang>>(){}.getType());
 			
 			 System.out.println("------------------------------");
 			 

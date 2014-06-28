@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -49,7 +50,7 @@ public class HttpConnect {
 	String httpUrl = "http://210.75.3.26:8855/houseapp/apprq.do";
 	public static String picUrl="http://210.75.3.26:8855/houseapp/";
 	
-	public  <T> Responds<?> httpUrlConnection(Request head,Responds<T> bean) {
+	public  <T> Responds<?> httpUrlConnection(Request head,Type type) {
 		try {
 			
 			// HttpPost连接对象
@@ -98,7 +99,7 @@ public class HttpConnect {
 				}
 				responseReader.close();
 				if(sb!=null){
-					Responds<?> responds =gson.fromJson(sb.toString(), Responds.class);
+					Responds<?> responds =gson.fromJson(sb.toString(), type);
 					return responds;
 				}
 				return null;

@@ -11,8 +11,10 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import cn.Bean.util.Register;
 import cn.Bean.util.SecondHandHouseDetails;
 
+import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
@@ -98,7 +100,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener{
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					Responds<SecondHandHouseDetails> responds =(Responds<SecondHandHouseDetails>) conn.httpUrlConnection(reques,new Responds<SecondHandHouseDetails>());
+					Responds<SecondHandHouseDetails> responds =(Responds<SecondHandHouseDetails>) conn.httpUrlConnection(reques,new TypeToken<Responds<SecondHandHouseDetails>>(){}.getType());
 					openActivity(CheckedActivity.class);
 					
 				}

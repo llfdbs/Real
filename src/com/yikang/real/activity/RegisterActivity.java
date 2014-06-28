@@ -1,5 +1,6 @@
 package com.yikang.real.activity;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
 
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import cn.Bean.util.Register;
 import cn.Bean.util.SecondHandHouseDetails;
 
+import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
@@ -104,7 +106,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 					// TODO Auto-generated method stub
 					Responds<Register> responds = (Responds<Register>) conn
 							.httpUrlConnection(reques,
-									new Responds<Register>());
+									new TypeToken<Responds<Register>>(){}.getType());
 					openActivity(CheckedActivity.class);
 					
 
