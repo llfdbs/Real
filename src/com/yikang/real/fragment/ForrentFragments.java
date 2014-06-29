@@ -8,6 +8,8 @@ import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import cn.Bean.util.ErFang;
+import cn.Bean.util.Area;
+import cn.Bean.util.ForrentHouse;
 import cn.Bean.util.SecondHouseValue;
 import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
@@ -28,9 +31,12 @@ import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
+import com.yikang.real.adapter.ForrentHouseAdapter;
 import com.yikang.real.adapter.NewHouseAdapter;
+import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.until.Container.PopStatus;
+import com.yikang.real.until.Container;
 import com.yikang.real.until.PupowindowUtil;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
@@ -51,9 +57,9 @@ public class ForrentFragments extends MainFragment implements
 	public CheckBox top_bar2;
 	public CheckBox top_bar3;
 	public CheckBox[] check;
-
-	public ArrayList<SecondHouseValue> data_newHouse;
-	public NewHouseAdapter adapter;
+	private List<Area> datas;
+	public ArrayList<ForrentHouse> data_newHouse;
+	public ForrentHouseAdapter adapter;
 	private String[] top_str = { "区域", "价格", "更多" };
 	public int pos;
 	public CheckedActivity act;
@@ -61,7 +67,107 @@ public class ForrentFragments extends MainFragment implements
 	private PopupWindow popPicese;
 	private PopupWindow popMore;
 	private LinearLayout zhu;
+	private int requestMode = 0;
+	
+	
+	
+	
+	
+	public Handler getAreaReult = new Handler() {
 
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			int result = msg.what;
+			Responds<Area> responde = (Responds<Area>) msg.obj;
+			switch (result) {
+			case 0:
+				break;
+			default:
+				datas = responde.getRESPONSE_BODY().get("list");
+				break;
+			}
+			listview.onDropDownComplete();
+		}
+
+	};
+	
+	
+	public Handler getDataResult = new Handler() {
+//		 
+//		 HashMap<String, List<ErFang>> response_BODY = responds.getRESPONSE_BODY();
+//		 List<ErFang>  rents= response_BODY.get("list");
+		
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			int result = msg.what;
+			Responds<ForrentHouse>  responde = (Responds<ForrentHouse> ) msg.obj;
+			switch (result) {
+			case 0:
+				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				break;
+
+			default:
+				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+
+					List<ForrentHouse> data = responde.getRESPONSE_BODY()
+							.get(Container.RESULT);
+					if (requestMode == Container.REFRESH) {
+						data_newHouse.clear();
+					} else if (!responde.isRESPONSE_NEXTPAGE()) {
+						listview.setOnBottomStyle(false);
+					}
+					data_newHouse.addAll(data);
+
+				} else {
+					((BaseActivity) act).showToast("请求失败，请重试", 3000);
+				}
+				break;
+			}
+			adapter.notifyDataSetChanged();
+			if (datas == null) {
+				getArea();
+				return;
+			}
+			listview.onDropDownComplete();
+			listview.onBottomComplete();
+		}
+
+	};
+	
+	
+	
+	
+	private void getArea() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Request request = new Request();
+				request.setCommandcode("101");
+				HashMap<String, String> body = new HashMap<String, String>();
+				body.put("city", "昆明");
+				request.setREQUEST_BODY(body);
+				Responds<Area> response = (Responds<Area>) new HttpConnect()
+						.httpUrlConnection(request, new TypeToken<Responds<Area>>() {
+						}.getType());
+				if (response != null) {
+					getAreaReult.obtainMessage(1, response).sendToTarget();
+				}
+				getAreaReult.obtainMessage(0).sendToTarget();
+			}
+		}).start();
+		
+	}
+	
+	
+	
+	
+	
+	
+//	private List<Area> datas;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -214,7 +320,7 @@ public class ForrentFragments extends MainFragment implements
 //	}
 
 	private void initData() {
-		data_newHouse = new ArrayList<SecondHouseValue>();
+		data_newHouse = new ArrayList<ForrentHouse>();
 		
 //		ttp://210.75.3.26:8855/houseapp/apprq?HEAD_INFO=
 //			{"commandcode":108,"REQUEST_BODY":{"city":"昆明","desc":"0" 
@@ -236,25 +342,22 @@ public class ForrentFragments extends MainFragment implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Responds<ErFang> responds = (Responds<ErFang>) conn
+				Responds<ForrentHouse> response = (Responds<ForrentHouse>) conn
 						.httpUrlConnection(reques,
-								new TypeToken<Responds<ErFang>>(){}.getType());
+								new TypeToken<Responds<ForrentHouse>>(){}.getType());
 			
 			 System.out.println("------------------------------");
 			 
-			 
-			 HashMap<String, List<ErFang>> response_BODY = responds.getRESPONSE_BODY();
-			 List<ErFang>  rents= response_BODY.get("list");
-//			 for(ErFang r:rents){
-//				 
-//				 System.out.println(r);
-//			 }
-		 
-		 
-//			 for(  HashMap<String, List<RentHouse>>  s:   response_BODY ){
-//				 
-//				 
-//			 }
+//			 
+//			 HashMap<String, List<ErFang>> response_BODY = responds.getRESPONSE_BODY();
+//			 List<ErFang>  rents= response_BODY.get("list");
+			
+			
+				if (response != null) {
+					getDataResult.obtainMessage(1, response).sendToTarget();
+				}
+				getDataResult.obtainMessage(0).sendToTarget();
+			
 			}
 		}).start();
 		
@@ -270,7 +373,7 @@ public class ForrentFragments extends MainFragment implements
 //			house.setSize(String.valueOf(30 + i) + "平米");
 //			data_newHouse.add(house);
 //		}
-		adapter = new NewHouseAdapter(act, data_newHouse);
+		adapter = new ForrentHouseAdapter(act, data_newHouse);
 	}
 
 	OnItemClickListener loction = new OnItemClickListener() {

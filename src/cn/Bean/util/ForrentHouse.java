@@ -4,7 +4,7 @@ package cn.Bean.util;
  * @author Administrator
  *
  */
-public class ErFang {
+public class ForrentHouse {
 	String temprownumber;
 	String nid;
 	String iconurl;
