@@ -1,6 +1,8 @@
 package com.yikang.real.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,32 +11,36 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import cn.Bean.util.Area;
+import cn.Bean.util.More;
+import cn.Bean.util.MoreValue;
+
 import com.yikang.real.R;
 
 @SuppressLint("ResourceAsColor")
-public class AreaAdapterTwo extends BaseAdapter {
+public class MoreAdapterTwo extends BaseAdapter {
 
 	Context context;
-	List<String> data;
-	int check;
+	List<MoreValue> data;
+	Integer check = 0;
+
 	
-	public int getCheck() {
-		return check;
-	}
-
-	public void setCheck(int check) {
-		this.check = check;
-	}
-
-	public List<String> getData() {
+	public List<MoreValue> getData() {
 		return data;
 	}
 
-	public void setData(List<String> data) {
+	public void setData(List<MoreValue> data) {
 		this.data = data;
 	}
 
-	public AreaAdapterTwo(Context context, List<String> data) {
+	public Integer getCheck() {
+		return check;
+	}
+
+	public void setCheck(Integer check){
+		this.check=check;
+	}
+
+	public MoreAdapterTwo(Context context, List<MoreValue> data) {
 		this.context = context;
 		this.data = data;
 	}
@@ -67,12 +73,12 @@ public class AreaAdapterTwo extends BaseAdapter {
 		}
 		TextView view = (TextView) convert
 				.findViewById(R.id.popu2list_item_title);
-		if (postion == check) {
+		view.setText(data.get(postion).getName());
+		if (postion==check) {
 			view.setTextColor(R.color.holo_blue_bright);
 		} else {
 			view.setTextColor(R.color.black);
 		}
-		view.setText(data.get(postion));
 		return convert;
 	}
 

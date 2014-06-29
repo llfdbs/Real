@@ -49,6 +49,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		RealApplication.initImageLoader(getApplicationContext());
 	}
 
+	
 	private void findview() {
 		login = (Button) findViewById(R.id.login);
 		login_username = (EditText) findViewById(R.id.login_username);

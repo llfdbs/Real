@@ -184,7 +184,7 @@ public class CheckedActivity extends BaseActivity implements
 			openActivityForResult(CityList.class, null, 501);
 			break;
 		case R.id.topbar_search:
-			openActivity(MainActivity.class);
+			openActivity(SearchActivity.class);
 			break;
 		case R.id.topbar_map:
 

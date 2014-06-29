@@ -85,7 +85,9 @@ public class ForrentHouseAdapter extends BaseAdapter {
 				.showStubImage(R.drawable.ic_launcher).cacheInMemory()// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc().build();// 设置下载的图片是否缓存在SD卡中
 
-		loader.displayImage(data.get(postions).getIconurl(), holder.getIcon(),options);
+		if(data.get(postions).getIconurl()!=null){
+			loader.displayImage(data.get(postions).getIconurl(), holder.getIcon(),options);
+		}
 
 		return converView;
 	}

@@ -37,7 +37,7 @@
         <activity android:name="com.yikang.real.activity.RegisterActivity" />
         <activity android:name="com.yikang.real.activity.Result" >
         </activity>
-        <activity android:name="com.yikang.real.activity.MainActivity" >
+        <activity android:name="com.yikang.real.activity.SearchActivity" >
         </activity>
         <activity android:name="com.yikang.real.activity.CityList" >
         </activity>

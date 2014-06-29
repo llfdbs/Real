@@ -2,17 +2,19 @@ package com.yikang.real.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
+import android.content.Entity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,8 +28,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import cn.Bean.util.Area;
-import cn.Bean.util.SecondHandHouse;
-import cn.Bean.util.SecondHandHouseDetails;
 import cn.Bean.util.SecondHouseValue;
 import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
@@ -38,8 +38,6 @@ import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
-import com.yikang.real.bean.House;
-import com.yikang.real.control.GetNewHouseControl;
 import com.yikang.real.imp.PopWindowCallBack;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.PopStatus;
@@ -66,9 +64,6 @@ public class OldHouseFragment extends MainFragment implements
 	private String[] top_str = { "区域", "售价", "更多" };
 	public int pos;
 	public CheckedActivity act;
-	private PopupWindow popLocation;
-	private PopupWindow popPicese;
-	private PopupWindow popMore;
 	private LinearLayout zhu;
 
 	/** 参数 */
@@ -77,11 +72,8 @@ public class OldHouseFragment extends MainFragment implements
 	private String lat = "";
 	private String businesscCircle = "";
 	private String price = "";
-	private int rType = 0;
-	private String MJ = "";
-	private String age = "";
-	private int ztype = 0;
-	private int desc = 0;
+
+	HashMap<String, String> map = new HashMap<String, String>();
 
 	private int requestMode = 0;
 	private int page = 0;
@@ -89,7 +81,7 @@ public class OldHouseFragment extends MainFragment implements
 	PopupWindow pop_area = null;
 	PopupWindow pop_price = null;
 	PopupWindow pop_more = null;
-
+	String show_more = "";
 	public Handler getAreaReult = new Handler() {
 
 		@Override
@@ -243,9 +235,6 @@ public class OldHouseFragment extends MainFragment implements
 		switch (status) {
 		case Location:
 			if (pop_area == null) {
-				// pop_area = util.getListPopu(act,
-				// ((RealApplication) act.getApplication())
-				// .getPicese(R.array.old_house), loction);
 				pop_area = util.getAreaPop(datas, this);
 			}
 			return pop_area;
@@ -253,14 +242,13 @@ public class OldHouseFragment extends MainFragment implements
 			if (pop_price == null) {
 				pop_price = util.getListPopu(act, ((RealApplication) act
 						.getApplication()).getPicese(R.array.old_house),
-						loction);
+						this);
 			}
 			return pop_price;
 		case More:
 			if (pop_more == null) {
-				pop_more = util.getListPopu(act, ((RealApplication) act
-						.getApplication()).getPicese(R.array.old_house),
-						loction);
+				pop_more = util.getMorePop(((RealApplication) act
+						.getApplication()).createMore(), this);
 			}
 			return pop_more;
 		}
@@ -278,14 +266,14 @@ public class OldHouseFragment extends MainFragment implements
 				request.setCommandcode("102");
 				HashMap<String, String> body = new HashMap<String, String>();
 				body.put("city", "昆明");
-				body.put("desc", String.valueOf(desc));
+				body.put("desc", map.get("desc"));
 				body.put("price", price);
-				body.put("area", area);
+				body.put("area", map.get("area"));
 				Log.v(Thread.currentThread().getName(), String.valueOf(page));
 				body.put("p", String.valueOf(page));
-				body.put("age", age);
-				body.put("ztype", String.valueOf(ztype));
-				body.put("rType", String.valueOf(rType));
+				body.put("age", map.get("age"));
+				body.put("ztype", map.get("ztype"));
+				body.put("rType", map.get("rType"));
 				body.put("businesscCircle", businesscCircle);
 				body.put("lat", lat);
 				body.put("lng", lng);
@@ -305,7 +293,7 @@ public class OldHouseFragment extends MainFragment implements
 
 	private void getArea() {
 		new Thread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -315,15 +303,16 @@ public class OldHouseFragment extends MainFragment implements
 				body.put("city", "昆明");
 				request.setREQUEST_BODY(body);
 				Responds<Area> response = (Responds<Area>) new HttpConnect()
-						.httpUrlConnection(request, new TypeToken<Responds<Area>>() {
-						}.getType());
+						.httpUrlConnection(request,
+								new TypeToken<Responds<Area>>() {
+								}.getType());
 				if (response != null) {
 					getAreaReult.obtainMessage(1, response).sendToTarget();
 				}
 				getAreaReult.obtainMessage(0).sendToTarget();
 			}
 		}).start();
-		
+
 	}
 
 	private void initData() {
@@ -331,23 +320,6 @@ public class OldHouseFragment extends MainFragment implements
 		adapter = new NewHouseAdapter(act, data_newHouse);
 	}
 
-	OnItemClickListener loction = new OnItemClickListener() {
-
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			// TODO Auto-generated method stub
-		}
-	};
-
-	OnItemClickListener picese = new OnItemClickListener() {
-
-		@Override
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-			// TODO Auto-generated method stub
-		}
-	};
 
 	@Override
 	public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
@@ -356,30 +328,24 @@ public class OldHouseFragment extends MainFragment implements
 		switch (arg0.getId()) {
 
 		case R.id.top_bar1:
-			if (!isChecked) {
-				break;
-			}
-			popLocation = createPop(PopStatus.Location);
-//			popLocation.setAnimationStyle(R.style.popwin_anim_style);
-			popLocation.showAsDropDown(zhu);
+
+			// popLocation.setAnimationStyle(R.style.popwin_anim_style);
+			if (datas != null)
+				createPop(PopStatus.Location).showAsDropDown(zhu);
 			break;
 
 		case R.id.top_bar2:
-			popLocation = createPop(PopStatus.Picese);
-			if (!isChecked) {
-				break;
-			}
-//			popLocation.setAnimationStyle(R.style.popwin_anim_style);
-			popLocation.showAsDropDown(zhu);
+
+			// popLocation.setAnimationStyle(R.style.popwin_anim_style);
+			if (datas != null)
+				createPop(PopStatus.Picese).showAsDropDown(zhu);
 			break;
 
 		case R.id.top_bar3:
-			if (!isChecked) {
-				break;
-			}
-			popLocation = createPop(PopStatus.More);
-//			popLocation.setAnimationStyle(R.style.popwin_anim_style);
-			popLocation.showAsDropDown(zhu);
+
+			// popLocation.setAnimationStyle(R.style.popwin_anim_style);
+			if (datas != null)
+				createPop(PopStatus.More).showAsDropDown(zhu);
 			break;
 		}
 
@@ -425,7 +391,7 @@ public class OldHouseFragment extends MainFragment implements
 		if (area.equals("不限")) {
 			this.area = "";
 			top_bar1.setText("区域");
-		} else{
+		} else {
 			this.area = area;
 			top_bar1.setText(area);
 		}
@@ -439,23 +405,21 @@ public class OldHouseFragment extends MainFragment implements
 		if (price.equals("不限")) {
 			this.price = "";
 			top_bar2.setText("售价");
-		} else{
+		} else {
 			this.price = price;
-			top_bar2.setText(price+"万");
+			top_bar2.setText(price + "万");
 		}
 		listview.onDropDown();
 	}
 
 	@Override
-	public void clickMore(String more) {
+	public void clickMore(String more, String key,String value) {
 		// TODO Auto-generated method stub
 		pop_more.dismiss();
 		if (more.equals("不限")) {
-			
-			top_bar3.setText("区域");
-		} else{
-			
-			top_bar3.setText(area);
+			map.remove(key);
+		} else {
+			map.put(key, value);
 		}
 		listview.onDropDown();
 	}

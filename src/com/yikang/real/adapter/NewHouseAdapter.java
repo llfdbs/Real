@@ -73,8 +73,8 @@ public class NewHouseAdapter extends BaseAdapter {
 
 		holder.getHouseName().setText(data.get(postions).getSimpleadd());
 		holder.getAddress().setText(data.get(postions).getCommunity());
-		holder.getHousePices().setText(data.get(postions).getHousetype()+"    "+data.get(postions).getArea()+"平米");
-		holder.getHouseSize().setText(data.get(postions).getTotalprice()+"万");
+		holder.getHousePices().setText(data.get(postions).getTotalprice()+"万");
+		holder.getHouseSize().setText(data.get(postions).getHousetype()+"    "+data.get(postions).getArea()+"平米");
 
 		ImageLoader loader = ImageLoader.getInstance();
 
@@ -84,8 +84,9 @@ public class NewHouseAdapter extends BaseAdapter {
 				.showImageForEmptyUri(R.drawable.ic_launcher)// 设置图片Uri为空或是错误的时候显示的图片
 				.showStubImage(R.drawable.ic_launcher).cacheInMemory()// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc().build();// 设置下载的图片是否缓存在SD卡中
-
-		loader.displayImage(data.get(postions).getArea(), holder.getIcon(),options);
+		if(data.get(postions).getIconurl()!=null){
+			loader.displayImage(data.get(postions).getIconurl(), holder.getIcon(),options);
+		}
 
 		return converView;
 	}

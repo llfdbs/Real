@@ -25,7 +25,7 @@ public class Result extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Intent intent=new Intent(Result.this,MainActivity.class);
+				Intent intent=new Intent(Result.this,SearchActivity.class);
 				startActivity(intent);
 				overridePendingTransition(R.anim.left_in, R.anim.left_out);
 				finish();

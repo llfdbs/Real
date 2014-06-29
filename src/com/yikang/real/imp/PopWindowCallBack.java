@@ -6,7 +6,7 @@ public interface PopWindowCallBack {
 	
 	public void  clickPrice(String price);
 	
-	public void clickMore(String more);
+	public void clickMore(String name,String key,String value);
 	
 	public void closePop();
 }

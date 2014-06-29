@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        android:gravity="center_vertical"
+         >
+
+        <EditText
+            android:singleLine="true"
+            android:drawableLeft="@drawable/sreach"
+            android:id="@+id/searchediter"
+            android:hint="请输入需要搜索的小区名称"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/reset"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView 
+              android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:text="搜索结果"
+            android:padding="5dp"
+        />
+    
+</LinearLayout>

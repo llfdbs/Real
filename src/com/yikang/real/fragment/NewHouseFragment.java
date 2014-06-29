@@ -149,24 +149,21 @@ public class NewHouseFragment extends MainFragment implements
 		PupowindowUtil util = new PupowindowUtil(act, act);
 		switch (status) {
 		case Location:
-			pop = util.getListPopu(act,((RealApplication) act.getApplication())
-					.getPicese(R.array.new_picese), loction);
+//			pop = util.getListPopu(act,((RealApplication) act.getApplication())
+//					.getPicese(R.array.new_picese), loction);
 			
 			break;
 		case Picese:
 
 			break;
 		case More:
-			pop = util.getListPopu(act,((RealApplication) act.getApplication())
-					.getPicese(R.array.new_picese), loction);
+//			pop = util.getListPopu(act,((RealApplication) act.getApplication())
+//					.getPicese(R.array.new_picese), loction);
 			break;
 		}
 		return pop;
 	}
 
-	private void validatePop() {
-
-	}
 
 	// 刷新数据
 	public void getData() {
@@ -186,15 +183,6 @@ public class NewHouseFragment extends MainFragment implements
 
 	private void initData() {
 		data_newHouse = new ArrayList<SecondHouseValue>();
-//		for (int i = 0; i < 6; i++) {
-//			House house = new House();
-//			house.setId(String.valueOf(i));
-//			house.setAddress("郑州市金水去黄河路" + i);
-//			house.setMuch(String.valueOf(10 + i) + "万");
-//			house.setName("现房好卖" + i);
-//			house.setSize(String.valueOf(30 + i) + "平米");
-//			data_newHouse.add(house);
-//		}
 		adapter = new NewHouseAdapter(act, data_newHouse);
 	}
 
