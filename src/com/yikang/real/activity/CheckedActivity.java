@@ -24,6 +24,7 @@ import com.yikang.real.fragment.ForrentFragments;
 import com.yikang.real.fragment.NewHouseFragment;
 import com.yikang.real.fragment.OldHouseFragment;
 import com.yikang.real.fragment.PersonCentrol;
+import com.yikang.real.map.OverlayDemo;
 import com.yikang.real.until.Container;
 
 public class CheckedActivity extends BaseActivity implements
@@ -69,7 +70,7 @@ public class CheckedActivity extends BaseActivity implements
 		mTab4.setOnCheckedChangeListener(this);
 
 		localcity = (TextView) findViewById(R.id.topbar_local);
-		map = (TextView) findViewById(R.id.topbar_search);
+		map = (TextView) findViewById(R.id.topbar_map);
 		search = (EditText) findViewById(R.id.topbar_search);
 		localcity.setOnClickListener(this);
 		map.setOnClickListener(this);
@@ -187,7 +188,7 @@ public class CheckedActivity extends BaseActivity implements
 			openActivity(SearchActivity.class);
 			break;
 		case R.id.topbar_map:
-
+			openActivity(OverlayDemo.class);
 			break;
 
 		default:

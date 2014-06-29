@@ -8,10 +8,14 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.widget.Toast;
 import cn.Bean.util.City;
 import cn.Bean.util.More;
 import cn.Bean.util.MoreValue;
 
+import com.baidu.mapapi.BMapManager;
+import com.baidu.mapapi.MKGeneralListener;
+import com.baidu.mapapi.map.MKEvent;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -26,9 +30,57 @@ public class RealApplication extends Application {
 	private static RealApplication mSingleton;
 	private long mLastPressBackTime;
 
+	public boolean m_bKeyRight = true;
+	public BMapManager mBMapManager = null;
+
+	public static final String strKey = "5C2B70DCF6E387561F7FCDF5C7B893430AFD3966";
+
+	public void initEngineManager(Context context) {
+		if (mBMapManager == null) {
+			mBMapManager = new BMapManager(context);
+		}
+
+		if (!mBMapManager.init(strKey, new MyGeneralListener())) {
+			Toast.makeText(
+					RealApplication.getInstance().getApplicationContext(),
+					"BMapManager  初始化错误!", Toast.LENGTH_LONG).show();
+		}
+	}
+
+	// 常用事件监听，用来处理通常的网络错误，授权验证错误等
+	public static class MyGeneralListener implements MKGeneralListener {
+
+		@Override
+		public void onGetNetworkState(int iError) {
+			if (iError == MKEvent.ERROR_NETWORK_CONNECT) {
+				Toast.makeText(
+						RealApplication.getInstance().getApplicationContext(),
+						"您的网络出错啦！", Toast.LENGTH_LONG).show();
+			} else if (iError == MKEvent.ERROR_NETWORK_DATA) {
+				Toast.makeText(
+						RealApplication.getInstance().getApplicationContext(),
+						"输入正确的检索条件！", Toast.LENGTH_LONG).show();
+			}
+			// ...
+		}
+
+		@Override
+		public void onGetPermissionState(int iError) {
+			if (iError == MKEvent.ERROR_PERMISSION_DENIED) {
+				// 授权Key错误：
+				Toast.makeText(
+						RealApplication.getInstance().getApplicationContext(),
+						"请在 DemoApplication.java文件输入正确的授权Key！",
+						Toast.LENGTH_LONG).show();
+				RealApplication.getInstance().m_bKeyRight = false;
+			}
+		}
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		initEngineManager(this);
 		mSingleton = this;
 		City city = new City();
 		city.setCity("昆明");
@@ -91,7 +143,10 @@ public class RealApplication extends Application {
 		String[] strs = getResources().getStringArray(resouce);
 		for (String str : strs) {
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("item", str+"万");
+			if (!str.equals("不限")) {
+				map.put("item", str + "万");
+			} else
+				map.put("item", str);
 			list.add(map);
 		}
 
