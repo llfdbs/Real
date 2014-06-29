@@ -33,6 +33,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.yikang.real.activity.WelcomeActivity" />
+        <activity android:name="com.yikang.real.activity.OldHouseDetailsActivity" />
+        <activity android:name="com.yikang.real.activity.ForrentDetailsActivity" />
         <activity android:name="com.yikang.real.activity.BeseActivity" />
         <activity android:name="com.yikang.real.activity.RegisterActivity" />
         <activity android:name="com.yikang.real.activity.Result" >

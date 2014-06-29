@@ -11,6 +11,7 @@ import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
 import android.content.Entity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,6 +36,8 @@ import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
+import com.yikang.real.activity.ForrentDetailsActivity;
+import com.yikang.real.activity.OldHouseDetailsActivity;
 import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
@@ -204,6 +207,19 @@ public class OldHouseFragment extends MainFragment implements
 			check[i].setText(top_str[i]);
 		}
 		initData();
+		
+		
+		listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+			Intent intent = new Intent(act,OldHouseDetailsActivity.class);
+				
+				startActivity(intent);
+			 
+			}
+		});
 		listview.setAdapter(adapter);
 		listview.setOnDropDownListener(new OnDropDownListener() {
 
