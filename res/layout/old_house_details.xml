@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="租房详情"
+            android:text="地图"
             android:textColor="#000000"
             android:textSize="22dp" />
     </RelativeLayout>
@@ -45,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="111111111"
+            android:text="豪华大气 ---------"
             android:textColor="#000000"
             android:textSize="20sp" />
     </LinearLayout>
@@ -62,24 +62,49 @@
         android:layout_marginRight="20dip"
         android:orientation="vertical" >
 
-        <LinearLayout
+            <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dip"
             android:layout_marginTop="10dip" >
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:text="租金:"
-                android:textSize="20sp" />
+                android:layout_weight="5" >
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="售价: "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="230万"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:text="3200/月（押一付三）"
-                android:textColor="#000000"
-                android:textSize="20sp" />
+                android:layout_weight="4" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="楼层: "
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2/28"
+                    android:textColor="#000000"
+                    android:textSize="20sp" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -96,13 +121,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="楼型:"
+                    android:text="单价: "
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4室2厅"
+                    android:text="10000元/平方"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -115,13 +140,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="楼型:"
+                    android:text="朝向:"
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="精装修"
+                    android:text="南北"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -186,13 +211,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="楼层:"
+                    android:text="房型: "
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1/5"
+                    android:text="4室2厅2卫"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -205,13 +230,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="类型"
+                    android:text="装修: "
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="普通住宅"
+                    android:text="精装修"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -231,13 +256,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="楼型:"
+                    android:text="面积: "
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="4室2厅"
+                    android:text="120平"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -250,13 +275,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="楼型:"
+                    android:text="年代: "
                     android:textSize="20sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="精装修"
+                    android:text="2010年"
                     android:textColor="#000000"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -268,34 +293,9 @@
         android:layout_height="1dip"
         android:background="#E3E3E3" />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dip"
-        android:layout_marginLeft="20dip"
-        android:layout_marginTop="10dip" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="房东电话:"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="15555555555"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="#E3E3E3" />
-
-    <FrameLayout
+   
+     
+       <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
@@ -361,10 +361,11 @@
             android:src="@drawable/dingwei" />
     </FrameLayout>
 
-    <TextView
+<TextView
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:background="#E3E3E3" />
+     
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -376,7 +377,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="房间搭配:"
+            android:text="描述: "
             android:textSize="20sp" />
 
         <TextView
@@ -403,7 +404,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="小区信息:"
+            android:text="周边设备: "
             android:textSize="20sp" />
 
         <TextView
@@ -415,10 +416,7 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:background="#E3E3E3" />
+     
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -426,20 +424,6 @@
         android:layout_marginBottom="5dip"
         android:layout_marginLeft="20dip"
         android:layout_marginTop="10dip" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="周边设备:"
-            android:textSize="20sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dip"
-            android:text="该小区地位位置优越，紧挨地铁 和公交车站，位置优越环境优美,隔壁还有美女！"
-            android:textColor="#000000"
-            android:textSize="20sp" />
     </LinearLayout>
 
     <TextView
@@ -454,6 +438,7 @@
 
         <ImageView
             android:id="@+id/gerentouxiang"
+            
             android:layout_width="100dip"
             android:layout_height="100dip"
             android:layout_marginBottom="10dip"
@@ -462,92 +447,101 @@
 
         <LinearLayout
             android:id="@+id/gerenziliao"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dip"
             android:layout_toRightOf="@+id/gerentouxiang"
+            android:layout_width="wrap_content"
+              android:layout_marginBottom="10dip"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <LinearLayout
+        
+                android:layout_marginTop="10dip"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip" >
+                android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView 
                     android:paddingLeft="10dip"
-                    android:text="姓名：" />
-
+                         android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:text="姓名："
+                />
+                
                 <TextView
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="张三"
-                    android:textColor="#000000" />
+                    android:layout_height="wrap_content" 
+                    android:text="张三"/>
+
             </LinearLayout>
-
             <LinearLayout
+        
+                android:layout_marginTop="10dip"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip" >
+                android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView 
                     android:paddingLeft="10dip"
-                    android:text="联系方式：" />
-
+                         android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:text="联系方式："
+                />
+                
                 <TextView
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="15555550395"
-                    android:textColor="#000000" />
+                    android:layout_height="wrap_content" 
+                    android:text="15555550395"/>
+
             </LinearLayout>
-
             <LinearLayout
+        
+                android:layout_marginTop="10dip"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip" >
+                android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView 
                     android:paddingLeft="10dip"
-                    android:text="服务公司：" />
-
+                         android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:text="服务公司："
+                />
+                
                 <TextView
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4室2厅"
-                    android:textColor="#000000" />
+                    android:layout_height="wrap_content" 
+                    android:text="4室2厅"/>
+
             </LinearLayout>
-
             <LinearLayout
+        
+                android:layout_marginTop="10dip"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip" >
+                android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView 
                     android:paddingLeft="10dip"
-                    android:text="在线房源：" />
-
+                         android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:text="在线房源："
+                />
+                
                 <TextView
+                    android:textColor="#000000"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="20套"
-                    android:textColor="#000000" />
+                    android:layout_height="wrap_content" 
+                    android:text="20套"/>
+
             </LinearLayout>
         </LinearLayout>
-
-        <ImageView
+        
+         <ImageView
             android:layout_width="100dip"
             android:layout_height="100dip"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dip"
-                 android:scaleType="centerInside"
+            android:scaleType="centerInside"
             android:src="@drawable/call_phone_select" />
     </RelativeLayout>
 
