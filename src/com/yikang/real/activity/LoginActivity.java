@@ -1,8 +1,9 @@
 package com.yikang.real.activity;
 
 import java.util.HashMap;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
@@ -13,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import cn.Bean.util.Register;
 import cn.Bean.util.SecondHandHouseDetails;
-
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
@@ -23,6 +23,7 @@ import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
+@SuppressLint("ResourceAsColor")
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	public Button login;
@@ -70,8 +71,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 
 		actionbar = getSupportActionBar();
+		int titleId = Resources.getSystem().getIdentifier(  
+                "action_bar_title", "id", "android"); 
+		TextView yourTextView = (TextView) findViewById(titleId);
+		yourTextView.setTextColor(R.color.black);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.actionbar));
+				R.drawable.top));
 	}
 
 	@Override

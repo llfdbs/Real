@@ -67,7 +67,7 @@ public class PupowindowUtil {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				// TODO Auto-generated method stub
-				String price =((String) data.get(arg2)).replace("万", "");
+				String price =((String)((HashMap) data.get(arg2)).get("item")).replace("万", "");
 				callBack.clickPrice(price);
 			}
 		});
@@ -76,7 +76,7 @@ public class PupowindowUtil {
 		pop.setOutsideTouchable(true);
 		pop.setContentView(view);
 		pop.setWidth(LayoutParams.MATCH_PARENT);
-		pop.setHeight(LayoutParams.MATCH_PARENT);
+		pop.setHeight(h);
 		pop.setFocusable(true);
 		// PopupWindow pop = new PopupWindow(view,300,300,true);
 		pop.setBackgroundDrawable(new BitmapDrawable());
