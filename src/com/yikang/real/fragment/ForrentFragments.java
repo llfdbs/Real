@@ -34,6 +34,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.activity.ForrentDetailsActivity;
+import com.yikang.real.activity.OldHouseDetailsActivity;
 import com.yikang.real.adapter.ForrentHouseAdapter;
 import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.BaseActivity;
@@ -70,8 +71,8 @@ public class ForrentFragments extends MainFragment implements
 	public CheckedActivity act;
 	private LinearLayout zhu;
 	private int requestMode = 0;
-	
-	private int page =0;
+
+	private int page = 0;
 	PopupWindow pop_area = null;
 	PopupWindow pop_price = null;
 	PopupWindow pop_more = null;
@@ -238,10 +239,12 @@ public class ForrentFragments extends MainFragment implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-			Intent intent = new Intent(act,ForrentDetailsActivity.class);
-				
+				Intent intent = new Intent(act, ForrentDetailsActivity.class);
+
+				intent.putExtra("nid", data_newHouse.get(arg2).getNid());
+
 				startActivity(intent);
-			 
+
 			}
 		});
 		listview.setAdapter(adapter);
@@ -258,8 +261,6 @@ public class ForrentFragments extends MainFragment implements
 		});
 
 		listview.setOnBottomListener(new OnClickListener() {
-
-		
 
 			@Override
 			public void onClick(View arg0) {
@@ -298,6 +299,7 @@ public class ForrentFragments extends MainFragment implements
 		}
 		return pop;
 	}
+
 	private void initData() {
 		data_newHouse = new ArrayList<ForrentHouse>();
 
@@ -308,7 +310,7 @@ public class ForrentFragments extends MainFragment implements
 		adapter = new ForrentHouseAdapter(act, data_newHouse);
 	}
 
-	private void getData(){
+	private void getData() {
 
 		final HttpConnect conn = new HttpConnect();
 		final Request reques = new Request();
@@ -338,7 +340,7 @@ public class ForrentFragments extends MainFragment implements
 			}
 		}).start();
 	}
-	
+
 	@Override
 	public void onCheckedChanged(CompoundButton arg0, boolean isChecked) {
 		// TODO Auto-generated method stub

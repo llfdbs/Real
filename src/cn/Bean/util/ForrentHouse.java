@@ -1,10 +1,17 @@
 package cn.Bean.util;
+
+import java.io.Serializable;
+
 /**
  * ¶þÊÖ·¿
  * @author Administrator
  *
  */
-public class ForrentHouse {
+public class ForrentHouse  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 19999L;
 	String temprownumber;
 	String nid;
 	String iconurl;
