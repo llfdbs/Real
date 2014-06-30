@@ -90,8 +90,7 @@
         <activity android:name="com.yikang.real.activity.ForrentDetailsActivity" />
         <activity android:name="com.yikang.real.activity.BeseActivity" />
         <activity android:name="com.yikang.real.activity.RegisterActivity" />
-        <activity android:name="com.yikang.real.activity.Result" >
-        </activity>
+        <activity android:name="com.yikang.real.activity.Result" />
         <activity android:name="com.yikang.real.activity.SearchActivity" >
         </activity>
         <activity android:name="com.yikang.real.activity.CityList" >

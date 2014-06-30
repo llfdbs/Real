@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -138,13 +139,7 @@ public abstract class BaseActivity extends ActionBarActivity{
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// menu.add(0, MENU_CHANGE_USER, 1,
-		// "切换用户").setIcon(android.R.drawable.ic_menu_revert);
-		// menu.add(0, MENU_SETTING, 2,
-		// "设置").setIcon(android.R.drawable.ic_menu_preferences);
-		// menu.add(0, MENU_EXIT, 3,
-		// "�?��").setIcon(android.R.drawable.ic_menu_close_clear_cancel);
-
+	
 		return true;
 	}
 

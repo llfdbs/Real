@@ -77,6 +77,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		yourTextView.setTextColor(R.color.black);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.top));
+		actionbar.setIcon(R.drawable.icon);
 	}
 
 	@Override

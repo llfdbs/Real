@@ -7,18 +7,20 @@ package cn.Bean.util;
  */
 public class SearchSecondValue {
 
-	private int xid;//小区id
-	private int title;//小区名称
-	public int getXid() {
+	private String xid;//小区id
+	private String title;//小区名称
+	public String getXid() {
 		return xid;
 	}
-	public void setXid(int xid) {
+	public void setXid(String xid) {
 		this.xid = xid;
 	}
-	public int getTitle() {
+	public String getTitle() {
 		return title;
 	}
-	public void setTitle(int title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
+
+
 }

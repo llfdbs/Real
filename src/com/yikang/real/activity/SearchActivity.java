@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,8 +22,10 @@ import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import cn.Bean.util.SearchSecondValue;
 import cn.Bean.util.SecondHouseValue;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
@@ -37,12 +41,11 @@ import com.yikang.real.web.Responds;
  * 
  */
 @SuppressLint("ResourceAsColor")
-public class SearchActivity extends BaseActivity implements
-		OnItemClickListener, OnEditorActionListener {
+public class SearchActivity extends BaseActivity implements OnItemClickListener {
 
 	ActionBar actionbar;
 	ListView lv_result;
-	SimpleAdapter adpter;
+	SimpleAdapter adapter;
 	List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 	ProgressBar bar;
 	EditText et_sreach;
@@ -52,8 +55,33 @@ public class SearchActivity extends BaseActivity implements
 
 		@Override
 		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			super.handleMessage(msg);
+			lv_result.setVisibility(View.VISIBLE);
+			bar.setVisibility(View.GONE);
+			int result = msg.what;
+			Responds<SearchSecondValue> responde = (Responds<SearchSecondValue>) msg.obj;
+			switch (result) {
+			case 0:
+				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				break;
+
+			default:
+				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+
+					List<SearchSecondValue> data_new = responde
+							.getRESPONSE_BODY().get(Container.RESULT);
+					data.clear();
+					Gson g = new Gson();
+					ArrayList<HashMap<String, String>> map = g.fromJson(
+							g.toJson(data_new), ArrayList.class);
+					data.addAll(map);
+
+				} else {
+					showToast("请求失败，请重试", 3000);
+				}
+				break;
+			}
+			adapter.notifyDataSetChanged();
+
 		}
 
 	};
@@ -73,18 +101,31 @@ public class SearchActivity extends BaseActivity implements
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
-
 		actionbar = getSupportActionBar();
+		actionbar.setHomeButtonEnabled(true);
+		actionbar.setIcon(R.drawable.back);
+		actionbar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.top));
 		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
 				"id", "android");
 		TextView yourTextView = (TextView) findViewById(titleId);
 		yourTextView.setTextColor(R.color.black);
-		actionbar.setBackgroundDrawable(getResources().getDrawable(
-				R.drawable.top));
+		actionbar.setTitle("搜索");
+
 	}
 
 	protected void initView() {
+		et_sreach = (EditText) findViewById(R.id.searchediter);
+		et_sreach.addTextChangedListener(textWatcher);
+		bar = (ProgressBar) findViewById(R.id.search_progress);
+		lv_result = (ListView) findViewById(R.id.search_list);
+		lv_result.setOnItemClickListener(this);
+		adapter = new SimpleAdapter(SearchActivity.this, data,
+				R.layout.group_list_item, new String[] { "title" },
+				new int[] { R.id.group_list_item_text });
 
+		lv_result.setAdapter(adapter);
+		bar.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -97,18 +138,17 @@ public class SearchActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public boolean onEditorAction(TextView arg0, int arg1, KeyEvent arg2) {
-		// TODO Auto-generated method stub
-		return false;
+		Bundle bundle = new Bundle();
+		bundle.putString("xid", data.get(index).get("xid"));
+		bundle.putString("title", data.get(index).get("title"));
+		openActivity(Result.class, bundle);
 	}
 
 	private void getData(final String key) {
+		lv_result.setVisibility(View.GONE);
+		bar.setVisibility(View.VISIBLE);
 		Thread thread = new Thread(new Runnable() {
 
 			@Override
@@ -120,12 +160,12 @@ public class SearchActivity extends BaseActivity implements
 				map.put("keyword", key);
 				map.put("city", Container.getCity().getCity());
 				request.setREQUEST_BODY(map);
-				Responds<SecondHouseValue> responds = (Responds<SecondHouseValue>) new HttpConnect()
+				Responds<SearchSecondValue> responds = (Responds<SearchSecondValue>) new HttpConnect()
 						.httpUrlConnection(request,
-								new TypeToken<Responds<SecondHouseValue>>() {
+								new TypeToken<Responds<SearchSecondValue>>() {
 								}.getType());
-				
-				if(responds!=null){
+
+				if (responds != null) {
 					result.obtainMessage(1, responds).sendToTarget();
 				}
 				result.obtainMessage(0).sendToTarget();
@@ -133,5 +173,30 @@ public class SearchActivity extends BaseActivity implements
 		});
 		thread.start();
 	}
+
+	private TextWatcher textWatcher = new TextWatcher() {
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			//
+
+			getData(et_sreach.getText().toString());
+
+		}
+
+		@Override
+		public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+				int arg3) {
+			// TODO Auto-generated method stub
+
+		}
+	};
 
 }
