@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		yourTextView.setTextColor(R.color.black);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.top));
-		actionbar.setIcon(R.drawable.icon);
+		actionbar.setIcon(R.drawable.back);
 	}
 
 	@Override
@@ -86,12 +86,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-
-		return true;
-	}
 
 	@Override
 	public void onClick(View v) {

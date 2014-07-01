@@ -1,5 +1,6 @@
 package com.yikang.real.activity;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -141,8 +143,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
 		Bundle bundle = new Bundle();
-		bundle.putString("xid", data.get(index).get("xid"));
-		bundle.putString("title", data.get(index).get("title"));
+		Type type =new TypeToken<ArrayList<HashMap<String,String>>>(){}.getType();
+		Gson g = new Gson();
+		ArrayList<HashMap<String, String>> temp = g.fromJson(
+				g.toJson(data), type);
+		bundle.putString("xid", temp.get(index).get("xid"));
+		bundle.putString("title", temp.get(index).get("title"));
 		openActivity(Result.class, bundle);
 	}
 
