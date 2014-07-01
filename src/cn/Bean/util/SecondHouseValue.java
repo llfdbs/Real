@@ -1,13 +1,19 @@
 package cn.Bean.util;
 
+import java.io.Serializable;
+
 /**
  * 二手房源属性
  * @author admin
  *
  */
 
-public class SecondHouseValue {
+public class SecondHouseValue implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 100066L;
 	private String temprownumber;
 	private String nid;//房源ID
 	private String iconurl;//图片地址

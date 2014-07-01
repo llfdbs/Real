@@ -54,7 +54,6 @@ public class OldHouseFragment extends MainFragment implements
 		PopWindowCallBack {
 
 	public int Model = 0;
-	@ViewById
 	public LinearLayout house_topbar;
 	public DropDownListView listview;
 	public CheckBox top_bar1;
@@ -214,8 +213,8 @@ public class OldHouseFragment extends MainFragment implements
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
-			Intent intent = new Intent(act,OldHouseDetailsActivity.class);
-				
+				Intent intent = new Intent(act, OldHouseDetailsActivity.class);
+				intent.putExtra("data", data_newHouse.get(arg2));
 				startActivity(intent);
 			 
 			}
