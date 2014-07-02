@@ -57,7 +57,7 @@ public class ForrentHouseDetailsBean {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	ArrayList  image;
+	ArrayList<String>  image;
 	public String getFloor() {
 		return floor;
 	}
@@ -180,11 +180,27 @@ public class ForrentHouseDetailsBean {
 	public void setBusiness(String business) {
 		this.business = business;
 	}
-	public ArrayList getImage() {
+	public ArrayList<String> getImage() {
 		return image;
 	}
-	public void setImage(ArrayList image) {
+	public void setImage(ArrayList<String> image) {
 		this.image = image;
 	}
+	@Override
+	public String toString() {
+		return "ForrentHouseDetailsBean [floor=" + floor + ", fitment="
+				+ fitment + ", type=" + type + ", state=" + state + ", person="
+				+ person + ", area=" + area + ", address=" + address
+				+ ", toward=" + toward + ", name=" + name + ", mob=" + mob
+				+ ", iconurl=" + iconurl + ", config=" + config + ", desc="
+				+ desc + ", com=" + com + ", cid=" + cid + ", environmental="
+				+ environmental + ", lat=" + lat + ", lng=" + lng
+				+ ", education=" + education + ", entertainment="
+				+ entertainment + ", facility=" + facility + ", business="
+				+ business + ", tel=" + tel + ", image=" + image + "]";
+	}
+
+	
+	
 
 }
