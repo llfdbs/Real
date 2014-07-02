@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yikang.real.R;
 import com.yikang.real.until.ToastTools;
 
@@ -23,6 +24,7 @@ public abstract class BaseActivity extends ActionBarActivity{
 	private long mLastPressBackTime;
 
 	// private StartThread mStartThread = null;
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
 
 	/**
 	 * 显示Toast消息

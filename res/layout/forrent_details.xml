@@ -42,10 +42,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <Gallery
-                android:id="@+id/mGallery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <com.yikang.real.view.DetialGallery 
+                  android:id="@+id/gallery"
+    			  android:layout_width="fill_parent"
+    		      android:layout_height="wrap_content"
+                  android:layout_gravity="center_vertical"
+                  android:spacing="1dip" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,7 +85,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="租金:"
+                        android:text="租金: "
                         android:textSize="20sp" />
 
                     <TextView
@@ -108,11 +111,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="楼型:"
+                            android:text="房型: "
                             android:textSize="20sp" />
 
                         <TextView
-                            android:id="@+id/louxing"
+                            android:id="@+id/state"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="4室2厅"
@@ -128,10 +131,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="楼型:"
+                            android:text="装修: "
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/fitment_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="精装修"
@@ -154,10 +158,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="面积:"
+                            android:text="面积: "
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/area_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="110平方"
@@ -173,10 +178,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="朝向:"
+                            android:text="朝向: "
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/toward_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="南北"
@@ -199,10 +205,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="楼层:"
+                            android:text="楼层: "
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/toward_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1/5"
@@ -218,10 +225,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="类型"
+                            android:text="类型: "
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/type_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="普通住宅"
@@ -229,51 +237,7 @@
                             android:textSize="20sp" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dip"
-                    android:layout_marginTop="10dip" >
-
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="5" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="楼型:"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="4室2厅"
-                            android:textColor="#000000"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="楼型:"
-                            android:textSize="20sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="精装修"
-                            android:textColor="#000000"
-                            android:textSize="20sp" />
-                    </LinearLayout>
-                </LinearLayout>
+ 
             </LinearLayout>
 
             <TextView
@@ -291,7 +255,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="房东电话:"
+                    android:text="房东电话: "
                     android:textSize="20sp" />
 
                 <TextView
@@ -327,10 +291,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="小区:"
+                            android:text="小区: "
                             android:textSize="20sp" />
 
                         <TextView
+                           android:id="@+id/com_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dip"
@@ -349,10 +314,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="地址:"
+                            android:text="地址: "
                             android:textSize="20sp" />
 
                         <TextView
+                            android:id="@+id/address_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dip"
@@ -388,10 +354,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="房间搭配:"
+                    android:text="房间搭配: "
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/config_TV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
@@ -415,10 +382,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="小区信息:"
+                    android:text="小区信息: "
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/environmental_TV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
@@ -446,6 +414,7 @@
                     android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/facility_TV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
@@ -466,8 +435,8 @@
 
                 <ImageView
                     android:id="@+id/gerentouxiang"
-                    android:layout_width="100dip"
-                    android:layout_height="100dip"
+                    android:layout_width="75dip"
+                    android:layout_height="75dip"
                     android:layout_marginBottom="10dip"
                     android:layout_marginTop="10dip"
                     android:src="@drawable/ic_launcher" />
@@ -492,6 +461,7 @@
                             android:text="姓名：" />
 
                         <TextView
+                            android:id="@+id/name_TV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="张三"
