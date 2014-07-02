@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Page;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
@@ -63,7 +64,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 			Responds<SearchSecondValue> responde = (Responds<SearchSecondValue>) msg.obj;
 			switch (result) {
 			case 0:
-				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				showToast("请求失败，请重试", 3000);
 				break;
 
 			default:
@@ -161,7 +162,13 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 			public void run() {
 				// TODO Auto-generated method stub
 				Request request = new Request();
-				request.setCommandcode("112");
+				if(Container.getCurrentPage()==Page.FORREN){
+					request.setCommandcode("114");
+				}else if(Container.getCurrentPage()==Page.OLD){
+					request.setCommandcode("112");
+				}else {
+					request.setCommandcode("112");
+				}
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("keyword", key);
 				map.put("city", Container.getCity().getCity());
@@ -173,8 +180,8 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 
 				if (responds != null) {
 					result.obtainMessage(1, responds).sendToTarget();
-				}
-				result.obtainMessage(0).sendToTarget();
+				}else
+					result.obtainMessage(0).sendToTarget();
 			}
 		});
 		thread.start();

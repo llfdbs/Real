@@ -31,6 +31,7 @@ import com.yikang.real.R;
 import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Page;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
@@ -58,7 +59,7 @@ public class Result extends BaseActivity implements OnItemClickListener {
 			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
 			switch (result) {
 			case 0:
-				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				showToast("请求失败，请重试", 3000);
 				break;
 
 			default:
@@ -181,7 +182,13 @@ public class Result extends BaseActivity implements OnItemClickListener {
 			public void run() {
 				// TODO Auto-generated method stub
 				Request request = new Request();
-				request.setCommandcode("113");
+				if(Container.getCurrentPage()==Page.FORREN){
+					request.setCommandcode("115");
+				}else if(Container.getCurrentPage()==Page.OLD){
+					request.setCommandcode("113");
+				}else {
+					request.setCommandcode("113");
+				}
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("xid", intent.getStringExtra("xid"));
 				map.put("p", String.valueOf(page));
@@ -193,8 +200,8 @@ public class Result extends BaseActivity implements OnItemClickListener {
 
 				if (responds != null) {
 					result.obtainMessage(1, responds).sendToTarget();
-				}
-				result.obtainMessage(0).sendToTarget();
+				}else
+					result.obtainMessage(0).sendToTarget();
 			}
 		});
 		thread.start();

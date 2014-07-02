@@ -63,7 +63,7 @@
             android:id="@+id/house_topbar3"
             style="@style/top_bar_linear" >
 
-            <CheckBox android:text="22"
+            <CheckBox 
                 android:button="@null"
                  android:id="@+id/top_bar3"
                  android:gravity="center"
@@ -83,7 +83,8 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@android:color/black"
+        android:divider="@color/background_holo_dark"
+        android:dividerHeight="1dp"
         android:drawSelectorOnTop="false"
         listViewAttr:isDropDownStyle="true"
         listViewAttr:isOnBottomStyle="true"

@@ -1,27 +1,26 @@
 package com.yikang.real.fragment;
 
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.ViewById;
-
-import com.yikang.real.R;
-import com.yikang.real.activity.Result;
-import com.yikang.real.adapter.PersonCentrolAdp;
-import com.yikang.real.application.BaseActivity;
-import com.yikang.real.until.Container;
-import com.yikang.real.until.ToastTools;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.yikang.real.R;
+import com.yikang.real.activity.LoginActivity;
+import com.yikang.real.activity.Result;
+import com.yikang.real.adapter.PersonCentrolAdp;
+import com.yikang.real.application.BaseActivity;
+import com.yikang.real.until.Container;
+import com.yikang.real.until.ToastTools;
 
 public class PersonCentrol extends Fragment {
 	BaseActivity act;
@@ -41,7 +40,8 @@ public class PersonCentrol extends Fragment {
 	}
 	
 	public ListView person_centrol;
-
+	public LinearLayout person_login;
+	
 	String[] data = new String[] { "我的收藏", "浏览记录", "房贷计算器", "关于我们" };
 	PersonCentrolAdp adapter = null;
 	
@@ -52,9 +52,37 @@ public class PersonCentrol extends Fragment {
 		// TODO Auto-generated method stub
 		View view =LayoutInflater.from(act).inflate(R.layout.person,null);
 		person_centrol =(ListView) view.findViewById(R.id.person_centrol);
+		person_login =(LinearLayout) view.findViewById(R.id.person_login);
+		
+		person_login.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				if(Container.USER==null){
+					Intent intent = new Intent(act, LoginActivity.class);
+					startActivity(intent);
+				}
+			}
+		});
 		
 		initData();
 		return view;
+	}
+	
+	
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		TextView name =	(TextView) person_login.findViewById(R.id.person_name);
+		if(Container.USER==null){
+			name.setText("登录/注册");
+		}else {
+			name.setText(Container.USER.getUsername());
+		}
+		
+		super.onResume();
 	}
 
 	public void initData() {
@@ -73,18 +101,23 @@ public class PersonCentrol extends Fragment {
 
 	public void onItemClicke(int postion) {
 
-		if (null == Container.USER || null == Container.USER.getUid()) {
-			ToastTools.showToastResources(act, R.string.login_warn, 2000);
-			return;
-		}
+	
 
 		Intent intent = new Intent();
 		switch (postion) {
 		case 0:
+			if (null == Container.USER || null == Container.USER.getUid()) {
+				ToastTools.showToastResources(act, R.string.login_warn, 2000);
+				return;
+			}
 			intent.setClass(act, Result.class);
 			act.startActivity(intent);
 			break;
 		case 1:
+			if (null == Container.USER || null == Container.USER.getUid()) {
+				ToastTools.showToastResources(act, R.string.login_warn, 2000);
+				return;
+			}
 			intent.setClass(act, Result.class);
 			act.startActivity(intent);
 			break;

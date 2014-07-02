@@ -25,7 +25,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import cn.Bean.util.Area;
-import cn.Bean.util.ForrentHouse;
+import cn.Bean.util.SecondHouseValue;
 import cn.Bean.util.SecondHouseValue;
 import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
@@ -64,7 +64,7 @@ public class ForrentFragments extends MainFragment implements
 	public CheckBox top_bar3;
 	public CheckBox[] check;
 	private List<Area> datas;
-	public ArrayList<ForrentHouse> data_newHouse;
+	public ArrayList<SecondHouseValue> data_newHouse;
 	public ForrentHouseAdapter adapter;
 	private String[] top_str = { "区域", "价格", "更多" };
 	public int pos;
@@ -111,18 +111,19 @@ public class ForrentFragments extends MainFragment implements
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			int result = msg.what;
-			Responds<ForrentHouse> responde = (Responds<ForrentHouse>) msg.obj;
+			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
 			switch (result) {
 			case 0:
-				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				 ((BaseActivity)act).showToast("请求失败，请重试", 3000);
 				break;
 
-			default:
+			case 1:
 				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
 
-					List<ForrentHouse> data = responde.getRESPONSE_BODY().get(
+					List<SecondHouseValue> data = responde.getRESPONSE_BODY().get(
 							Container.RESULT);
 					if (requestMode == Container.REFRESH) {
+						listview.setOnBottomStyle(true);
 						data_newHouse.clear();
 					} else if (!responde.isRESPONSE_NEXTPAGE()) {
 						listview.setOnBottomStyle(false);
@@ -162,8 +163,8 @@ public class ForrentFragments extends MainFragment implements
 								}.getType());
 				if (response != null) {
 					getAreaReult.obtainMessage(1, response).sendToTarget();
-				}
-				getAreaReult.obtainMessage(0).sendToTarget();
+				}else
+					getAreaReult.obtainMessage(0).sendToTarget();
 			}
 		}).start();
 
@@ -254,7 +255,6 @@ public class ForrentFragments extends MainFragment implements
 			@Override
 			public void onDropDown() {
 				// TODO Auto-generated method stub
-				listview.setOnBottomStyle(true);
 				requestMode = Container.REFRESH;
 				getData();
 			}
@@ -270,6 +270,7 @@ public class ForrentFragments extends MainFragment implements
 				getData();
 			}
 		});
+		listview.setOnBottomStyle(false);
 
 	}
 
@@ -301,7 +302,7 @@ public class ForrentFragments extends MainFragment implements
 	}
 
 	private void initData() {
-		data_newHouse = new ArrayList<ForrentHouse>();
+		data_newHouse = new ArrayList<SecondHouseValue>();
 
 		// ttp://210.75.3.26:8855/houseapp/apprq?HEAD_INFO=
 		// {"commandcode":108,"REQUEST_BODY":{"city":"昆明","desc":"0"
@@ -327,9 +328,9 @@ public class ForrentFragments extends MainFragment implements
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				Responds<ForrentHouse> response = (Responds<ForrentHouse>) conn
+				Responds<SecondHouseValue> response = (Responds<SecondHouseValue>) conn
 						.httpUrlConnection(reques,
-								new TypeToken<Responds<ForrentHouse>>() {
+								new TypeToken<Responds<SecondHouseValue>>() {
 								}.getType());
 
 				if (response != null) {

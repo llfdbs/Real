@@ -7,7 +7,10 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -15,18 +18,28 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 import cn.Bean.util.Area;
 import cn.Bean.util.More;
 import cn.Bean.util.MoreValue;
+import cn.Bean.util.SecondHouseValue;
 
+import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.adapter.AreaAdapter;
 import com.yikang.real.adapter.AreaAdapterTwo;
 import com.yikang.real.adapter.MoreAdapter;
 import com.yikang.real.adapter.MoreAdapterTwo;
+import com.yikang.real.adapter.NewHouseAdapter;
+import com.yikang.real.application.BaseActivity;
 import com.yikang.real.imp.PopWindowCallBack;
+import com.yikang.real.web.HttpConnect;
+import com.yikang.real.web.Request;
+import com.yikang.real.web.Responds;
 
 public class PupowindowUtil {
 
@@ -41,7 +54,7 @@ public class PupowindowUtil {
 	MoreAdapter more;
 	MoreAdapterTwo more_two;
 	HashMap<Integer, Integer> more_check = new HashMap<Integer, Integer>();
-
+	
 	public PupowindowUtil(Context context, Activity act) {
 		this.context = context;
 		inflate = LayoutInflater.from(context);
@@ -201,6 +214,7 @@ public class PupowindowUtil {
 		return pop;
 	}
 
+	
 	// 把数据换转换成可用内容
 	private List<String> createAreaMap(List<Area> datas, int index) {
 		return datas.get(index).getListarea();

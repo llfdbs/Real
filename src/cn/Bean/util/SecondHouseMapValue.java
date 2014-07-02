@@ -12,6 +12,14 @@ public class SecondHouseMapValue {
 	private float lng;//纬度
 	private String title;//标题
 	private int count;//数量
+	private String flag;
+	
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 	public int getMid() {
 		return mid;
 	}

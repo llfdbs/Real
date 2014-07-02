@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		case R.id.login:
 			final HttpConnect conn = new HttpConnect();
 			final Request reques = new Request();
-			reques.setCommandcode("103");
+			reques.setCommandcode("110");
 			HashMap map = new HashMap<String, String>();
 			map.put("nid", "100001");
 			reques.setREQUEST_BODY(map);
@@ -127,7 +127,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public void chance() {
-		login_username.setText("test");
+		login_username.setText("");
+		login_pwd.setText("");
 	}
 
 }

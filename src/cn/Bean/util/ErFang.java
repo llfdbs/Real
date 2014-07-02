@@ -1,17 +1,10 @@
 package cn.Bean.util;
-
-import java.io.Serializable;
-
 /**
  * 二手房
  * @author Administrator
  *
  */
-public class ForrentHouse  implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 19999L;
+public class ErFang {
 	String temprownumber;
 	String nid;
 	String iconurl;
@@ -22,17 +15,6 @@ public class ForrentHouse  implements Serializable {
 	String cid;
 	String simpleadd;
 	String camera;
-	private String totalprice;//总价
-	
-	
-	public String getTotalprice() {
-		return totalprice;
-	}
-
-	public void setTotalprice(String totalprice) {
-		this.totalprice = totalprice;
-	}
-
 	public String getTemprownumber() {
 		return temprownumber;
 	}

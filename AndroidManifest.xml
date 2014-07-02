@@ -101,11 +101,11 @@
             android:name="com.yikang.real.map.OverlayDemo"
             android:label="BaiduMapPoint" 
             android:configChanges="orientation"
-            android:screenOrientation="sensor">
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.baidu.mapapi.search.PlaceCaterActivity"
-            android:configChanges="orientation|keyboardHidden"
+           
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <service

@@ -10,21 +10,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import cn.Bean.util.ForrentHouse;
+import cn.Bean.util.SecondHouseValue;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yikang.real.R;
-import com.yikang.real.bean.House;
 
 public class ForrentHouseAdapter extends BaseAdapter {
 
 	Context context;
-	ArrayList<ForrentHouse> data;
+	ArrayList<SecondHouseValue> data;
 
-	public ForrentHouseAdapter(Context context, List<ForrentHouse> data) {
+	public ForrentHouseAdapter(Context context, List<SecondHouseValue> data) {
 		this.context = context;
-		this.data = (ArrayList<ForrentHouse>) data;
+		this.data = (ArrayList<SecondHouseValue>) data;
 	}
 
 	@Override
