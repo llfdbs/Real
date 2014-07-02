@@ -110,9 +110,7 @@ public class ForrentDetailsActivity  extends BaseActivity implements OnClickList
 				mForrentDetailsActivityHandler.obtainMessage(0).sendToTarget();
 			}
 		}).start();
-
-		
-		
+ 
 	}
 
 	private void findView() {
