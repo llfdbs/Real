@@ -11,6 +11,8 @@ public class ToastTools {
 	private static Runnable r = new Runnable() {
 		public void run() {
 			mToast.cancel();
+			
+			
 		}
 	};
 

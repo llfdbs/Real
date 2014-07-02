@@ -62,9 +62,9 @@ public class AreaAdapter extends BaseAdapter {
 				.findViewById(R.id.popu2list_item_title);
 		view.setText(data.get(postion).getArea());
 		if (postion == check) {
-			view.setTextColor(R.color.holo_blue_bright);
+			convert.setBackgroundColor(R.color.background_holo_light);
 		} else {
-			view.setTextColor(R.color.black);
+			convert.setBackgroundColor(R.color.white);
 		}
 		return convert;
 	}

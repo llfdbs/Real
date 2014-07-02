@@ -10,21 +10,36 @@
         android:layout_height="fill_parent"
         android:clickable="true" />
 
+    <TextView
+        android:id="@+id/map_bottomline"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white" />
+
     <ImageView
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/map_bottomline"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="10dip"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="22dp"
         android:src="@drawable/custom_loc" />
 
-    <TextView 
-        android:id="@+id/map_bottomline"
-       	android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"
-        />
+    <EditText
+        android:id="@+id/topbar_search"
+        android:layout_width="220dp"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="22dp"
+        android:layout_toLeftOf="@+id/button1"
+        android:background="@drawable/shape_login"
+        android:drawableLeft="@drawable/sreach"
+        android:paddingLeft="5dp"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
 </RelativeLayout>

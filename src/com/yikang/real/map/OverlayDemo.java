@@ -652,7 +652,14 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 				"id", "android");
 		TextView yourTextView = (TextView) findViewById(titleId);
 		yourTextView.setTextColor(R.color.black);
-			actionbar.setTitle("搜索结果");
+		if(Container.getCurrentPage()==Page.FORREN){
+			actionbar.setTitle("租房地图展示");
+		}else if(Container.getCurrentPage()==Page.OLD){
+			actionbar.setTitle("二手房地图展示");
+		}else {
+			actionbar.setTitle("地图展示");
+		}
+			
 
 	}
 

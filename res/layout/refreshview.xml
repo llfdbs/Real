@@ -4,13 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <cn.trinea.android.common.view.DropDownListView
+    <ListView
         android:id="@+id/pull_refresh_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawSelectorOnTop="false"
-        
-	>
-    </cn.trinea.android.common.view.DropDownListView>
+        android:cacheColorHint="#000000"
+	/>
+
 
 </LinearLayout>

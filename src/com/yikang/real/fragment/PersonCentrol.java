@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.yikang.real.R;
+import com.yikang.real.activity.History;
 import com.yikang.real.activity.LoginActivity;
 import com.yikang.real.activity.Result;
 import com.yikang.real.adapter.PersonCentrolAdp;
@@ -110,7 +111,7 @@ public class PersonCentrol extends Fragment {
 				ToastTools.showToastResources(act, R.string.login_warn, 2000);
 				return;
 			}
-			intent.setClass(act, Result.class);
+			intent.setClass(act, History.class);
 			act.startActivity(intent);
 			break;
 		case 1:
@@ -118,7 +119,7 @@ public class PersonCentrol extends Fragment {
 				ToastTools.showToastResources(act, R.string.login_warn, 2000);
 				return;
 			}
-			intent.setClass(act, Result.class);
+			intent.setClass(act, History.class);
 			act.startActivity(intent);
 			break;
 		case 2:
