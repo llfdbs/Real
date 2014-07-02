@@ -216,7 +216,9 @@ public class OldHouseFragment extends MainFragment implements
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent intent = new Intent(act, OldHouseDetailsActivity.class);
-				intent.putExtra("data", data_newHouse.get(arg2));
+
+				intent.putExtra("nid", data_newHouse.get(arg2).getNid());
+
 				startActivity(intent);
 			 
 			}
