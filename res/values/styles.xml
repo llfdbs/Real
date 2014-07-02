@@ -65,11 +65,12 @@
     </style>
 
     <style name="top_bar_limit" parent="top_bar_style">
-        <item name="android:layout_marginTop">5dip</item>
+        <item name="android:layout_marginTop">7dip</item>
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginBottom">5dip</item>
+        <item name="android:layout_marginBottom">7dip</item>
         <item name="android:background">@color/holo_blue_bright</item>
+        
     </style>
 
     <style name="top_bar_linear" parent="top_bar_style">
@@ -101,5 +102,9 @@
     <style name="popwin_anim_style">  
      <item name="android:windowEnterAnimation">@anim/scale</item>  
      <item name="android:windowExitAnimation">@anim/scale_in</item>  
+</style>  
+    <style name="house_anim_style">  
+     <item name="android:windowEnterAnimation">@anim/bottom_in</item>  
+     <item name="android:windowExitAnimation">@anim/bottom_out</item>  
 </style>  
 </resources>

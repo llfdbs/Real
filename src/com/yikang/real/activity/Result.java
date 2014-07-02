@@ -28,25 +28,27 @@ import cn.trinea.android.common.view.DropDownListView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
+import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Page;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
 @SuppressLint("ResourceAsColor")
-public class Result extends BaseActivity implements OnItemClickListener{
+public class Result extends BaseActivity implements OnItemClickListener {
 	private Button button;
 	private ActionBar actionbar;
 	Intent intent;
-
+	public ArrayList<SecondHouseValue> data_newHouse;
+	public NewHouseAdapter adapter;
 	DropDownListView lv_result;
-	SimpleAdapter adapter;
 	List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 	ProgressBar bar;
 	TextView tx_reset;
-	int page=0;
-	
+	int page = 0;
+
 	Handler result = new Handler() {
 
 		@Override
@@ -57,19 +59,19 @@ public class Result extends BaseActivity implements OnItemClickListener{
 			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
 			switch (result) {
 			case 0:
-				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				showToast("请求失败，请重试", 3000);
 				break;
 
 			default:
 				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
 
-					List<SecondHouseValue> data_new = responde
-							.getRESPONSE_BODY().get(Container.RESULT);
-					data.clear();
-					Gson g = new Gson();
-					ArrayList<HashMap<String, String>> map = g.fromJson(
-							g.toJson(data_new), ArrayList.class);
-					data.addAll(map);
+					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
+							.get(Container.RESULT);
+					data_newHouse.clear();
+					data_newHouse.addAll(data);
+					 if (!responde.isRESPONSE_NEXTPAGE()) {
+						 lv_result.setOnBottomStyle(false);
+						}
 
 				} else {
 					showToast("请求失败，请重试", 3000);
@@ -81,37 +83,28 @@ public class Result extends BaseActivity implements OnItemClickListener{
 		}
 
 	};
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.result);
-		button = (Button) findViewById(R.id.back);
+		initView();
 		init();
 		initActionBar();
+		getData();
 
 	}
 
 	public void init() {
-		button.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(Result.this, SearchActivity.class);
-				startActivity(intent);
-				overridePendingTransition(R.anim.left_in, R.anim.left_out);
-				finish();
-			}
-		});
 
 	}
 
 	@Override
 	protected void initData() {
 		// TODO Auto-generated method stub
-
+		data_newHouse = new ArrayList<SecondHouseValue>();
+		adapter = new NewHouseAdapter(this, data_newHouse);
 	}
 
 	@Override
@@ -120,18 +113,17 @@ public class Result extends BaseActivity implements OnItemClickListener{
 
 	}
 
-	protected void initView(){
-		bar = (ProgressBar) findViewById(R.id.search_progress);
-		lv_result = (DropDownListView) findViewById(R.id.search_list);
+	protected void initView() {
+		initData();
+		bar = (ProgressBar) findViewById(R.id.result_progress);
+		lv_result = (DropDownListView) findViewById(R.id.resutl_list);
 		lv_result.setOnItemClickListener(this);
-		adapter = new SimpleAdapter(Result.this, data,
-				R.layout.group_list_item, new String[] { "title" },
-				new int[] { R.id.group_list_item_text });
+
 		lv_result.setAutoLoadOnBottom(true);
 		lv_result.setDropDownStyle(false);
 		lv_result.setOnBottomStyle(true);
 		lv_result.setOnBottomListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
@@ -139,11 +131,22 @@ public class Result extends BaseActivity implements OnItemClickListener{
 				page++;
 			}
 		});
+
+		lv_result.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				openActivity(OldHouseDetailsActivity.class);
+			}
+		});
 		
 		lv_result.setAdapter(adapter);
 		bar.setVisibility(View.GONE);
+
 	}
-	
+
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
@@ -158,7 +161,7 @@ public class Result extends BaseActivity implements OnItemClickListener{
 		TextView yourTextView = (TextView) findViewById(titleId);
 		yourTextView.setTextColor(R.color.black);
 		if (null != intent.getStringExtra("xid")) {
-			actionbar.setTitle(intent.getStringExtra("xid"));
+			actionbar.setTitle(intent.getStringExtra("title"));
 		} else {
 			actionbar.setTitle("搜索结果");
 		}
@@ -167,9 +170,9 @@ public class Result extends BaseActivity implements OnItemClickListener{
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private void getData() {
 		lv_result.setVisibility(View.GONE);
 		bar.setVisibility(View.VISIBLE);
@@ -179,10 +182,16 @@ public class Result extends BaseActivity implements OnItemClickListener{
 			public void run() {
 				// TODO Auto-generated method stub
 				Request request = new Request();
-				request.setCommandcode("113");
+				if(Container.getCurrentPage()==Page.FORREN){
+					request.setCommandcode("115");
+				}else if(Container.getCurrentPage()==Page.OLD){
+					request.setCommandcode("113");
+				}else {
+					request.setCommandcode("113");
+				}
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("xid", intent.getStringExtra("xid"));
-				map.put("p",String.valueOf(page));
+				map.put("p", String.valueOf(page));
 				request.setREQUEST_BODY(map);
 				Responds<SecondHouseValue> responds = (Responds<SecondHouseValue>) new HttpConnect()
 						.httpUrlConnection(request,
@@ -191,8 +200,8 @@ public class Result extends BaseActivity implements OnItemClickListener{
 
 				if (responds != null) {
 					result.obtainMessage(1, responds).sendToTarget();
-				}
-				result.obtainMessage(0).sendToTarget();
+				}else
+					result.obtainMessage(0).sendToTarget();
 			}
 		});
 		thread.start();

@@ -1,5 +1,7 @@
 package com.yikang.real.activity;
 
+import java.util.HashMap;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -26,6 +29,7 @@ import com.yikang.real.fragment.OldHouseFragment;
 import com.yikang.real.fragment.PersonCentrol;
 import com.yikang.real.map.OverlayDemo;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Page;
 
 public class CheckedActivity extends BaseActivity implements
 		OnCheckedChangeListener, OnClickListener {
@@ -101,16 +105,20 @@ public class CheckedActivity extends BaseActivity implements
 		if (isChecked) {
 			switch (buttonView.getId()) {
 			case R.id.radio_button1:
+				Container.setCurrentPage(Page.OLD);
 				pager.setCurrentItem(1);
 				break;
 			case R.id.radio_button2:
+				Container.setCurrentPage(Page.NEW);
 				pager.setCurrentItem(2);
 				break;
 			case R.id.radio_button3:
+				Container.setCurrentPage(Page.PERSON);
 				pager.setCurrentItem(3);
 				break;
 			case R.id.radio_button0:
 			default:
+				Container.setCurrentPage(Page.FORREN);
 				pager.setCurrentItem(0);
 				break;
 			}

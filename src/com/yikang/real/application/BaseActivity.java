@@ -145,7 +145,14 @@ public abstract class BaseActivity extends ActionBarActivity{
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		return false;
+		switch (item.getItemId()) {
+		case android.R.id.home:
+
+			finish();
+
+			break;
+		}
+		return true;
 	}
 
 	@Override

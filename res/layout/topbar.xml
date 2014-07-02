@@ -21,6 +21,9 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/shape_login"
+        android:editable="false"
+        android:drawableLeft="@drawable/sreach"
+        android:paddingLeft="5dp"
         >
 
     </EditText>

@@ -14,13 +14,16 @@
     <LinearLayout style="@style/login_input_style" >
 
         <EditText
+            android:drawableLeft="@drawable/username"
             android:id="@+id/login_username"
 			style="@style/login_input_edite"
             android:hint="@string/loginname"
              />
 
         <EditText
+            android:drawableLeft="@drawable/password"
             android:id="@+id/login_pwd"
+            
             style="@style/login_input_edite"
             android:hint="@string/loginpwd" />
     </LinearLayout>

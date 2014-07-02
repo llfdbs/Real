@@ -1,5 +1,6 @@
 package com.yikang.real.activity;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Page;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
@@ -61,7 +64,7 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 			Responds<SearchSecondValue> responde = (Responds<SearchSecondValue>) msg.obj;
 			switch (result) {
 			case 0:
-				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				showToast("请求失败，请重试", 3000);
 				break;
 
 			default:
@@ -141,8 +144,12 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
 		Bundle bundle = new Bundle();
-		bundle.putString("xid", data.get(index).get("xid"));
-		bundle.putString("title", data.get(index).get("title"));
+		Type type =new TypeToken<ArrayList<HashMap<String,String>>>(){}.getType();
+		Gson g = new Gson();
+		ArrayList<HashMap<String, String>> temp = g.fromJson(
+				g.toJson(data), type);
+		bundle.putString("xid", temp.get(index).get("xid"));
+		bundle.putString("title", temp.get(index).get("title"));
 		openActivity(Result.class, bundle);
 	}
 
@@ -155,7 +162,13 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 			public void run() {
 				// TODO Auto-generated method stub
 				Request request = new Request();
-				request.setCommandcode("112");
+				if(Container.getCurrentPage()==Page.FORREN){
+					request.setCommandcode("114");
+				}else if(Container.getCurrentPage()==Page.OLD){
+					request.setCommandcode("112");
+				}else {
+					request.setCommandcode("112");
+				}
 				HashMap<String, String> map = new HashMap<String, String>();
 				map.put("keyword", key);
 				map.put("city", Container.getCity().getCity());
@@ -167,8 +180,8 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 
 				if (responds != null) {
 					result.obtainMessage(1, responds).sendToTarget();
-				}
-				result.obtainMessage(0).sendToTarget();
+				}else
+					result.obtainMessage(0).sendToTarget();
 			}
 		});
 		thread.start();

@@ -112,7 +112,7 @@ public class OldHouseFragment extends MainFragment implements
 			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
 			switch (result) {
 			case 0:
-				// ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				 ((BaseActivity)act).showToast("请求失败，请重试", 3000);
 				break;
 
 			default:
@@ -121,6 +121,7 @@ public class OldHouseFragment extends MainFragment implements
 					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
 							.get(Container.RESULT);
 					if (requestMode == Container.REFRESH) {
+						listview.setOnBottomStyle(true);
 						data_newHouse.clear();
 					} else if (!responde.isRESPONSE_NEXTPAGE()) {
 						listview.setOnBottomStyle(false);
@@ -171,6 +172,7 @@ public class OldHouseFragment extends MainFragment implements
 		top_bar3.setOnFocusChangeListener(this);
 
 		AfterView();
+		listview.setOnBottomStyle(false);
 		listview.onDropDown();
 	}
 
@@ -225,7 +227,6 @@ public class OldHouseFragment extends MainFragment implements
 			@Override
 			public void onDropDown() {
 				// TODO Auto-generated method stub
-				listview.setOnBottomStyle(true);
 				requestMode = Container.REFRESH;
 				getData();
 			}
@@ -299,8 +300,8 @@ public class OldHouseFragment extends MainFragment implements
 								}.getType());
 				if (response != null) {
 					getDataResult.obtainMessage(1, response).sendToTarget();
-				}
-				getDataResult.obtainMessage(0).sendToTarget();
+				}else
+					getDataResult.obtainMessage(0).sendToTarget();
 			}
 		});
 		getdata.start();

@@ -77,7 +77,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		yourTextView.setTextColor(R.color.black);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.top));
-		actionbar.setIcon(R.drawable.icon);
+		actionbar.setIcon(R.drawable.back);
 	}
 
 	@Override
@@ -86,12 +86,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
-
-		return true;
-	}
 
 	@Override
 	public void onClick(View v) {
@@ -99,7 +93,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		case R.id.login:
 			final HttpConnect conn = new HttpConnect();
 			final Request reques = new Request();
-			reques.setCommandcode("103");
+			reques.setCommandcode("110");
 			HashMap map = new HashMap<String, String>();
 			map.put("nid", "100001");
 			reques.setREQUEST_BODY(map);
@@ -133,7 +127,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	}
 
 	public void chance() {
-		login_username.setText("test");
+		login_username.setText("");
+		login_pwd.setText("");
 	}
 
 }

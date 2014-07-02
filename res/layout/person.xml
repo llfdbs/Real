@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_holo_light"
+    android:background="#f0f0f0"
     android:orientation="vertical"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
@@ -15,6 +15,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:padding="15dp"
+        android:id="@+id/person_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
@@ -25,12 +27,13 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/person" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="登陆/注册"
+            android:id="@+id/person_name"
             android:textColor="@android:color/background_dark"
             android:textSize="8pt" />
     </LinearLayout>

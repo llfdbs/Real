@@ -25,8 +25,15 @@ public class SecondHouseValue implements Serializable {
 	private String cid;//Ð¡ÇøID
 	private String camera;//ÉãÏñÍ·
 	private String simpleadd;
-
+	private String price;
 	
+	
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
 	public String getTemprownumber() {
 		return temprownumber;
 	}
