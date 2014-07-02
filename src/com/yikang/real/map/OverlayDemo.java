@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,6 +16,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.renderscript.Sampler.Value;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.support.v7.app.ActionBar;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -28,7 +32,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.Bean.util.SecondHouseMapValue;
 import cn.Bean.util.SecondHouseValue;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -73,7 +76,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 	private MyOverlay mOverlay = null;
 	private PopupOverlay pop = null;
 	// private View viewCache = null;
-	private Button requestLocButton = null;
+	private ImageView requestLocButton = null;
 	ArrayList<OverlayItem> list = new ArrayList<OverlayItem>();
 	float level = 0;
 
@@ -121,6 +124,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 		}
 
 	};
+	private ActionBar actionbar;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -143,7 +147,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 		 */
 		setContentView(R.layout.activity_overlay);
 		mMapView = (MapView) findViewById(R.id.bmapView);
-		requestLocButton = (Button) findViewById(R.id.button1);
+		requestLocButton = (ImageView) findViewById(R.id.button1);
 		OnClickListener btnClickListener = new OnClickListener() {
 
 			@Override
@@ -634,9 +638,21 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
+		
+		actionbar = getSupportActionBar();
+		actionbar.setHomeButtonEnabled(true);
+		actionbar.setIcon(R.drawable.back);
+		actionbar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.top));
+		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
+				"id", "android");
+		TextView yourTextView = (TextView) findViewById(titleId);
+		yourTextView.setTextColor(R.color.black);
+			actionbar.setTitle("搜索结果");
 
 	}
 
@@ -645,9 +661,17 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 		// TODO Auto-generated method stub
 		if(null!=temp_data&&(level>14||level==14)){
 			SecondHouseMapValue value=temp_data.get(index);
-			PupowindowUtil util =new PupowindowUtil(this, this);
-			PopupWindow pop =new MapHousePop(this, value.getTitle(), value.getMid(), "123");
-			pop.showAsDropDown(requestLocButton);
+			String commandcode="";
+			if(Container.getCurrentPage()==Page.FORREN){
+				commandcode ="123";
+			}else if(Container.getCurrentPage()==Page.OLD){
+				commandcode= "119";
+			}
+			PopupWindow pop =new MapHousePop(this,  value.getMid(), commandcode);
+			DisplayMetrics metrie = new DisplayMetrics();
+			getWindowManager().getDefaultDisplay().getMetrics(metrie);
+			int height = metrie.heightPixels;
+			pop.showAtLocation(findViewById(R.id.map_bottomline), Gravity.TOP, 0, height);
 		}
 	}
 

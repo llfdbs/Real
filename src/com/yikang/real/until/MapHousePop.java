@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -30,7 +31,6 @@ import com.yikang.real.web.Responds;
 public class MapHousePop extends PopupWindow {
 
 	Activity context;
-	String title;
 	String xid;
 	String commandcode;
 	LayoutInflater inflate;
@@ -39,13 +39,14 @@ public class MapHousePop extends PopupWindow {
 	View view;
 	ListView list;
 	ProgressBar bar;
-
-	public MapHousePop(Activity context, String title, int xid,
+	OnItemClickListener onItemClick;
+	TextView title;
+	
+	public MapHousePop(Activity context, int xid,
 			String commandcode) {
 		super(context);
 		inflate = LayoutInflater.from(context);
 		this.context = context;
-		this.title = title;
 		this.xid = String.valueOf(xid);
 		this.commandcode = commandcode;
 		init();
@@ -68,7 +69,9 @@ public class MapHousePop extends PopupWindow {
 
 					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
 							.get(Container.RESULT);
-
+					if(data!=null){
+						title.setText(data.get(0).getCommunity());
+					}
 					data_newHouse.addAll(data);
 
 				} else {
@@ -85,14 +88,14 @@ public class MapHousePop extends PopupWindow {
 
 	public void init() {
 		view = inflate.inflate(R.layout.maphouse, null);
-		TextView text = (TextView) view.findViewById(R.id.house_title);
-		text.setText(title);
+		title = (TextView) view.findViewById(R.id.house_title);
 		list = (ListView) view.findViewById(R.id.map_house);
 		bar = (ProgressBar) view.findViewById(R.id.map_house_bar);
 		data_newHouse.clear();
-		SecondHouseValue hous=new SecondHouseValue();
-
 		adapter = new NewHouseAdapter(context, data_newHouse);
+		if(onItemClick!=null){
+			list.setOnItemClickListener(onItemClick);
+		}
 		list.setAdapter(adapter);
 		getData();
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 100);
@@ -107,6 +110,10 @@ public class MapHousePop extends PopupWindow {
 		setBackgroundDrawable(new BitmapDrawable());
 //		update();
 
+	}
+	
+	private void setItemOnclick(OnItemClickListener onItemClick){
+		this.onItemClick=onItemClick;
 	}
 	
 	private void getData(){
