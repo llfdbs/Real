@@ -1,54 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    >
-    <LinearLayout 
-    android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
-      <!--  
-      <Button
-        android:id="@+id/clear"
-        android:layout_height="fill_parent"
-        android:layout_width="fill_parent"
-        android:layout_weight="1"
-        android:layout_marginLeft="2dip"
-		android:layout_marginRight="2dip"
-		android:layout_marginTop="2dip"
-		android:layout_marginBottom="2dip"
-        android:background="@drawable/button_style"
-        android:onClick="clearOverlay"
-        android:padding="10dip"
-        android:text="清除(clear)" />
-      <Button
-        android:id="@+id/resert"
+    android:orientation="vertical" >
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:layout_marginLeft="2dip"
-		android:layout_marginRight="2dip"
-		android:layout_marginTop="2dip"
-		android:layout_marginBottom="2dip"
-        android:background="@drawable/button_style"
-        android:onClick="resetOverlay"
-        android:text="重置(reset)" />
-      
-         -->
-    </LinearLayout>
-    
-    <com.baidu.mapapi.map.MapView android:id="@+id/bmapView"
-	    android:layout_width="fill_parent" android:layout_height="fill_parent" 
-	    android:clickable="true"     
-	/>
-     <Button
-         android:id="@+id/button1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentRight="true"
-         android:layout_alignParentTop="true"
-         android:layout_marginRight="25dp"
-         android:layout_marginTop="10dip"
-         android:background="@drawable/custom_loc"  />
+        android:clickable="true" />
+
+    <ImageView
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="10dip"
+        android:src="@drawable/custom_loc" />
+
+    <TextView 
+        android:id="@+id/map_bottomline"
+       	android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        />
 </RelativeLayout>
