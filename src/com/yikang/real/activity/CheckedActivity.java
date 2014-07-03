@@ -105,7 +105,7 @@ public class CheckedActivity extends BaseActivity implements
 		if (isChecked) {
 			switch (buttonView.getId()) {
 			case R.id.radio_button1:
-				Container.setCurrentPage(Page.OLD);
+				Container.setCurrentPage(Page.FORREN);
 				pager.setCurrentItem(1);
 				break;
 			case R.id.radio_button2:
@@ -118,7 +118,7 @@ public class CheckedActivity extends BaseActivity implements
 				break;
 			case R.id.radio_button0:
 			default:
-				Container.setCurrentPage(Page.FORREN);
+				Container.setCurrentPage(Page.OLD);
 				pager.setCurrentItem(0);
 				break;
 			}

@@ -50,17 +50,15 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 		findView();
 		AfterView();
 		mTab1.performClick();
+		initActionBar();
 	}
 
 	private void findView() {
-		mTab1 = (RadioButton) findViewById(R.id.radio_button0);
-		mTab2 = (RadioButton) findViewById(R.id.radio_button1);
-		pager = (ViewPager) findViewById(R.id.pager);
+		mTab1 = (RadioButton) findViewById(R.id.radio_button6);
+		mTab2 = (RadioButton) findViewById(R.id.radio_button7);
+		pager = (ViewPager) findViewById(R.id.pager7);
 		mTab1.setOnCheckedChangeListener(this);
 		mTab2.setOnCheckedChangeListener(this);
-
-		ActionBar acb = getSupportActionBar();
-		acb.hide();
 	}
 
 	private void AfterView() {
@@ -76,13 +74,11 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		if (isChecked) {
 			switch (buttonView.getId()) {
-			case R.id.radio_button1:
-				Container.setCurrentPage(Page.OLD);
-				pager.setCurrentItem(1);
+			case R.id.radio_button6:
+				pager.setCurrentItem(0);
 				break;
 			default:
-				Container.setCurrentPage(Page.FORREN);
-				pager.setCurrentItem(0);
+				pager.setCurrentItem(1);
 				break;
 			}
 
@@ -100,7 +96,7 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 
 		@Override
 		public int getCount() {
-			return 4;
+			return 2;
 		}
 
 		@Override
@@ -112,7 +108,6 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 				// 二手房
 			case 1:
 				return frags[1];
-				// 新房
 
 			}
 			return null;

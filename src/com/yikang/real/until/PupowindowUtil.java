@@ -125,7 +125,7 @@ public class PupowindowUtil {
 					adapter2.notifyDataSetChanged();
 				} else {
 					lv2.setVisibility(View.GONE);
-					callBack.clickArea("不限");
+					callBack.clickArea("不限制");
 				}
 			}
 		});

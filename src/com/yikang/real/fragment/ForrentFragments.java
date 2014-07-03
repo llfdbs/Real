@@ -41,6 +41,7 @@ import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.imp.PopWindowCallBack;
 import com.yikang.real.until.Container.PopStatus;
+import com.yikang.real.until.Container.Share;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.PupowindowUtil;
 import com.yikang.real.web.HttpConnect;
@@ -114,14 +115,14 @@ public class ForrentFragments extends MainFragment implements
 			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
 			switch (result) {
 			case 0:
-				 ((BaseActivity)act).showToast("请求失败，请重试", 3000);
+				((BaseActivity) act).showToast("请求失败，请重试", 3000);
 				break;
 
 			case 1:
 				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
 
-					List<SecondHouseValue> data = responde.getRESPONSE_BODY().get(
-							Container.RESULT);
+					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
+							.get(Container.RESULT);
 					if (requestMode == Container.REFRESH) {
 						listview.setOnBottomStyle(true);
 						data_newHouse.clear();
@@ -163,7 +164,7 @@ public class ForrentFragments extends MainFragment implements
 								}.getType());
 				if (response != null) {
 					getAreaReult.obtainMessage(1, response).sendToTarget();
-				}else
+				} else
 					getAreaReult.obtainMessage(0).sendToTarget();
 			}
 		}).start();
@@ -241,9 +242,9 @@ public class ForrentFragments extends MainFragment implements
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent intent = new Intent(act, ForrentDetailsActivity.class);
-
-				intent.putExtra("nid", data_newHouse.get(arg2).getNid());
-
+				Bundle bundle = new Bundle();
+				bundle.putSerializable(Share.FORRENT.getType(), data_newHouse.get(arg2));
+				intent.putExtras(bundle);
 				startActivity(intent);
 
 			}
@@ -335,8 +336,8 @@ public class ForrentFragments extends MainFragment implements
 
 				if (response != null) {
 					getDataResult.obtainMessage(1, response).sendToTarget();
-				}
-				getDataResult.obtainMessage(0).sendToTarget();
+				} else
+					getDataResult.obtainMessage(0).sendToTarget();
 
 			}
 		}).start();
@@ -390,7 +391,7 @@ public class ForrentFragments extends MainFragment implements
 	public void clickArea(String area) {
 		// TODO Auto-generated method stub
 		pop_area.dismiss();
-		if (area.equals("不限")) {
+		if (area.equals("不限制")) {
 			this.area = "";
 			top_bar1.setText("区域");
 		} else {

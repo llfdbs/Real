@@ -1,11 +1,13 @@
 package cn.Bean.util;
 
+import java.io.Serializable;
+
 
 /**
  * 二手房地图属性
  *
  */
-public class SecondHouseMapValue {
+public class SecondHouseMapValue implements Serializable{
 
 	private int mid;//小区id
 	private float lat;//经度

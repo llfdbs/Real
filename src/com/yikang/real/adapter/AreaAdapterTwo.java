@@ -62,7 +62,7 @@ public class AreaAdapterTwo extends BaseAdapter {
 		// TODO Auto-generated method stub
 		if (convert == null) {
 			convert = LayoutInflater.from(context).inflate(
-					R.layout.popu2list_item, null);
+					R.layout.popu2list_item2, null);
 
 		}
 		TextView view = (TextView) convert

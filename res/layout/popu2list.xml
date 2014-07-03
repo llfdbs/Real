@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-      android:background="#ffffff"
+    android:background="@android:color/background_light"
     android:orientation="horizontal" >
 
     <ListView
         android:id="@+id/populist_menu"
         android:layout_width="wrap_content"
-        android:background="@color/white"
         android:layout_weight="2"
         android:layout_height="match_parent" >
     </ListView>
@@ -16,8 +15,8 @@
         android:id="@+id/populist_menu2"
         android:layout_width="wrap_content" 
         android:layout_weight="1"
-        android:background="@color/background_holo_light"
         android:visibility="gone"
+        
         android:layout_height="match_parent" >
     </ListView>
     

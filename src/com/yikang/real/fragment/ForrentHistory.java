@@ -21,6 +21,8 @@ import com.yikang.real.R;
 import com.yikang.real.activity.History;
 import com.yikang.real.adapter.ForrentHouseAdapter;
 import com.yikang.real.adapter.NewHouseAdapter;
+import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Share;
 
 public class ForrentHistory extends Fragment{
 
@@ -34,6 +36,7 @@ public class ForrentHistory extends Fragment{
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		act =(History) activity;
+		super.onAttach(activity);
 	}
 
 	public static ForrentHistory instantiation(int position) {
@@ -67,21 +70,24 @@ public class ForrentHistory extends Fragment{
 		Gson gson =new Gson();
 		String source;
 		Type type ;
+		share=act.getSharedPreferences(Container.SHARENAME, 0);
 		switch (postion) {
-		case 0:
-			share=act.getSharedPreferences("old", Context.MODE_PRIVATE);
-			source=share.getString("collect", "");
+		case 1:
+			source=share.getString(Share.OLD.getType(), null);
 			type =new TypeToken<List<SecondHouseValue>>(){}.getType();
+			if(source!=null){
 			data =gson.fromJson(source,type);
 			adapter =new NewHouseAdapter(act, data);
+			}
 			break;
 
-		case 1:
-			share =act.getSharedPreferences("forrent", Context.MODE_PRIVATE);
-			source=share.getString("collect", "");
+		case 0:
+			source=share.getString(Share.FORRENT.getType(), null);
 			type =new TypeToken<List<SecondHouseValue>>(){}.getType();
+			if(source!=null){
 			data =gson.fromJson(source,type);
 			adapter =new ForrentHouseAdapter(act, data);
+			}
 			break;
 		}
 	}

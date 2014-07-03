@@ -39,7 +39,6 @@ public class MapHousePop extends PopupWindow {
 	View view;
 	ListView list;
 	ProgressBar bar;
-	OnItemClickListener onItemClick;
 	TextView title;
 	
 	public MapHousePop(Activity context, int xid,
@@ -93,9 +92,7 @@ public class MapHousePop extends PopupWindow {
 		bar = (ProgressBar) view.findViewById(R.id.map_house_bar);
 		data_newHouse.clear();
 		adapter = new NewHouseAdapter(context, data_newHouse);
-		if(onItemClick!=null){
-			list.setOnItemClickListener(onItemClick);
-		}
+
 		list.setAdapter(adapter);
 		getData();
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 100);
@@ -112,8 +109,10 @@ public class MapHousePop extends PopupWindow {
 
 	}
 	
-	private void setItemOnclick(OnItemClickListener onItemClick){
-		this.onItemClick=onItemClick;
+	public void setItemOnclick(OnItemClickListener onItemClick){
+		if(onItemClick!=null){
+			list.setOnItemClickListener(onItemClick);
+		}
 	}
 	
 	private void getData(){

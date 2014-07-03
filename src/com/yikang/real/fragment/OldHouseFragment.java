@@ -44,6 +44,7 @@ import com.yikang.real.application.RealApplication;
 import com.yikang.real.imp.PopWindowCallBack;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.PopStatus;
+import com.yikang.real.until.Container.Share;
 import com.yikang.real.until.PupowindowUtil;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
@@ -217,8 +218,9 @@ public class OldHouseFragment extends MainFragment implements
 					long arg3) {
 				Intent intent = new Intent(act, OldHouseDetailsActivity.class);
 
-				intent.putExtra("nid", data_newHouse.get(arg2).getNid());
-
+				Bundle bundle =new Bundle();
+				bundle.putSerializable(Share.OLD.getType(), data_newHouse.get(arg2));
+				intent.putExtras(bundle);
 				startActivity(intent);
 			 
 			}
@@ -406,7 +408,7 @@ public class OldHouseFragment extends MainFragment implements
 	public void clickArea(String area) {
 		// TODO Auto-generated method stub
 		pop_area.dismiss();
-		if (area.equals("不限")) {
+		if (area.equals("不限制")) {
 			this.area = "";
 			top_bar1.setText("区域");
 		} else {

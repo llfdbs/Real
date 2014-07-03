@@ -1,12 +1,22 @@
 package com.yikang.real.activity;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -14,19 +24,24 @@ import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
+import cn.Bean.util.Collect;
 import cn.Bean.util.ForrentHouseDetailsBean;
+import cn.Bean.util.OldHouseDetailsBean;
+import cn.Bean.util.SecondHouseValue;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Share;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
-public class ForrentDetailsActivity extends BaseActivity implements
-		OnClickListener {
+public class ForrentDetailsActivity extends BaseActivity 
+		 {
 
 	private TextView title;
 	private com.yikang.real.view.DetialGallery gallery;
@@ -34,6 +49,9 @@ public class ForrentDetailsActivity extends BaseActivity implements
 	private TextView louxing;
 	private String nid;
 	private ForrentHouseDetailsBean fhdb;
+	private ActionBar actionbar;
+	private Intent intent;
+	private SecondHouseValue value;
 
 	@Override
 	protected void initData() {
@@ -47,10 +65,21 @@ public class ForrentDetailsActivity extends BaseActivity implements
 
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
-
+		intent = getIntent();
+		actionbar = getSupportActionBar();
+		actionbar.setHomeButtonEnabled(true);
+		actionbar.setIcon(R.drawable.back);
+		actionbar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.top));
+		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
+				"id", "android");
+		TextView yourTextView = (TextView) findViewById(titleId);
+		yourTextView.setTextColor(R.color.black);
+		actionbar.setTitle("租房详情");
 	}
 
 	@Override
@@ -59,9 +88,10 @@ public class ForrentDetailsActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.forrent_details);
 
-		nid = (String) getIntent().getStringExtra("nid");
-
+		value= (SecondHouseValue) getIntent().getExtras().getSerializable(Share.FORRENT.getType());
+		nid = value.getNid();
 		getData();
+		initActionBar();
 	}
 
 	public Handler mForrentDetailsActivityHandler = new Handler() {
@@ -95,7 +125,9 @@ public class ForrentDetailsActivity extends BaseActivity implements
 	private TextView environmental_TV;
 	private TextView facility_TV;
 	private TextView name_TV;
+	private TextView mob_TV;
 	private DisplayImageOptions options;
+	private TextView mian_mob_TV;
 
 	/**
 	 * 获取 数据
@@ -120,7 +152,7 @@ public class ForrentDetailsActivity extends BaseActivity implements
 				if (response != null) {
 					mForrentDetailsActivityHandler.obtainMessage(1, response)
 							.sendToTarget();
-				}
+				}else
 				mForrentDetailsActivityHandler.obtainMessage(0).sendToTarget();
 			}
 		}).start();
@@ -129,8 +161,6 @@ public class ForrentDetailsActivity extends BaseActivity implements
 
 	private void findView() {
 
-		ImageView back = (ImageView) findViewById(R.id.back);
-		back.setOnClickListener(this);
 		// request.getParameter("bizorderid")==null?"":request.getParameter("bizorderid");
 		title = (TextView) findViewById(R.id.title);
 
@@ -153,6 +183,14 @@ public class ForrentDetailsActivity extends BaseActivity implements
 		// fhdb.getFitment()==null?"":fhdb.getFitment()
 		fitment_TV.setText(fhdb.getFitment() == null ? "" : fhdb.getFitment());
 
+		
+		mob_TV= (TextView) findViewById(R.id.forrent_mob);
+		mob_TV.setText(fhdb.getMob()==null?"":fhdb.getMob());
+		
+		mian_mob_TV= (TextView) findViewById(R.id.forrent_main_mob);
+		mian_mob_TV.setText(fhdb.getMob()==null?"":fhdb.getMob());
+		
+		
 		toward_TV = (TextView) findViewById(R.id.toward_TV);
 		toward_TV.setText(fhdb.getToward() == null ? "" : fhdb.getToward());
 
@@ -184,18 +222,110 @@ public class ForrentDetailsActivity extends BaseActivity implements
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.back:
+	/**
+	 * 获取 数据
+	 */
+	public void getCollect() {
 
-			break;
+		new Thread(new Runnable() {
 
-		default:
-			break;
-		}
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Request request = new Request();
+				request.setCommandcode("124");
+				HashMap<String, String> body = new HashMap<String, String>();
+				body.put("nid", nid.trim());
+				body.put("username", Container.getUSER().getUsername());
+				request.setREQUEST_BODY(body);
+				Responds<Collect> response = (Responds<Collect>) new HttpConnect()
+						.httpUrlConnection(request,
+								new TypeToken<Responds<Collect>>() {
+								}.getType());
+				if (response != null) {
+					collect.obtainMessage(1, response).sendToTarget();
+				}else
+				collect.obtainMessage(0).sendToTarget();
+			}
+		}).start();
 
 	}
+
+	private MenuItem item;
+	public Handler collect = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			int result = msg.what;
+			Responds<Collect> responde = (Responds<Collect>) msg.obj;
+			switch (result) {
+			case 0:
+				showToast("请求失败", 2000);
+				break;
+			default:
+				List<Collect> data = responde.getRESPONSE_BODY().get(
+						Container.RESULT);
+				if (data.get(0).getState().equals("1")) {
+					
+					Gson g =new Gson();
+					SharedPreferences share =getSharedPreferences(Container.SHARENAME, 0);
+					String sha= share.getString(Share.FORRENT.getType(), null);
+					ArrayList<SecondHouseValue> list;
+					if(sha==null){
+						list=new ArrayList<SecondHouseValue>();
+					}else {
+						Type type =new TypeToken<ArrayList<SecondHouseValue>>(){}.getType();
+						list= g.fromJson(sha, type);
+					}
+					list.add(value);
+					sha =g.toJson(list);
+					Editor editor =share.edit();
+					editor.putString(Share.FORRENT.getType(), sha);
+					editor.commit();
+					
+					
+					showToast("收藏成功", 2000);
+					item.setIcon(R.drawable.collected);
+				} else {
+					showToast("不要重复收藏", 2000);
+				}
+				findView();
+				break;
+			}
+		}
+
+	};
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case android.R.id.home:
+
+			finish();
+
+			break;
+		case R.id.action_settings:
+			if(Container.getUSER()==null){
+				showToast("请先登录", 2000);
+				return true;
+			}
+			
+			getCollect();
+			this.item = item;
+			break;
+		}
+		return true;
+	}
+
 
 	private class ImagePagerAdapter extends BaseAdapter {
 

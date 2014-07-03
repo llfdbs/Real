@@ -73,10 +73,10 @@ public class MoreAdapter extends BaseAdapter {
 				.findViewById(R.id.popu2list_item_title);
 		view.setText(data.get(postion).getMoreName());
 		if (postion==this.postion) {
-//			if (postion == check) {
+//		if (postion == check) {
 			convert.setBackgroundColor(R.color.background_holo_light);
 		} else {
-			convert.setBackgroundColor(R.color.white);
+			convert.setBackgroundColor(android.R.color.white);
 		}
 		return convert;
 	}

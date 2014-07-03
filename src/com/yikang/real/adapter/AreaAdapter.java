@@ -64,7 +64,7 @@ public class AreaAdapter extends BaseAdapter {
 		if (postion == check) {
 			convert.setBackgroundColor(R.color.background_holo_light);
 		} else {
-			convert.setBackgroundColor(R.color.white);
+			convert.setBackgroundColor(android.R.color.white);
 		}
 		return convert;
 	}

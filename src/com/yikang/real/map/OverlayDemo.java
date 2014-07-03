@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.Resources;
@@ -24,6 +25,8 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -32,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.Bean.util.SecondHouseMapValue;
 import cn.Bean.util.SecondHouseValue;
+
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -49,10 +53,13 @@ import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
+import com.yikang.real.activity.ForrentDetailsActivity;
+import com.yikang.real.activity.OldHouseDetailsActivity;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.Page;
+import com.yikang.real.until.Container.Share;
 import com.yikang.real.until.MapHousePop;
 import com.yikang.real.until.PupowindowUtil;
 import com.yikang.real.web.HttpConnect;
@@ -63,7 +70,7 @@ import com.yikang.real.web.Responds;
  * @author 袁天祥 功能1:地图移动缩放时显示边界坐标范围 功能2:地图缩放到一定级别的时候 地图上四个点变成一个点
  *         功能3:加载地图实现首次定位，通过按钮实现手动定位
  */
-public class OverlayDemo extends BaseActivity implements ClickBack {
+public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickListener {
 
 	/**
 	 * MapView 是地图主控件
@@ -207,7 +214,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 		mMapView.refresh();
 		level=9;
 		getData("9");
-
+		initActionBar();
 	}
 
 	/**
@@ -680,6 +687,21 @@ public class OverlayDemo extends BaseActivity implements ClickBack {
 			int height = metrie.heightPixels;
 			pop.showAtLocation(findViewById(R.id.map_bottomline), Gravity.TOP, 0, height);
 		}
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
+		// TODO Auto-generated method stub
+		SecondHouseMapValue value=temp_data.get(index);
+		Bundle bundle =new Bundle();
+		if(Container.getCurrentPage()==Page.FORREN){
+			bundle.putSerializable(Share.FORRENT.getType(), value);
+			openActivity(ForrentDetailsActivity.class	, bundle);
+		}else if(Container.getCurrentPage()==Page.OLD){
+			bundle.putSerializable(Share.OLD.getType(), value);
+			openActivity(OldHouseDetailsActivity.class	, bundle);
+		}
+		
 	}
 
 }

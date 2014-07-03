@@ -11,12 +11,12 @@
         android:orientation="horizontal" >
 
         <RadioButton
-            android:id="@+id/radio_button0"
+            android:id="@+id/radio_button6"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/zufang" />
 
         <RadioButton
-            android:id="@+id/radio_button1"
+            android:id="@+id/radio_button7"
             style="@style/main_tab_bottom"
             android:drawableTop="@drawable/erfang" />
 
@@ -28,7 +28,7 @@
         android:background="@drawable/bottom_line" />
 
     <com.yikang.real.view.DisTouchViewPager
-        android:id="@+id/pager"
+        android:id="@+id/pager7"
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"

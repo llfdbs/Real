@@ -1,24 +1,30 @@
 package com.yikang.real.activity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import cn.Bean.util.Register;
-import cn.Bean.util.SecondHandHouseDetails;
+import cn.Bean.util.Login;
+import cn.Bean.util.SearchSecondValue;
+
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.bean.User;
+import com.yikang.real.until.Container;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
@@ -86,6 +92,33 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	Handler loginhandler =new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			int result = msg.what;
+			Responds<Login> responde = (Responds<Login>) msg.obj;
+			switch (result) {
+			case 0:
+				showToast("请求失败，请重试", 3000);
+				break;
+
+			default:
+				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+					User user =new User();
+					user.setUsername(login_username.getText().toString());
+					user.setUid(String.valueOf(responde.getRESPONSE_BODY().get("list").get(0).getLid()));
+					Container.setUSER(user);
+					finish();
+				} else {
+					showToast("请求失败，请重试", 3000);
+				}
+				break;
+			}
+		}
+		
+	};
 
 	@Override
 	public void onClick(View v) {
@@ -93,22 +126,27 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		case R.id.login:
 			final HttpConnect conn = new HttpConnect();
 			final Request reques = new Request();
-			reques.setCommandcode("110");
+			reques.setCommandcode("111");
 			HashMap map = new HashMap<String, String>();
-			map.put("nid", "100001");
+			map.put("username",login_username.getText().toString());
+			map.put("password",login_pwd.getText().toString());
 			reques.setREQUEST_BODY(map);
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					Responds<SecondHandHouseDetails> responds = (Responds<SecondHandHouseDetails>) conn
+					Responds<Login> responds = (Responds<Login>) conn
 							.httpUrlConnection(
 									reques,
-									new TypeToken<Responds<SecondHandHouseDetails>>() {
+									new TypeToken<Responds<Login>>() {
 									}.getType());
-					openActivity(CheckedActivity.class);
-
+					if(responds!=null){
+						loginhandler.obtainMessage(1, responds).sendToTarget();
+					}else {
+						loginhandler.obtainMessage(0).sendToTarget();
+					}
+					
 				}
 			}).start();
 			break;
