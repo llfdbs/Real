@@ -61,7 +61,7 @@ public class AreaAdapter extends BaseAdapter {
 		TextView view = (TextView) convert
 				.findViewById(R.id.popu2list_item_title);
 		view.setText(data.get(postion).getArea());
-		if (postion == check) {
+		if (postion == check&&postion!=0) {
 			convert.setBackgroundColor(R.color.background_holo_light);
 		} else {
 			convert.setBackgroundColor(android.R.color.white);

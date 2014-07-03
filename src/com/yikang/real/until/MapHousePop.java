@@ -34,7 +34,7 @@ public class MapHousePop extends PopupWindow {
 	String xid;
 	String commandcode;
 	LayoutInflater inflate;
-	ArrayList<SecondHouseValue> data_newHouse = new ArrayList<SecondHouseValue>();
+	public static ArrayList<SecondHouseValue> data_newHouse = new ArrayList<SecondHouseValue>();
 	NewHouseAdapter adapter;
 	View view;
 	ListView list;

@@ -669,7 +669,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			
 
 	}
-
+	MapHousePop pop2 =null;
 	@Override
 	public void Onclick(int index) {
 		// TODO Auto-generated method stub
@@ -681,18 +681,19 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			}else if(Container.getCurrentPage()==Page.OLD){
 				commandcode= "119";
 			}
-			PopupWindow pop =new MapHousePop(this,  value.getMid(), commandcode);
+			pop2 =new MapHousePop(this,  value.getMid(), commandcode);
+			pop2.setItemOnclick(this);
 			DisplayMetrics metrie = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metrie);
 			int height = metrie.heightPixels;
-			pop.showAtLocation(findViewById(R.id.map_bottomline), Gravity.TOP, 0, height);
+			pop2.showAtLocation(findViewById(R.id.map_bottomline), Gravity.TOP, 0, height);
 		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int index, long arg3) {
 		// TODO Auto-generated method stub
-		SecondHouseMapValue value=temp_data.get(index);
+		SecondHouseValue value=pop2.data_newHouse.get(index);
 		Bundle bundle =new Bundle();
 		if(Container.getCurrentPage()==Page.FORREN){
 			bundle.putSerializable(Share.FORRENT.getType(), value);
