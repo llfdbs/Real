@@ -22,8 +22,22 @@ public class OldHouseDetailsBean {
 	// "business":"康乐茶叶市场 、民升超市 、大商汇、 国美电器、 沃尔玛、南亚风情园 广福厨具市场、十一家具",
 	// "image":["Photos/201404/CS1404000003/d07231dc03b147b498986176282cd88e.jpg"]}]}}
 
-	String floor, fitment, type, years, name, mob, add, namepath, lat, lng,
-			desc, environmental, education, entertainment, facility, business;
+	String floor,//楼层
+	fitment, //装修
+	type,	//物业用途
+	years,	//年代
+	name,	//经纪人
+	mob,	//手机
+	add,	//地址
+	namepath,	//经纪人图像
+	lat, //精度
+	lng,//维度
+	desc,//详细描述
+	environmental,// 周边环境
+	education,//学校教育
+	entertainment,//休闲娱乐
+	facility,//交通状况
+	business;//商业百汇
 
 	ArrayList<String> image;
 
