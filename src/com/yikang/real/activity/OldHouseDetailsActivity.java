@@ -39,7 +39,7 @@ import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
-public class OldHouseDetailsActivity extends BaseActivity  {
+public class OldHouseDetailsActivity extends BaseActivity {
 	private OldHouseDetailsBean fhdb;
 	private ImageView back;
 	private String nid;
@@ -84,20 +84,22 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 				List<Collect> data = responde.getRESPONSE_BODY().get(
 						Container.RESULT);
 				if (data.get(0).getState().equals("1")) {
-					
-					Gson g =new Gson();
-					SharedPreferences share =getSharedPreferences(Container.SHARENAME, 0);
-					String sha= share.getString(Share.OLD.getType(), null);
+
+					Gson g = new Gson();
+					SharedPreferences share = getSharedPreferences(
+							Container.SHARENAME, 0);
+					String sha = share.getString(Share.OLD.getType(), null);
 					ArrayList<SecondHouseValue> list;
-					if(sha==null){
-						list=new ArrayList<SecondHouseValue>();
-					}else {
-						Type type =new TypeToken<ArrayList<SecondHouseValue>>(){}.getType();
-						list= g.fromJson(sha, type);
+					if (sha == null) {
+						list = new ArrayList<SecondHouseValue>();
+					} else {
+						Type type = new TypeToken<ArrayList<SecondHouseValue>>() {
+						}.getType();
+						list = g.fromJson(sha, type);
 					}
 					list.add(value);
-					sha =g.toJson(list);
-					Editor editor =share.edit();
+					sha = g.toJson(list);
+					Editor editor = share.edit();
 					editor.putString(Share.OLD.getType(), sha);
 					editor.commit();
 					showToast("收藏成功", 2000);
@@ -117,6 +119,7 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 	private Intent intent;
 	private ActionBar actionbar;
 	private SecondHouseValue value;
+
 	@Override
 	protected void initData() {
 		// TODO Auto-generated method stub
@@ -164,7 +167,7 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 
 			break;
 		case R.id.action_settings:
-			if(Container.getUSER()==null){
+			if (Container.getUSER() == null) {
 				showToast("请先登录", 2000);
 				return true;
 			}
@@ -180,18 +183,19 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.old_house_details);
-		value= (SecondHouseValue) getIntent().getExtras().getSerializable(Share.OLD.getType());
+		value = (SecondHouseValue) getIntent().getExtras().getSerializable(
+				Share.OLD.getType());
 		nid = value.getNid();
 		getData();
 		initActionBar();
 
-		
 	}
 
 	private void findView() {
 
 		options = new DisplayImageOptions.Builder()
 				.showImageForEmptyUri(R.drawable.ic_launcher)
+				.showImageOnFail(R.drawable.ic_launcher)
 				.showStubImage(R.drawable.ic_launcher).cacheInMemory()
 				.cacheOnDisc().build();
 
@@ -213,22 +217,22 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 		// "business":"康乐茶叶市场 、民升超市 、大商汇、 国美电器、 沃尔玛、南亚风情园 广福厨具市场、十一家具",
 		// "image":["Photos/201404/CS1404000003/d07231dc03b147b498986176282cd88e.jpg"]}]}}
 
-		TextView floor_TV = (TextView) findViewById(R.id.floor_TV);
+		TextView floor_TV = (TextView) findViewById(R.id.floor_FV);
 		floor_TV.setText(fhdb.getFloor() == null ? "" : fhdb.getFloor());
 		// 装修
 		TextView fitment_TV = (TextView) findViewById(R.id.fitment_TV);
 		fitment_TV.setText(fhdb.getFitment() == null ? "" : fhdb.getFitment());
 
-		TextView main_mob =(TextView) findViewById(R.id.old_detail_mob);
+		TextView main_mob = (TextView) findViewById(R.id.old_detail_mob);
 		main_mob.setText(fhdb.getMob() == null ? "" : fhdb.getMob());
-		
-		TextView years_TV = (TextView) findViewById(R.id.years_TV);
+
+		TextView years_TV = (TextView) findViewById(R.id.years_FV);
 		years_TV.setText(fhdb.getYears() == null ? "" : fhdb.getYears());
 
-		TextView name_TV = (TextView) findViewById(R.id.name_TV);
+		TextView name_TV = (TextView) findViewById(R.id.name_FV);
 		name_TV.setText(fhdb.getName() == null ? "" : fhdb.getName());
 
-		TextView add_TV = (TextView) findViewById(R.id.add_TV);
+		TextView add_TV = (TextView) findViewById(R.id.add_FV);
 		add_TV.setText(fhdb.getAdd() == null ? "" : fhdb.getAdd());
 
 		// "environmental":"杨家地农贸市场 正和农贸市场.太家河农贸市场 滇池卫城社区医院、儿童医院、圣约翰医院，同仁医院 ",
@@ -269,8 +273,9 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 				if (response != null) {
 					mOldHouseDetailsActivityHandler.obtainMessage(1, response)
 							.sendToTarget();
-				}else
-				mOldHouseDetailsActivityHandler.obtainMessage(0).sendToTarget();
+				} else
+					mOldHouseDetailsActivityHandler.obtainMessage(0)
+							.sendToTarget();
 			}
 		}).start();
 
@@ -297,13 +302,12 @@ public class OldHouseDetailsActivity extends BaseActivity  {
 								}.getType());
 				if (response != null) {
 					collect.obtainMessage(1, response).sendToTarget();
-				}else
-				collect.obtainMessage(0).sendToTarget();
+				} else
+					collect.obtainMessage(0).sendToTarget();
 			}
 		}).start();
 
 	}
-
 
 	private class ImagePagerAdapter extends BaseAdapter {
 
