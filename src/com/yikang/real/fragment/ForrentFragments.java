@@ -40,6 +40,7 @@ import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.imp.PopWindowCallBack;
+import com.yikang.real.imp.PublicDb;
 import com.yikang.real.until.Container.PopStatus;
 import com.yikang.real.until.Container.Share;
 import com.yikang.real.until.Container;
@@ -242,6 +243,7 @@ public class ForrentFragments extends MainFragment implements
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent intent = new Intent(act, ForrentDetailsActivity.class);
+				new PublicDb().save(act, data_newHouse.get(arg2), Share.FORRENT_FOOTMARK.getType());
 				Bundle bundle = new Bundle();
 				bundle.putSerializable(Share.FORRENT.getType(), data_newHouse.get(arg2));
 				intent.putExtras(bundle);

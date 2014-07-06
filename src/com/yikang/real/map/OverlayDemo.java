@@ -6,31 +6,25 @@ import java.util.List;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.renderscript.Sampler.Value;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.ActionBar;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 import cn.Bean.util.SecondHouseMapValue;
@@ -55,13 +49,13 @@ import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.ForrentDetailsActivity;
 import com.yikang.real.activity.OldHouseDetailsActivity;
+import com.yikang.real.activity.SearchActivity;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.Page;
 import com.yikang.real.until.Container.Share;
 import com.yikang.real.until.MapHousePop;
-import com.yikang.real.until.PupowindowUtil;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
@@ -153,6 +147,17 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		 * 由于MapView在setContentView()中初始化,所以它需要在BMapManager初始化之后
 		 */
 		setContentView(R.layout.activity_overlay);
+		EditText edit =(EditText) findViewById(R.id.map_search);
+		edit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Bundle bundle =new Bundle();
+				bundle.putString("from", "Map");
+				openActivityForResult(SearchActivity.class,bundle,500);
+			}
+		});
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		requestLocButton = (ImageView) findViewById(R.id.button1);
 		OnClickListener btnClickListener = new OnClickListener() {
@@ -216,28 +221,6 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		getData("9");
 		initActionBar();
 	}
-
-	/**
-	 * 初始化坐标点的数据
-	 */
-	// private void init() {
-	// map1.put("lon", (float) 113.670141);
-	// map1.put("lat", (float) 34.837953);
-	// map2.put("lon", (float) 113.602553);
-	// map2.put("lat", (float) 34.757838);
-	// map3.put("lon", (float) 113.755606);
-	// map3.put("lat", (float) 34.769381);
-	// map4.put("lon", (float) 113.684901);
-	// map4.put("lat", (float) 34.714861);
-	// map5.put("lon", (float) 113.676268);
-	// map5.put("lat", (float) 34.780611);
-	// srcoue.add(map1);
-	// srcoue.add(map2);
-	// srcoue.add(map3);
-	// srcoue.add(map4);
-	// srcoue.add(map5);
-	// createOverLays(srcoue);
-	// }
 
 	// 继承MyLocationOverlay重写dispatchTap实现点击处理
 	public class locationOverlay extends MyLocationOverlay {
@@ -332,7 +315,6 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				 * 地图完成带动画的操作（如: animationTo()）后，或是放大缩小按钮此回调被触发
 				 */
 				level = mMapView.getZoomLevel();
-				// reloadOverlay(level);
 				if (list != null) {
 					updateMapState();
 					getData(String.valueOf(level));
@@ -356,17 +338,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			mMapView.getOverlays().remove(mOverlay);
 			mOverlay.removeAll();
 		}
-		// if (level > 14.0 || level == 14) { // 返回小区+数量
-		// mOverlay.addItem(list.get(5));
-		// } else if (14 > level && level > 11) { // 返回区域+数量
-		//
-		// mOverlay.addItem(list.get(5));
-		// // mOverlay.addItem(list.get(1));
-		// // mOverlay.addItem(list.get(2));
-		// // mOverlay.addItem(list.get(3));
-		//
-		// } else { // 返回市+数量
-		// }
+
 		for (OverlayItem item : list) {
 
 			mOverlay.addItem(item);
@@ -427,40 +399,6 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		pop = new PopupOverlay(mMapView, popListener);
 
 	}
-
-	/**
-	 * @param srcoue
-	 *            四个点的坐标集合
-	 * @return
-	 */
-//	private List<OverlayItem> createOverLays(List<Map<String, Float>> srcoue) {
-//		LayoutInflater inflate = LayoutInflater.from(this);
-//		list = new ArrayList<OverlayItem>();
-//		for (Map<String, Float> map : srcoue) {
-//			GeoPoint p = new GeoPoint((int) (map.get("lat") * 1E6),
-//					(int) (map.get("lon") * 1E6));
-//			OverlayItem item = new OverlayItem(p, "", "");
-//			View view = inflate.inflate(R.layout.itme, null);
-//			Bitmap bit = BMapUtil.getBitmapFromView(view);
-//			Drawable drawable = (Drawable) new BitmapDrawable(bit);
-//			item.setMarker(drawable);
-//			list.add(item);
-//		}
-//
-//		GeoPoint p = new GeoPoint((int) (34.780611 * 1E6),
-//				(int) (113.676268 * 1E6));
-//		OverlayItem item = new OverlayItem(p, "", "");
-//		View view = inflate.inflate(R.layout.itme, null);
-//		TextView text = (TextView) view.findViewById(R.id.text1);
-//		text.setText("4");
-//		Bitmap bit = BMapUtil.getBitmapFromView(view);
-//		Drawable drawable = (Drawable) new BitmapDrawable(bit);
-//		item.setMarker(drawable);
-//		list.add(item);
-//
-//		return list;
-//
-//	}
 
 	/**
 	 * 获取屏幕边界坐标范围
@@ -682,6 +620,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				commandcode= "119";
 			}
 			pop2 =new MapHousePop(this,  value.getMid(), commandcode);
+			pop2.init();
 			pop2.setItemOnclick(this);
 			DisplayMetrics metrie = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(metrie);
@@ -705,4 +644,77 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		
 	}
 
+	@Override
+	protected void onActivityResult(int request, int response, Intent intent) {
+		// TODO Auto-generated method stub
+		switch (response) {
+		case 200:
+			String xid =intent.getStringExtra("xid");
+			if(xid!=null){
+				getLocal(xid);
+			}else {
+				showToast("获取失败， 请重试", 2000);
+			}
+			
+
+		default:
+			break;
+		}
+	}
+
+	Handler result_local = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			int result = msg.what;
+			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
+			switch (result) {
+			case 0:
+				showToast("请求失败，请重试", 3000);
+				break;
+
+			default:
+				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+					List<SecondHouseValue> value =(List<SecondHouseValue>) responde.getRESPONSE_BODY();
+					
+				} else {
+					showToast("请求失败，请重试", 3000);
+				}
+				break;
+			}
+
+		}
+
+	};
+	//FIXME 未知
+	private void getLocal(final String xid){
+		Thread thread = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Request request = new Request();
+				if(Container.getCurrentPage()==Page.FORREN){
+					request.setCommandcode("123");
+				}else if(Container.getCurrentPage()==Page.OLD){
+					request.setCommandcode("119");
+				}else {
+					request.setCommandcode("119");
+				}
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("xid", xid);
+				request.setREQUEST_BODY(map);
+				Responds<SecondHouseValue> responds = (Responds<SecondHouseValue>) new HttpConnect()
+						.httpUrlConnection(request,
+								new TypeToken<Responds<SecondHouseValue>>() {
+								}.getType());
+
+				if (responds != null) {
+					result_local.obtainMessage(1, responds).sendToTarget();
+				}else
+					result_local.obtainMessage(0).sendToTarget();
+			}
+		});
+		thread.start();
+	}
 }

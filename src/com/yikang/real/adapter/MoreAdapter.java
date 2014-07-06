@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import cn.Bean.util.Area;
 import cn.Bean.util.More;
@@ -72,11 +73,13 @@ public class MoreAdapter extends BaseAdapter {
 		TextView view = (TextView) convert
 				.findViewById(R.id.popu2list_item_title);
 		view.setText(data.get(postion).getMoreName());
+		ImageView image=(ImageView) convert.findViewById(R.id.popu2list_item_touch);
 		if (postion==this.postion) {
-//		if (postion == check) {
-			convert.setBackgroundColor(R.color.background_holo_light);
+			view.setTextColor(R.color.holo_blue_bright);
+			image.setVisibility(View.VISIBLE);
 		} else {
-			convert.setBackgroundColor(android.R.color.white);
+			view.setTextColor(android.R.color.black);
+			image.setVisibility(View.GONE);
 		}
 		return convert;
 	}

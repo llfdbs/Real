@@ -13,6 +13,7 @@ import cn.Bean.util.City;
 import cn.Bean.util.More;
 import cn.Bean.util.MoreValue;
 
+import com.baidu.frontia.FrontiaApplication;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.MKEvent;
@@ -24,7 +25,7 @@ import com.yikang.real.R;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.ToastTools;
 
-public class RealApplication extends Application {
+public class RealApplication extends FrontiaApplication{
 
 	private List<WeakReference<Activity>> mActivityList = new ArrayList<WeakReference<Activity>>();
 	private static RealApplication mSingleton;
@@ -86,6 +87,9 @@ public class RealApplication extends Application {
 		city.setCity("昆明");
 		Container.setCity(city);
 		initImageLoader(getApplicationContext());
+		//FIXME
+		        FrontiaApplication. 
+                               initFrontiaApplication(getApplicationContext());
 	}
 
 	public static RealApplication getInstance() {

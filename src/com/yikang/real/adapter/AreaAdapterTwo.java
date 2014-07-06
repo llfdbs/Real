@@ -66,7 +66,7 @@ public class AreaAdapterTwo extends BaseAdapter {
 
 		}
 		TextView view = (TextView) convert
-				.findViewById(R.id.popu2list_item_title);
+				.findViewById(R.id.popu2list_item_title2);
 		if (postion == check) {
 			view.setTextColor(R.color.holo_blue_bright);
 		} else {

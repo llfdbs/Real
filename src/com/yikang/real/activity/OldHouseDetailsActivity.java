@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
+import com.yikang.real.imp.PublicDb;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.Share;
 import com.yikang.real.view.DetialGallery;
@@ -41,10 +42,8 @@ import com.yikang.real.web.Responds;
 
 public class OldHouseDetailsActivity extends BaseActivity {
 	private OldHouseDetailsBean fhdb;
-	private ImageView back;
 	private String nid;
 	String intro;
-	MenuItem item;
 
 	public Handler mOldHouseDetailsActivityHandler = new Handler() {
 
@@ -69,11 +68,14 @@ public class OldHouseDetailsActivity extends BaseActivity {
 
 	};
 
+	
 	public Handler collect = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
+			
+			new PublicDb().save(OldHouseDetailsActivity.this,value,Share.OLD.getType());
 			int result = msg.what;
 			Responds<Collect> responde = (Responds<Collect>) msg.obj;
 			switch (result) {
@@ -84,26 +86,7 @@ public class OldHouseDetailsActivity extends BaseActivity {
 				List<Collect> data = responde.getRESPONSE_BODY().get(
 						Container.RESULT);
 				if (data.get(0).getState().equals("1")) {
-
-					Gson g = new Gson();
-					SharedPreferences share = getSharedPreferences(
-							Container.SHARENAME, 0);
-					String sha = share.getString(Share.OLD.getType(), null);
-					ArrayList<SecondHouseValue> list;
-					if (sha == null) {
-						list = new ArrayList<SecondHouseValue>();
-					} else {
-						Type type = new TypeToken<ArrayList<SecondHouseValue>>() {
-						}.getType();
-						list = g.fromJson(sha, type);
-					}
-					list.add(value);
-					sha = g.toJson(list);
-					Editor editor = share.edit();
-					editor.putString(Share.OLD.getType(), sha);
-					editor.commit();
 					showToast("收藏成功", 2000);
-					item.setIcon(R.drawable.collected);
 				} else {
 					showToast("不要重复收藏", 2000);
 				}
@@ -116,7 +99,6 @@ public class OldHouseDetailsActivity extends BaseActivity {
 
 	private DetialGallery gallery;
 	private DisplayImageOptions options;
-	private Intent intent;
 	private ActionBar actionbar;
 	private SecondHouseValue value;
 
@@ -136,7 +118,6 @@ public class OldHouseDetailsActivity extends BaseActivity {
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
-		intent = getIntent();
 		actionbar = getSupportActionBar();
 		actionbar.setHomeButtonEnabled(true);
 		actionbar.setIcon(R.drawable.back);
@@ -171,8 +152,8 @@ public class OldHouseDetailsActivity extends BaseActivity {
 				showToast("请先登录", 2000);
 				return true;
 			}
+			item.setIcon(R.drawable.collected);
 			getCollect();
-			this.item = item;
 			break;
 		}
 		return true;
@@ -193,11 +174,7 @@ public class OldHouseDetailsActivity extends BaseActivity {
 
 	private void findView() {
 
-		options = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showImageOnFail(R.drawable.ic_launcher)
-				.showStubImage(R.drawable.ic_launcher).cacheInMemory()
-				.cacheOnDisc().build();
+		options = Container.options;
 
 		// {"floor":1
 		// ,"fitment":"精装",
@@ -220,7 +197,7 @@ public class OldHouseDetailsActivity extends BaseActivity {
 		TextView floor_TV = (TextView) findViewById(R.id.floor_FV);
 		floor_TV.setText(fhdb.getFloor() == null ? "" : fhdb.getFloor());
 		// 装修
-		TextView fitment_TV = (TextView) findViewById(R.id.fitment_TV);
+		TextView fitment_TV = (TextView) findViewById(R.id.fitment_FV);
 		fitment_TV.setText(fhdb.getFitment() == null ? "" : fhdb.getFitment());
 
 		TextView main_mob = (TextView) findViewById(R.id.old_detail_mob);

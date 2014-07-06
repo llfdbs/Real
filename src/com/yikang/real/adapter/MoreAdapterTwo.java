@@ -68,11 +68,11 @@ public class MoreAdapterTwo extends BaseAdapter {
 		// TODO Auto-generated method stub
 		if (convert == null) {
 			convert = LayoutInflater.from(context).inflate(
-					R.layout.popu2list_item, null);
+					R.layout.popu2list_item2, null);
 
 		}
 		TextView view = (TextView) convert
-				.findViewById(R.id.popu2list_item_title);
+				.findViewById(R.id.popu2list_item_title2);
 		view.setText(data.get(postion).getName());
 		if (postion==check) {
 			view.setTextColor(R.color.holo_blue_bright);

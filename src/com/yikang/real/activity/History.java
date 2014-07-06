@@ -43,10 +43,14 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 
 	private ActionBar actionbar;
 
+	private String fromwhere;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.history);
+		Intent intent =getIntent();
+		fromwhere=intent.getStringExtra("fromwhere");
 		findView();
 		AfterView();
 		mTab1.performClick();
@@ -62,8 +66,8 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 	}
 
 	private void AfterView() {
-		ForrentHistory forrent = ForrentHistory.instantiation(0);
-		ForrentHistory old = ForrentHistory.instantiation(1);
+		ForrentHistory forrent = ForrentHistory.instantiation(0,fromwhere);
+		ForrentHistory old = ForrentHistory.instantiation(1,fromwhere);
 	
 		fragments = new Fragment[] { forrent, old};
 		mAdapter = new MyAdapter(getSupportFragmentManager(), fragments);
@@ -145,7 +149,10 @@ public class History extends BaseActivity implements OnCheckedChangeListener {
 						"id", "android");
 				TextView yourTextView = (TextView) findViewById(titleId);
 				yourTextView.setTextColor(R.color.black);
-				actionbar.setTitle("我的收藏");
+				if(fromwhere.equals("history")){
+					actionbar.setTitle("我的收藏");
+				}else
+					actionbar.setTitle("我的足迹");
 	}
 
 }

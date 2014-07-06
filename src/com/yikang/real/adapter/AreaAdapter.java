@@ -1,14 +1,17 @@
 package com.yikang.real.adapter;
 
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import cn.Bean.util.Area;
+
 import com.yikang.real.R;
 
 @SuppressLint("ResourceAsColor")
@@ -60,11 +63,14 @@ public class AreaAdapter extends BaseAdapter {
 		}
 		TextView view = (TextView) convert
 				.findViewById(R.id.popu2list_item_title);
+		ImageView image=(ImageView) convert.findViewById(R.id.popu2list_item_touch);
 		view.setText(data.get(postion).getArea());
 		if (postion == check&&postion!=0) {
-			convert.setBackgroundColor(R.color.background_holo_light);
+			view.setTextColor(R.color.holo_blue_bright);
+			image.setVisibility(View.VISIBLE);
 		} else {
-			convert.setBackgroundColor(android.R.color.white);
+			view.setTextColor(android.R.color.black);
+			image.setVisibility(View.GONE);
 		}
 		return convert;
 	}

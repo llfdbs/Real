@@ -34,12 +34,20 @@ public class MapHousePop extends PopupWindow {
 	String xid;
 	String commandcode;
 	LayoutInflater inflate;
-	public static ArrayList<SecondHouseValue> data_newHouse = new ArrayList<SecondHouseValue>();
+	public static ArrayList<SecondHouseValue> data_newHouse;
 	NewHouseAdapter adapter;
 	View view;
 	ListView list;
 	ProgressBar bar;
 	TextView title;
+	
+	public static ArrayList<SecondHouseValue> getData_newHouse() {
+		return data_newHouse;
+	}
+
+	public static void setData_newHouse(ArrayList<SecondHouseValue> data_newHouse) {
+		MapHousePop.data_newHouse = data_newHouse;
+	}
 	
 	public MapHousePop(Activity context, int xid,
 			String commandcode) {
@@ -48,7 +56,8 @@ public class MapHousePop extends PopupWindow {
 		this.context = context;
 		this.xid = String.valueOf(xid);
 		this.commandcode = commandcode;
-		init();
+		data_newHouse = new ArrayList<SecondHouseValue>();
+
 	}
 
 	Handler getHouse = new Handler() {
@@ -94,7 +103,9 @@ public class MapHousePop extends PopupWindow {
 		adapter = new NewHouseAdapter(context, data_newHouse);
 
 		list.setAdapter(adapter);
-		getData();
+		if(data_newHouse.size()==0){
+			getData();
+		}
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 100);
 		view.setLayoutParams(params);
 		setOutsideTouchable(true);

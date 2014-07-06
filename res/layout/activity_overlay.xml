@@ -17,29 +17,27 @@
         android:layout_alignParentBottom="true"
         android:background="@color/white" />
 
+    <EditText
+        android:id="@+id/map_search"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/shape_login"
+        android:drawableLeft="@drawable/sreach"
+        android:paddingLeft="5dp"
+        android:editable="false"
+        android:singleLine="true" >
+
+    </EditText>
+
     <ImageView
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/map_bottomline"
-        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/topbar_search"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="22dp"
         android:src="@drawable/custom_loc" />
-
-    <EditText
-        android:id="@+id/topbar_search"
-        android:layout_width="220dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="22dp"
-        android:layout_toLeftOf="@+id/button1"
-        android:background="@drawable/shape_login"
-        android:drawableLeft="@drawable/sreach"
-        android:paddingLeft="5dp"
-        android:singleLine="true" >
-
-        <requestFocus />
-    </EditText>
 
 </RelativeLayout>

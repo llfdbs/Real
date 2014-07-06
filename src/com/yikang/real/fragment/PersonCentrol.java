@@ -112,6 +112,7 @@ public class PersonCentrol extends Fragment {
 				return;
 			}
 			intent.setClass(act, History.class);
+			intent.putExtra("fromwhere", "history");
 			act.startActivity(intent);
 			break;
 		case 1:
@@ -120,6 +121,7 @@ public class PersonCentrol extends Fragment {
 				return;
 			}
 			intent.setClass(act, History.class);
+			intent.putExtra("fromwhere", "footmark");
 			act.startActivity(intent);
 			break;
 		case 2:

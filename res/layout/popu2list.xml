@@ -11,6 +11,11 @@
         android:layout_weight="2"
         android:layout_height="match_parent" >
     </ListView>
+    <TextView 
+          android:layout_width="1px"
+          android:layout_height="match_parent"
+              android:background="@color/holo_blue_bright"
+        />
   <ListView
         android:id="@+id/populist_menu2"
         android:layout_width="wrap_content" 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
+import com.yikang.real.map.OverlayDemo;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.Page;
 import com.yikang.real.web.HttpConnect;
@@ -150,7 +152,14 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 				g.toJson(data), type);
 		bundle.putString("xid", temp.get(index).get("xid"));
 		bundle.putString("title", temp.get(index).get("title"));
-		openActivity(Result.class, bundle);
+		if(null!=getIntent().getStringExtra("from")){
+			Intent intent =getIntent();
+			intent.setClass(SearchActivity.this, OverlayDemo.class);
+			intent.putExtras(bundle);
+			setResult(200,intent);
+		}else {
+			openActivity(Result.class, bundle);
+		}
 	}
 
 	private void getData(final String key) {

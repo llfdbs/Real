@@ -34,6 +34,7 @@ import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
+import com.yikang.real.imp.PublicDb;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.Container.Share;
 import com.yikang.real.web.HttpConnect;
@@ -50,7 +51,6 @@ public class ForrentDetailsActivity extends BaseActivity
 	private String nid;
 	private ForrentHouseDetailsBean fhdb;
 	private ActionBar actionbar;
-	private Intent intent;
 	private SecondHouseValue value;
 
 	@Override
@@ -69,7 +69,6 @@ public class ForrentDetailsActivity extends BaseActivity
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
-		intent = getIntent();
 		actionbar = getSupportActionBar();
 		actionbar.setHomeButtonEnabled(true);
 		actionbar.setIcon(R.drawable.back);
@@ -164,10 +163,7 @@ public class ForrentDetailsActivity extends BaseActivity
 		// request.getParameter("bizorderid")==null?"":request.getParameter("bizorderid");
 		title = (TextView) findViewById(R.id.title);
 
-		options = new DisplayImageOptions.Builder()
-				.showImageForEmptyUri(R.drawable.ic_launcher)
-				.showStubImage(R.drawable.ic_launcher).cacheInMemory()
-				.cacheOnDisc().build();
+		options = Container.options;
 		gallery = (com.yikang.real.view.DetialGallery) findViewById(R.id.gallery);
 
 		gallery.setAdapter(new ImagePagerAdapter(fhdb.getImage()));
@@ -251,12 +247,13 @@ public class ForrentDetailsActivity extends BaseActivity
 
 	}
 
-	private MenuItem item;
+	
 	public Handler collect = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
+			new PublicDb().save(ForrentDetailsActivity.this,value,Share.FORRENT.getType());
 			int result = msg.what;
 			Responds<Collect> responde = (Responds<Collect>) msg.obj;
 			switch (result) {
@@ -267,30 +264,10 @@ public class ForrentDetailsActivity extends BaseActivity
 				List<Collect> data = responde.getRESPONSE_BODY().get(
 						Container.RESULT);
 				if (data.get(0).getState().equals("1")) {
-					
-					Gson g =new Gson();
-					SharedPreferences share =getSharedPreferences(Container.SHARENAME, 0);
-					String sha= share.getString(Share.FORRENT.getType(), null);
-					ArrayList<SecondHouseValue> list;
-					if(sha==null){
-						list=new ArrayList<SecondHouseValue>();
-					}else {
-						Type type =new TypeToken<ArrayList<SecondHouseValue>>(){}.getType();
-						list= g.fromJson(sha, type);
-					}
-					list.add(value);
-					sha =g.toJson(list);
-					Editor editor =share.edit();
-					editor.putString(Share.FORRENT.getType(), sha);
-					editor.commit();
-					
-					
 					showToast("收藏成功", 2000);
-					item.setIcon(R.drawable.collected);
 				} else {
 					showToast("不要重复收藏", 2000);
 				}
-				findView();
 				break;
 			}
 		}
@@ -318,9 +295,8 @@ public class ForrentDetailsActivity extends BaseActivity
 				showToast("请先登录", 2000);
 				return true;
 			}
-			
+			item.setIcon(R.drawable.collected);
 			getCollect();
-			this.item = item;
 			break;
 		}
 		return true;
