@@ -1,8 +1,6 @@
 package com.yikang.real.bean;
 
-import org.androidannotations.annotations.EBean;
 
-@EBean
 public class House {
 
 	public String id;

@@ -47,8 +47,11 @@ import com.google.gson.JsonObject;
 
 public class HttpConnect {
 
-	String httpUrl = "http://210.75.3.26:8855/houseapp/apprq.do";
-	public static String picUrl="http://210.75.3.26:8855/houseapp/";
+//	String httpUrl = "http://210.75.3.26:8855/houseapp/apprq.do";
+//	public static String picUrl="http://210.75.3.26:8855/houseapp/";
+	
+	String httpUrl ="http://116.55.248.105:8855/houseapp/apprq.do";
+	public static String picUrl="http://116.55.248.105:8855/houseapp/";
 	
 	public  <T> Responds<?> httpUrlConnection(Request head,Type type) {
 		try {

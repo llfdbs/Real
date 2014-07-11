@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.androidannotations.annotations.ViewById;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -320,11 +319,11 @@ public class ForrentFragments extends MainFragment implements
 		final Request reques = new Request();
 		reques.setCommandcode("108");
 		HashMap map = new HashMap<String, Object>();
-		map.put("city", "昆明");
+		map.put("city", Container.getCity().getCity());
 		map.put("desc", "0");
 		map.put("p", 1);
-		map.put("lat", 24.973079315636);
-		map.put("lng", 102.69840055824);
+		map.put("lat", Container.getCity().getLat());
+		map.put("lng", Container.getCity().getLng());
 		reques.setREQUEST_BODY(map);
 		new Thread(new Runnable() {
 

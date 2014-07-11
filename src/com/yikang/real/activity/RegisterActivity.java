@@ -2,6 +2,7 @@ package com.yikang.real.activity;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -17,11 +18,13 @@ import android.widget.TextView;
 import cn.Bean.util.Login;
 import cn.Bean.util.Register;
 import cn.Bean.util.SecondHandHouseDetails;
+
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.bean.User;
+import com.yikang.real.until.Util;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
@@ -113,15 +116,20 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.register:
+
+			if(regist_username.getText().length()==0){
+				regist_username.setError("账号不能为空");
+				return ;
+			}
+			if(regist_pwd.getText().length()==0){
+				regist_pwd.setError("密码不能为空");
+				return ;
+			}
+			if(Util.isMobileNO(regist_username.getText().toString())){
+				regist_username.setError("账号必须是手机号");
+				return ;
+			}
 			
-			if(regist_username.getText().toString().trim().length()==0){
-				showToastResources(R.string.phone_number_err, 0);
-				return; 
-			}
-			if(regist_pwd.getText().toString().trim().length()==0){
-				showToastResources(R.string.pwd_err, 0);
-				return; 
-			}
 			final HttpConnect conn = new HttpConnect();
 			final Request reques = new Request();
 			// REQUEST_BODY":{"username":"12" , "password":"xxx"}}

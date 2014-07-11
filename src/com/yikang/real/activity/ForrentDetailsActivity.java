@@ -1,14 +1,9 @@
 package com.yikang.real.activity;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,20 +13,19 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.Bean.util.Collect;
 import cn.Bean.util.ForrentHouseDetailsBean;
-import cn.Bean.util.OldHouseDetailsBean;
 import cn.Bean.util.SecondHouseValue;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.imp.PublicDb;
@@ -41,12 +35,10 @@ import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
 
-public class ForrentDetailsActivity extends BaseActivity 
-		 {
+public class ForrentDetailsActivity extends BaseActivity {
 
 	private TextView title;
 	private com.yikang.real.view.DetialGallery gallery;
-	private TextView zujin;
 	private TextView louxing;
 	private String nid;
 	private ForrentHouseDetailsBean fhdb;
@@ -87,7 +79,8 @@ public class ForrentDetailsActivity extends BaseActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.forrent_details);
 
-		value= (SecondHouseValue) getIntent().getExtras().getSerializable(Share.FORRENT.getType());
+		value = (SecondHouseValue) getIntent().getExtras().getSerializable(
+				Share.FORRENT.getType());
 		nid = value.getNid();
 		getData();
 		initActionBar();
@@ -127,6 +120,11 @@ public class ForrentDetailsActivity extends BaseActivity
 	private TextView mob_TV;
 	private DisplayImageOptions options;
 	private TextView mian_mob_TV;
+	private TextView transaction_TV;
+	private TextView zujin;
+	private TextView area_TV;
+	private TextView floor_TV;
+	private TextView person_TV;
 
 	/**
 	 * 获取 数据
@@ -142,6 +140,9 @@ public class ForrentDetailsActivity extends BaseActivity
 				request.setCommandcode("109");
 				HashMap<String, String> body = new HashMap<String, String>();
 				body.put("nid", nid);
+				if(Container.getUSER()!=null){
+					body.put("tel", Container.getUSER().getUsername());
+				}
 				request.setREQUEST_BODY(body);
 				Responds<ForrentHouseDetailsBean> response = (Responds<ForrentHouseDetailsBean>) new HttpConnect()
 						.httpUrlConnection(
@@ -151,8 +152,9 @@ public class ForrentDetailsActivity extends BaseActivity
 				if (response != null) {
 					mForrentDetailsActivityHandler.obtainMessage(1, response)
 							.sendToTarget();
-				}else
-				mForrentDetailsActivityHandler.obtainMessage(0).sendToTarget();
+				} else
+					mForrentDetailsActivityHandler.obtainMessage(0)
+							.sendToTarget();
 			}
 		}).start();
 
@@ -169,7 +171,7 @@ public class ForrentDetailsActivity extends BaseActivity
 		gallery.setAdapter(new ImagePagerAdapter(fhdb.getImage()));
 		gallery.setSelection(0);
 
-		// title.setText(fh.getTitle()==null?"":fhdb.getTitle());
+		title.setText(fhdb.getCom() == null ? "" : fhdb.getCom());
 		// zujin = (TextView) findViewById(R.id.zujin);
 		// zujin.setText(fh.getPrice()==null?"":fh.getPrice()+"/月");
 		// louxing = (TextView) findViewById(R.id.louxing);
@@ -179,15 +181,13 @@ public class ForrentDetailsActivity extends BaseActivity
 		// fhdb.getFitment()==null?"":fhdb.getFitment()
 		fitment_TV.setText(fhdb.getFitment() == null ? "" : fhdb.getFitment());
 
-		
-		mob_TV= (TextView) findViewById(R.id.forrent_mob);
-		mob_TV.setText(fhdb.getMob()==null?"":fhdb.getMob());
-		
-		mian_mob_TV= (TextView) findViewById(R.id.forrent_main_mob);
-		mian_mob_TV.setText(fhdb.getMob()==null?"":fhdb.getMob());
-		
-		
-		toward_TV = (TextView) findViewById(R.id.toward_TV);
+		mob_TV = (TextView) findViewById(R.id.forrent_mob);
+		mob_TV.setText(fhdb.getMob() == null ? "" : fhdb.getMob());
+
+		mian_mob_TV = (TextView) findViewById(R.id.forrent_main_mob);
+		mian_mob_TV.setText(fhdb.getMob() == null ? "" : fhdb.getMob());
+
+		toward_TV = (TextView) findViewById(R.id.floor_TV);
 		toward_TV.setText(fhdb.getToward() == null ? "" : fhdb.getToward());
 
 		type_TV = (TextView) findViewById(R.id.type_TV);
@@ -209,13 +209,36 @@ public class ForrentDetailsActivity extends BaseActivity
 		environmental_TV.setText(fhdb.getEnvironmental() == null ? "" : fhdb
 				.getEnvironmental());
 
-		facility_TV = (TextView) findViewById(R.id.facility_TV);
-		facility_TV.setText(fhdb.getFacility() == null ? "" : fhdb
+		transaction_TV = (TextView) findViewById(R.id.transaction_TV);
+		transaction_TV.setText(fhdb.getFacility() == null ? "" : fhdb
 				.getFacility());
+
+		facility_TV = (TextView) findViewById(R.id.facility_TV);
+		facility_TV.setText(fhdb.getBusiness() == null ? "" : fhdb
+				.getBusiness());
 
 		name_TV = (TextView) findViewById(R.id.name_TV);
 		name_TV.setText(fhdb.getName() == null ? "" : fhdb.getName());
 
+		zujin = (TextView) findViewById(R.id.zujin);
+		zujin.setText(value != null ? value.getPrice() : "");
+
+		area_TV = (TextView) findViewById(R.id.area_TV);
+		area_TV.setText(fhdb.getArea() == null ? "" : fhdb.getArea());
+
+		floor_TV = (TextView) findViewById(R.id.floor_TV);
+		floor_TV.setText(fhdb.getFloor() == null ? "" : fhdb.getFloor());
+
+		person_TV = (TextView) findViewById(R.id.forrent_person);
+		person_TV.setText(fhdb.getPerson() == null ? "" : fhdb.getPerson());
+		
+		ImageView head =(ImageView) findViewById(R.id.gerentouxiang);
+		ImageLoader loader = ImageLoader.getInstance();
+		
+		if(fhdb.getIconurl()!=null){
+			
+			loader.displayImage(HttpConnect.picUrl+fhdb.getIconurl(), head,options);
+		}
 	}
 
 	/**
@@ -232,7 +255,9 @@ public class ForrentDetailsActivity extends BaseActivity
 				request.setCommandcode("124");
 				HashMap<String, String> body = new HashMap<String, String>();
 				body.put("nid", nid.trim());
-				body.put("username", Container.getUSER().getUsername());
+				if(Container.getUSER()!=null){
+					body.put("tel", Container.getUSER().getUsername());
+				}
 				request.setREQUEST_BODY(body);
 				Responds<Collect> response = (Responds<Collect>) new HttpConnect()
 						.httpUrlConnection(request,
@@ -240,20 +265,20 @@ public class ForrentDetailsActivity extends BaseActivity
 								}.getType());
 				if (response != null) {
 					collect.obtainMessage(1, response).sendToTarget();
-				}else
-				collect.obtainMessage(0).sendToTarget();
+				} else
+					collect.obtainMessage(0).sendToTarget();
 			}
 		}).start();
 
 	}
 
-	
 	public Handler collect = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
-			new PublicDb().save(ForrentDetailsActivity.this,value,Share.FORRENT.getType());
+			new PublicDb().save(ForrentDetailsActivity.this, value,
+					Share.FORRENT.getType());
 			int result = msg.what;
 			Responds<Collect> responde = (Responds<Collect>) msg.obj;
 			switch (result) {
@@ -291,17 +316,46 @@ public class ForrentDetailsActivity extends BaseActivity
 
 			break;
 		case R.id.action_settings:
-			if(Container.getUSER()==null){
+			if (Container.getUSER() == null) {
 				showToast("请先登录", 2000);
 				return true;
 			}
 			item.setIcon(R.drawable.collected);
 			getCollect();
 			break;
+		case R.id.action_fenxiang:
+			ShareSDK.initSDK(this);
+			OnekeyShare oks = new OnekeyShare();
+			// 关闭sso授权
+			oks.disableSSOWhenAuthorize();
+
+			// 分享时Notification的图标和文字
+			oks.setNotification(R.drawable.ic_launcher,
+					getString(R.string.app_name));
+			// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+			oks.setTitle(getString(R.string.share));
+			// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+			oks.setTitleUrl("http://sharesdk.cn");
+			// text是分享文本，所有平台都需要这个字段
+			oks.setText("我是分享文本");
+			// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+			oks.setImagePath("/sdcard/test.jpg");
+			// url仅在微信（包括好友和朋友圈）中使用
+			oks.setUrl("http://sharesdk.cn");
+			// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+			oks.setComment("我是测试评论文本");
+			// site是分享此内容的网站名称，仅在QQ空间使用
+			oks.setSite(getString(R.string.app_name));
+			// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+			oks.setSiteUrl("http://sharesdk.cn");
+
+			// 启动分享GUI
+			oks.show(this);
+			break;
+
 		}
 		return true;
 	}
-
 
 	private class ImagePagerAdapter extends BaseAdapter {
 

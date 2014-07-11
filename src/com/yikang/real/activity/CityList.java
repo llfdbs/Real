@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import cn.Bean.util.City;
 import cn.Bean.util.SecondHandHouseDetails;
-
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
@@ -15,13 +13,15 @@ import com.yikang.real.until.Container;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
-
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +58,7 @@ public class CityList extends BaseActivity {
 		}
 
 	};
+	private ActionBar actionbar;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -180,9 +181,19 @@ public class CityList extends BaseActivity {
 
 	}
 
+	@SuppressLint("ResourceAsColor")
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
-
+		actionbar = getSupportActionBar();
+		actionbar.setHomeButtonEnabled(true);
+		actionbar.setIcon(R.drawable.back);
+		actionbar.setBackgroundDrawable(getResources().getDrawable(
+				R.drawable.top));
+		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
+				"id", "android");
+		TextView yourTextView = (TextView) findViewById(titleId);
+		yourTextView.setTextColor(R.color.black);
+		actionbar.setTitle("城市列表");
 	}
 }

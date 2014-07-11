@@ -14,13 +14,38 @@
     <LinearLayout style="@style/login_input_style" >
 
         <EditText
+               android:drawableLeft="@drawable/username"
             android:id="@+id/login_username"
 			style="@style/login_input_edite"
             android:hint="@string/loginname"
              />
-
+	<LinearLayout 
+	    style="@style/login_input_edite"
+	    android:orientation="horizontal"
+	    >
+	      <EditText
+            android:id="@+id/login_username"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:hint="输入验证码"
+             />
+	    
+	      <Button 
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:text="获取验证码"
+	          
+	          />
+	    
+	</LinearLayout>
+        
         <EditText
+            android:drawableLeft="@drawable/password"
             android:id="@+id/login_pwd"
+            android:password="true"
             style="@style/login_input_edite"
             android:hint="@string/loginpwd" />
     </LinearLayout>

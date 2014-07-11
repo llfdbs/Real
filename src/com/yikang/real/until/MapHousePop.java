@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -23,6 +24,7 @@ import cn.Bean.util.SecondHouseValue;
 import com.baidu.mapapi.utils.h;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
+import com.yikang.real.adapter.ForrentHouseAdapter;
 import com.yikang.real.adapter.NewHouseAdapter;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
@@ -35,7 +37,7 @@ public class MapHousePop extends PopupWindow {
 	String commandcode;
 	LayoutInflater inflate;
 	public static ArrayList<SecondHouseValue> data_newHouse;
-	NewHouseAdapter adapter;
+	BaseAdapter adapter;
 	View view;
 	ListView list;
 	ProgressBar bar;
@@ -49,7 +51,7 @@ public class MapHousePop extends PopupWindow {
 		MapHousePop.data_newHouse = data_newHouse;
 	}
 	
-	public MapHousePop(Activity context, int xid,
+	public MapHousePop(Activity context, String xid,
 			String commandcode) {
 		super(context);
 		inflate = LayoutInflater.from(context);
@@ -77,7 +79,7 @@ public class MapHousePop extends PopupWindow {
 
 					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
 							.get(Container.RESULT);
-					if(data!=null){
+					if(data!=null&&data.size()>0){
 						title.setText(data.get(0).getCommunity());
 					}
 					data_newHouse.addAll(data);
@@ -100,8 +102,11 @@ public class MapHousePop extends PopupWindow {
 		list = (ListView) view.findViewById(R.id.map_house);
 		bar = (ProgressBar) view.findViewById(R.id.map_house_bar);
 		data_newHouse.clear();
+		if(commandcode.equals("123")){
+			adapter = new ForrentHouseAdapter(context, data_newHouse);
+		}else{
 		adapter = new NewHouseAdapter(context, data_newHouse);
-
+		}
 		list.setAdapter(adapter);
 		if(data_newHouse.size()==0){
 			getData();

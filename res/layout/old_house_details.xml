@@ -230,12 +230,14 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/com_FV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
                     android:text="广元小区"
                     android:textColor="#000000"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -258,7 +260,7 @@
                     android:layout_marginLeft="5dip"
                     android:text="顺河路花园小区"
                     android:textColor="#000000"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
                  
             </LinearLayout>
         </LinearLayout>
@@ -294,12 +296,12 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/desc_FV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
-            android:text="该小区地位位置优越，紧挨地铁 和公交车站，位置优越环境优美,隔壁还有美女！"
             android:textColor="#000000"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
@@ -319,7 +321,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="周边设备: "
+            android:text="周边交通: "
             android:textSize="14sp" />
 
         <TextView
@@ -329,11 +331,10 @@
             android:layout_marginLeft="5dip"
             android:text="该小区地位位置优越，紧挨地铁 和公交车站，位置优越环境优美,隔壁还有美女！"
             android:textColor="#000000"
-            android:textSize="10sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
-     
-
+  
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

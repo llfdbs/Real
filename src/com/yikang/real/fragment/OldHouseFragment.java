@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.androidannotations.annotations.ViewById;
-
 import android.app.Activity;
 import android.content.Entity;
 import android.content.Intent;

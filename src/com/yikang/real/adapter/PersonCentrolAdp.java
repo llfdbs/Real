@@ -52,13 +52,13 @@ public class PersonCentrolAdp extends BaseAdapter{
 		name.setText(data[postion]);
 		switch (postion) {
 		case 0:
-			icon.setImageResource(R.drawable.shoucang);
+			icon.setImageResource(R.drawable.person);
 			break;
 		case 1:
-			icon.setImageResource(R.drawable.history);
+			icon.setImageResource(R.drawable.shoucang);
 			break;
 		case 2:
-			icon.setImageResource(R.drawable.jisuanqi);
+			icon.setImageResource(R.drawable.history);
 			break;
 		case 3:
 			icon.setImageResource(R.drawable.about);

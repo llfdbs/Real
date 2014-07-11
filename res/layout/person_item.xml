@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
@@ -20,8 +19,14 @@
         android:id="@+id/person_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="登陆/注册"
         android:textColor="@color/black"
-        android:textSize="8pt" />
+        android:textSize="10pt" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ice" />
 
 </LinearLayout>

@@ -35,7 +35,6 @@
                 android:id="@+id/name_TV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="张三"
                 android:textColor="#000000" />
         </LinearLayout>
 
@@ -54,7 +53,6 @@
                 android:id="@+id/forrent_mob"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="15555550395"
                 android:textColor="#000000" />
         </LinearLayout>
 
@@ -70,29 +68,13 @@
                 android:text="服务公司：" />
 
             <TextView
+                android:id="@+id/forrent_person"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4室2厅"
                 android:textColor="#000000" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dip"
-                android:text="在线房源：" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="20套"
-                android:textColor="#000000" />
-        </LinearLayout>
+   
     </LinearLayout>
 
     <ImageButton

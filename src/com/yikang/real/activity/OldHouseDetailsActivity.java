@@ -26,10 +26,13 @@ import android.widget.TextView;
 import cn.Bean.util.Collect;
 import cn.Bean.util.OldHouseDetailsBean;
 import cn.Bean.util.SecondHouseValue;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
 import com.yikang.real.imp.PublicDb;
@@ -68,14 +71,14 @@ public class OldHouseDetailsActivity extends BaseActivity {
 
 	};
 
-	
 	public Handler collect = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
-			
-			new PublicDb().save(OldHouseDetailsActivity.this,value,Share.OLD.getType());
+
+			new PublicDb().save(OldHouseDetailsActivity.this, value,
+					Share.OLD.getType());
 			int result = msg.what;
 			Responds<Collect> responde = (Responds<Collect>) msg.obj;
 			switch (result) {
@@ -155,6 +158,36 @@ public class OldHouseDetailsActivity extends BaseActivity {
 			item.setIcon(R.drawable.collected);
 			getCollect();
 			break;
+		case R.id.action_fenxiang:
+			ShareSDK.initSDK(this);
+			OnekeyShare oks = new OnekeyShare();
+			// 关闭sso授权
+			oks.disableSSOWhenAuthorize();
+
+			// 分享时Notification的图标和文字
+			oks.setNotification(R.drawable.ic_launcher,
+					getString(R.string.app_name));
+			// title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
+			oks.setTitle(getString(R.string.share));
+			// titleUrl是标题的网络链接，仅在人人网和QQ空间使用
+			oks.setTitleUrl("http://sharesdk.cn");
+			// text是分享文本，所有平台都需要这个字段
+			oks.setText("我是分享文本");
+			// imagePath是图片的本地路径，Linked-In以外的平台都支持此参数
+			oks.setImagePath("/sdcard/test.jpg");
+			// url仅在微信（包括好友和朋友圈）中使用
+			oks.setUrl("http://sharesdk.cn");
+			// comment是我对这条分享的评论，仅在人人网和QQ空间使用
+			oks.setComment("我是测试评论文本");
+			// site是分享此内容的网站名称，仅在QQ空间使用
+			oks.setSite(getString(R.string.app_name));
+			// siteUrl是分享此内容的网站地址，仅在QQ空间使用
+			oks.setSiteUrl("http://sharesdk.cn");
+
+			// 启动分享GUI
+			oks.show(this);
+			break;
+
 		}
 		return true;
 	}
@@ -211,7 +244,29 @@ public class OldHouseDetailsActivity extends BaseActivity {
 
 		TextView add_TV = (TextView) findViewById(R.id.add_FV);
 		add_TV.setText(fhdb.getAdd() == null ? "" : fhdb.getAdd());
+		
+		TextView price_FV= (TextView) findViewById(R.id.price_FV);
+		price_FV.setText(value.getPrice()==null?"":value.getPrice());
+		
+		TextView type_FV= (TextView) findViewById(R.id.type_FV);
+		type_FV.setText(fhdb.getType()==null?"":fhdb.getType());
 
+		TextView Area_FV= (TextView) findViewById(R.id.area_FV);
+		Area_FV.setText(value.getArea()==null?"":value.getArea());
+		
+		TextView com_FV =(TextView) findViewById(R.id.com_FV);
+		com_FV .setText(fhdb.getName()==null?"":fhdb.getName());
+		
+		TextView desc_FV =(TextView) findViewById(R.id.desc_FV);
+		desc_FV .setText(fhdb.getDesc()==null?"":fhdb.getDesc());
+		
+		ImageView head =(ImageView) findViewById(R.id.gerentouxiang);
+		ImageLoader loader = ImageLoader.getInstance();
+		
+		if(fhdb.getNamepath()!=null){
+			
+			loader.displayImage(HttpConnect.picUrl+fhdb.getNamepath(), head,options);
+		}
 		// "environmental":"杨家地农贸市场 正和农贸市场.太家河农贸市场 滇池卫城社区医院、儿童医院、圣约翰医院，同仁医院 ",
 		// "education":"云南大学滇池学院 滇池旅游度假区实验中学 滇池旅游度假区实验小学 扬帆贝贝 爱英森电脑培训学",
 		// "entertainment":"云南民族村、 海埂公园 大名星KTV 青少年活动中心 南亚风情园 西贡码头 千禧KTV 西",
@@ -242,6 +297,9 @@ public class OldHouseDetailsActivity extends BaseActivity {
 				request.setCommandcode("103");
 				HashMap<String, String> body = new HashMap<String, String>();
 				body.put("nid", nid);
+				if(Container.getUSER()!=null){
+					body.put("tel", Container.getUSER().getUsername());
+				}
 				request.setREQUEST_BODY(body);
 				Responds<OldHouseDetailsBean> response = (Responds<OldHouseDetailsBean>) new HttpConnect()
 						.httpUrlConnection(request,
@@ -272,6 +330,9 @@ public class OldHouseDetailsActivity extends BaseActivity {
 				request.setCommandcode("124");
 				HashMap<String, String> body = new HashMap<String, String>();
 				body.put("nid", nid);
+				if(Container.getUSER()!=null){
+					body.put("tel", Container.getUSER().getUsername());
+				}
 				request.setREQUEST_BODY(body);
 				Responds<Collect> response = (Responds<Collect>) new HttpConnect()
 						.httpUrlConnection(request,

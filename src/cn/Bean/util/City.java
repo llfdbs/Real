@@ -5,6 +5,24 @@ package cn.Bean.util;
 public class City {
 	private String city;//区域名称
 //	private String listarea;//区域名称列表
+	private float lat;
+	private float lng;
+	
+	public float getLat() {
+		return lat;
+	}
+
+	public void setLat(float lat) {
+		this.lat = lat;
+	}
+
+	public float getLng() {
+		return lng;
+	}
+
+	public void setLng(float lng) {
+		this.lng = lng;
+	}
 
 	public String getCity() {
 		return city;

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class SecondHouseMapValue implements Serializable{
 
-	private int mid;//小区id
+	private String mid;//小区id
 	private float lat;//经度
 	private float lng;//纬度
 	private String title;//标题
@@ -22,10 +22,11 @@ public class SecondHouseMapValue implements Serializable{
 	public void setFlag(String flag) {
 		this.flag = flag;
 	}
-	public int getMid() {
+	
+	public String getMid() {
 		return mid;
 	}
-	public void setMid(int mid) {
+	public void setMid(String mid) {
 		this.mid = mid;
 	}
 	public float getLat() {

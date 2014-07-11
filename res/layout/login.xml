@@ -23,7 +23,7 @@
         <EditText
             android:drawableLeft="@drawable/password"
             android:id="@+id/login_pwd"
-            
+            android:password="true"
             style="@style/login_input_edite"
             android:hint="@string/loginpwd" />
     </LinearLayout>

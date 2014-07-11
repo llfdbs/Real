@@ -78,7 +78,7 @@ public class MoreAdapter extends BaseAdapter {
 			view.setTextColor(R.color.holo_blue_bright);
 			image.setVisibility(View.VISIBLE);
 		} else {
-			view.setTextColor(android.R.color.black);
+			view.setTextColor(R.color.black);
 			image.setVisibility(View.GONE);
 		}
 		return convert;

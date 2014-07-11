@@ -82,6 +82,7 @@ public class Container {
 	final public static DisplayImageOptions options = new DisplayImageOptions.Builder()
 			.showImageForEmptyUri(R.drawable.image_src)
 			.showImageOnFail(R.drawable.image_src)
-			.showStubImage(R.drawable.image_src).cacheInMemory().cacheOnDisc()
+			.showStubImage(R.drawable.image_src)
+			.cacheInMemory().cacheOnDisc()
 			.build();
 }

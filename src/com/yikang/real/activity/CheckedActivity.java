@@ -65,12 +65,12 @@ public class CheckedActivity extends BaseActivity implements
 	private void findView() {
 		mTab1 = (RadioButton) findViewById(R.id.radio_button0);
 		mTab2 = (RadioButton) findViewById(R.id.radio_button1);
-		mTab3 = (RadioButton) findViewById(R.id.radio_button2);
+//		mTab3 = (RadioButton) findViewById(R.id.radio_button2);
 		mTab4 = (RadioButton) findViewById(R.id.radio_button3);
 		pager = (ViewPager) findViewById(R.id.pager);
 		mTab1.setOnCheckedChangeListener(this);
 		mTab2.setOnCheckedChangeListener(this);
-		mTab3.setOnCheckedChangeListener(this);
+//		mTab3.setOnCheckedChangeListener(this);
 		mTab4.setOnCheckedChangeListener(this);
 
 		localcity = (TextView) findViewById(R.id.topbar_local);
@@ -95,7 +95,7 @@ public class CheckedActivity extends BaseActivity implements
 		OldHouseFragment old = new OldHouseFragment();
 		NewHouseFragment newH = new NewHouseFragment();
 		PersonCentrol centrol = new PersonCentrol();
-		fragments = new Fragment[] { forrent, old, newH, centrol };
+		fragments = new Fragment[] { forrent, old,  centrol };
 		mAdapter = new MyAdapter(getSupportFragmentManager(), fragments);
 		pager.setAdapter(mAdapter);
 	}
@@ -108,13 +108,13 @@ public class CheckedActivity extends BaseActivity implements
 				Container.setCurrentPage(Page.OLD);
 				pager.setCurrentItem(1);
 				break;
-			case R.id.radio_button2:
-				Container.setCurrentPage(Page.NEW);
-				pager.setCurrentItem(2);
-				break;
+//			case R.id.radio_button2:
+//				Container.setCurrentPage(Page.NEW);
+//				pager.setCurrentItem(2);
+//				break;
 			case R.id.radio_button3:
 				Container.setCurrentPage(Page.PERSON);
-				pager.setCurrentItem(3);
+				pager.setCurrentItem(2);
 				break;
 			case R.id.radio_button0:
 			default:
@@ -137,7 +137,8 @@ public class CheckedActivity extends BaseActivity implements
 
 		@Override
 		public int getCount() {
-			return 4;
+//			return 4;
+			return frags.length;
 		}
 
 		@Override
@@ -145,17 +146,17 @@ public class CheckedActivity extends BaseActivity implements
 			switch (position) {
 			// 租房
 			case 0:
-				return frags[0];
+				return frags[position];
 				// 二手房
+//			case 1:
+//				return frags[1];
+//				// 新房
 			case 1:
-				return frags[1];
-				// 新房
-			case 2:
-				return frags[2];
+				return frags[position];
 				// 个人
-			case 3:
+			case 2:
 			default:
-				return frags[3];
+				return frags[position];
 			}
 		}
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+      android:background="#f0f0f0"
+    android:gravity="center_horizontal" >
+    <TextView
+        android:id="@+id/login_topline"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@color/holo_blue_bright" />
+    <TextView
+        android:id="@+id/usercenter_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="20dp"
+      />
+
+    <Button
+        android:id="@+id/unlogin"
+        android:text="注销账户"
+        android:textColor="@color/black"
+            android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
+
+    <Button
+          android:textColor="@color/black"
+        android:id="@+id/change"
+            android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="修改密码" />
+
+</LinearLayout>

@@ -15,6 +15,7 @@ import cn.Bean.util.SecondHouseValue;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.yikang.real.R;
+import com.yikang.real.web.HttpConnect;
 
 public class ForrentHouseAdapter extends BaseAdapter {
 
@@ -72,21 +73,20 @@ public class ForrentHouseAdapter extends BaseAdapter {
 
 		holder.getHouseName().setText(data.get(postions).getSimpleadd());
 		holder.getAddress().setText(data.get(postions).getCommunity());
-		holder.getHousePices().setText(data.get(postions).getHousetype());
-		holder.getHouseSize().setText(data.get(postions).getPrice()+"元");
+		holder.getHousePices().setText(data.get(postions).getPrice()+"元");
+		holder.getHouseSize().setText(data.get(postions).getHousetype());
 
 		ImageLoader loader = ImageLoader.getInstance();
 
 		DisplayImageOptions options;
 		options = new DisplayImageOptions.Builder()
-				.showImageOnFail(R.drawable.ic_launcher) // 设置图片在下载期间显示的图片
-				.showImageForEmptyUri(R.drawable.ic_launcher)// 设置图片Uri为空或是错误的时候显示的图片
-				.showStubImage(R.drawable.ic_launcher).cacheInMemory()// 设置下载的图片是否缓存在内存中
+				.showImageOnFail(R.drawable.image_src) // 设置图片在下载期间显示的图片
+				.showImageForEmptyUri(R.drawable.image_src)// 设置图片Uri为空或是错误的时候显示的图片
+				.showStubImage(R.drawable.image_src)
+				.cacheInMemory()// 设置下载的图片是否缓存在内存中
 				.cacheOnDisc().build();// 设置下载的图片是否缓存在SD卡中
 
-		if(data.get(postions).getIconurl()!=null){
-			loader.displayImage(data.get(postions).getIconurl(), holder.getIcon(),options);
-		}
+		loader.displayImage(HttpConnect.picUrl+data.get(postions).getIconurl(), holder.getIcon(),options);
 
 		return converView;
 	}

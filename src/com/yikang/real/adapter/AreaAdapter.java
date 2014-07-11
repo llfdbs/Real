@@ -2,6 +2,7 @@ package com.yikang.real.adapter;
 
 import java.util.List;
 
+import android.R.color;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -69,7 +70,7 @@ public class AreaAdapter extends BaseAdapter {
 			view.setTextColor(R.color.holo_blue_bright);
 			image.setVisibility(View.VISIBLE);
 		} else {
-			view.setTextColor(android.R.color.black);
+			view.setTextColor(R.color.black);
 			image.setVisibility(View.GONE);
 		}
 		return convert;

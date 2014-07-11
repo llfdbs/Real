@@ -35,9 +35,29 @@ public class ForrentHouseDetailsBean {
 	// ]
 
 	 
-	String floor, fitment, type, state, person, area, address, toward, name,
-			mob, iconurl,   config, desc, com, cid, environmental,lat,lng,
-			education, entertainment, facility, business,tel;
+	String floor, //楼层
+	fitment, //装修
+	type, //物业用途
+	state,//凭租状态
+	person,//公司个人
+	area, //面积
+	address, //地址
+	toward,//朝向
+	name,//经纪人姓名
+	mob, //经纪人电话
+	iconurl,   //经纪人头像
+	config, //房间配置
+	desc, //详细描述
+	com, //小区名称
+	cid, //小区id
+	environmental,//周边环境
+	lat,//经度
+	lng,//维度
+	education, //学校教育
+	entertainment, //休闲娱乐
+	facility, //交通情况
+	business,//商业百货
+	tel;
  
 	public String getLat() {
 		return lat;

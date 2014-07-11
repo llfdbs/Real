@@ -152,11 +152,14 @@ public class SearchActivity extends BaseActivity implements OnItemClickListener 
 				g.toJson(data), type);
 		bundle.putString("xid", temp.get(index).get("xid"));
 		bundle.putString("title", temp.get(index).get("title"));
+		bundle.putString("lat", temp.get(index).get("lat"));
+		bundle.putString("lng", temp.get(index).get("lng"));
 		if(null!=getIntent().getStringExtra("from")){
 			Intent intent =getIntent();
 			intent.setClass(SearchActivity.this, OverlayDemo.class);
 			intent.putExtras(bundle);
 			setResult(200,intent);
+			finish();
 		}else {
 			openActivity(Result.class, bundle);
 		}

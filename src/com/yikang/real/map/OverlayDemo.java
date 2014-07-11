@@ -1,6 +1,7 @@
 package com.yikang.real.map;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -218,7 +220,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		// 修改定位数据后刷新图层生效
 		mMapView.refresh();
 		level=9;
-		getData("9");
+		
 		initActionBar();
 	}
 
@@ -265,6 +267,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 						(int) (24.872058314636 * 1e6),
 						(int) (102.59540044824 * 1e6)));
 				isRequest = false;
+				getData("9");
 			}
 			// 首次定位完成
 			isFirstLoc = false;
@@ -289,8 +292,11 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				 */
 				level = mMapView.getZoomLevel();
 				if (list != null) {
-					updateMapState();
+					if(pop2!=null&&pop2.isShowing()){
+						return ;
+					}
 					getData(String.valueOf(level));
+//					updateMapState();
 				}
 			}
 
@@ -316,7 +322,10 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				 */
 				level = mMapView.getZoomLevel();
 				if (list != null) {
-					updateMapState();
+//					updateMapState();
+					if(pop2!=null&&pop2.isShowing()){
+						return ;
+					}
 					getData(String.valueOf(level));
 				}
 			}
@@ -334,7 +343,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 	public void reloadOverlay(float level) {
 
 		// 清除自定义点
-		if(mOverlay!=null||null!=mMapView.getOverlays()){
+		if(mMapView!=null||mOverlay!=null||null!=mMapView.getOverlays()){
 			mMapView.getOverlays().remove(mOverlay);
 			mOverlay.removeAll();
 		}
@@ -403,36 +412,52 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 	/**
 	 * 获取屏幕边界坐标范围
 	 */
-	private void updateMapState() {
+	private HashMap<String, String> updateMapState() {
 		// 获取屏幕右上左下角坐标的另一种方法
-		// GeoPoint centerPoint = mMapView.getMapCenter();// 地图中心坐标点
-		// int tpSpan = mMapView.getLatitudeSpan();// 当前纬线的跨度（从地图的上边缘到下边缘）
-		// int lrSpan = mMapView.getLongitudeSpan();// 当前经度的跨度（从地图的左边缘到右边缘）
-		// GeoPoint point = new GeoPoint(centerPoint.getLatitudeE6()- tpSpan /
-		// 2, centerPoint.getLongitudeE6() + lrSpan / 2);// 右上角
-		// GeoPoint point2 = new GeoPoint(centerPoint.getLatitudeE6()+ tpSpan /
-		// 2, centerPoint.getLongitudeE6() - lrSpan / 2);// 左下角
+//		 GeoPoint centerPoint = mMapView.getMapCenter();// 地图中心坐标点
+//		 int tpSpan = mMapView.getLatitudeSpan();// 当前纬线的跨度（从地图的上边缘到下边缘）
+//		 int lrSpan = mMapView.getLongitudeSpan();// 当前经度的跨度（从地图的左边缘到右边缘）
+//		 GeoPoint point = new GeoPoint(centerPoint.getLatitudeE6()- tpSpan /
+//		 2, centerPoint.getLongitudeE6() + lrSpan / 2);// 右上角
+//		 GeoPoint point2 = new GeoPoint(centerPoint.getLatitudeE6()+ tpSpan /
+//		 2, centerPoint.getLongitudeE6() - lrSpan / 2);// 左下角
 		// 隐藏“我的位置”的显示信息
-		pop.hidePop();
+		//		pop.hidePop();
 		// 获得屏幕右上角和左下角的经纬度
 		GeoPoint pointLeft = mMapView.getProjection().fromPixels(0,
 				mMapView.getHeight());
 
 		GeoPoint pointRight = mMapView.getProjection().fromPixels(
 				mMapView.getWidth(), 0);
-
-		// Toast.makeText(
-		// this,
-		// "纬度范围:" + pointLeft.getLatitudeE6() + "~"
-		// + pointRight.getLatitudeE6() + "\n" + "经度范围:"
-		// + pointLeft.getLongitudeE6() + "~"
-		// + pointRight.getLongitudeE6(), Toast.LENGTH_SHORT)
-		// .show();
-		HashMap<String, Integer> options = new HashMap<String, Integer>();
-		options.put("minlat", pointLeft.getLatitudeE6());
-		options.put("maxlat", pointRight.getLatitudeE6());
-		options.put("minlng", pointLeft.getLongitudeE6());
-		options.put("maxlng", pointRight.getLongitudeE6());
+		HashMap<String, String> options = new HashMap<String, String>();
+		if(pointLeft!=null){
+			StringBuffer minlat =new StringBuffer(String.valueOf(pointLeft.getLatitudeE6()));
+			minlat.insert(2,".");
+			StringBuffer maxlat =new StringBuffer(String.valueOf(pointRight.getLatitudeE6()));
+			maxlat.insert(2,".");
+			StringBuffer minlng =new StringBuffer(String.valueOf(pointLeft.getLongitudeE6()));
+			minlng.insert(3,".");
+			StringBuffer maxlng =new StringBuffer(String.valueOf(pointRight.getLongitudeE6()));
+			maxlng.insert(3,".");
+			options.put("minlat", minlat.toString());
+			options.put("maxlat", maxlat.toString());
+			options.put("minlng", minlng.toString());
+			options.put("maxlng", maxlng.toString());
+			Log.v(Thread.currentThread().getName(),
+					 "纬度范围:" + minlat + "~"
+					 + maxlat + "\n" + "经度范围:"
+					 + minlng + "~"
+					 + maxlng)
+					 ;
+		}else {
+			options.put("minlat", "24.872058314636");
+			options.put("maxlat", "24.973079315736");
+			options.put("minlng", "102.59540044824");
+			options.put("maxlng", "102.69840055924");
+		}
+	
+	
+		return options;
 	}
 
 	public void ListConversionPotions(List<SecondHouseMapValue> source) {
@@ -444,7 +469,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			OverlayItem item = new OverlayItem(p, "", "");
 			View view = inflate.inflate(R.layout.itme, null);
 			TextView text = (TextView) view.findViewById(R.id.text1);
-			text.setText(String.valueOf(value.getCount()));
+			text.setText(String.valueOf(value.getCount()==0?"":value.getCount()));
 			ImageView image= (ImageView) view.findViewById(R.id.imageView1);
 			if (level > 14.0 || level == 14) { // 返回小区+数量
 				image.setImageResource(R.drawable.icon_gcoding);
@@ -549,12 +574,13 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				} else {
 					request.setCommandcode("118");
 				}
-				HashMap<String, String> map = new HashMap<String, String>();
+				
+				HashMap<String, String> map = updateMapState();
 				map.put("city", "昆明");
-				map.put("minlat", "24.872058314636");
-				map.put("maxlat", "24.973079315736");
-				map.put("minlng", "102.59540044824");
-				map.put("maxlng", "102.69840055924");
+//				map.put("minlat", "24.872058314636");
+//				map.put("maxlat", "24.973079315736");
+//				map.put("minlng", "102.59540044824");
+//				map.put("maxlng", "102.69840055924");
 				map.put("zoomLevel", level);
 				request.setREQUEST_BODY(map);
 				Responds<SecondHouseMapValue> responds = (Responds<SecondHouseMapValue>) new HttpConnect()
@@ -620,6 +646,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				commandcode= "119";
 			}
 			pop2 =new MapHousePop(this,  value.getMid(), commandcode);
+
 			pop2.init();
 			pop2.setItemOnclick(this);
 			DisplayMetrics metrie = new DisplayMetrics();
@@ -650,8 +677,39 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		switch (response) {
 		case 200:
 			String xid =intent.getStringExtra("xid");
+			String title =intent.getStringExtra("title");
+			String lat =intent.getStringExtra("lat");
+			String lng =intent.getStringExtra("lng");
 			if(xid!=null){
-				getLocal(xid);
+//				getLocal(xid);
+				mMapController.setZoom(15);
+				mMapController.animateTo(new GeoPoint(
+						(int) (Float.valueOf(lat) * 1e6),
+						(int) (Float.valueOf(lng) * 1e6)));
+				List<SecondHouseMapValue> list =new ArrayList<SecondHouseMapValue>();
+				SecondHouseMapValue map =new SecondHouseMapValue();
+				map.setCount(0);
+				map.setLat(Float.valueOf(lat));
+				map.setLng(Float.valueOf(lng));
+				map.setMid(xid);
+				map.setTitle(title);
+				list.add(map);
+				ListConversionPotions(list);
+				
+				String commandcode="";
+				if(Container.getCurrentPage()==Page.FORREN){
+					commandcode ="123";
+				}else if(Container.getCurrentPage()==Page.OLD){
+					commandcode= "119";
+				}
+				pop2 =new MapHousePop(this,  xid, commandcode);
+				pop2.init();
+				pop2.setItemOnclick(this);
+				DisplayMetrics metrie = new DisplayMetrics();
+				getWindowManager().getDefaultDisplay().getMetrics(metrie);
+				int height = metrie.heightPixels;
+				pop2.showAtLocation(findViewById(R.id.map_bottomline), Gravity.TOP, 0, height);
+				
 			}else {
 				showToast("获取失败， 请重试", 2000);
 			}
@@ -661,60 +719,60 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			break;
 		}
 	}
-
-	Handler result_local = new Handler() {
-
-		@Override
-		public void handleMessage(Message msg) {
-			int result = msg.what;
-			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
-			switch (result) {
-			case 0:
-				showToast("请求失败，请重试", 3000);
-				break;
-
-			default:
-				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
-					List<SecondHouseValue> value =(List<SecondHouseValue>) responde.getRESPONSE_BODY();
-					
-				} else {
-					showToast("请求失败，请重试", 3000);
-				}
-				break;
-			}
-
-		}
-
-	};
-	//FIXME 未知
-	private void getLocal(final String xid){
-		Thread thread = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				Request request = new Request();
-				if(Container.getCurrentPage()==Page.FORREN){
-					request.setCommandcode("123");
-				}else if(Container.getCurrentPage()==Page.OLD){
-					request.setCommandcode("119");
-				}else {
-					request.setCommandcode("119");
-				}
-				HashMap<String, String> map = new HashMap<String, String>();
-				map.put("xid", xid);
-				request.setREQUEST_BODY(map);
-				Responds<SecondHouseValue> responds = (Responds<SecondHouseValue>) new HttpConnect()
-						.httpUrlConnection(request,
-								new TypeToken<Responds<SecondHouseValue>>() {
-								}.getType());
-
-				if (responds != null) {
-					result_local.obtainMessage(1, responds).sendToTarget();
-				}else
-					result_local.obtainMessage(0).sendToTarget();
-			}
-		});
-		thread.start();
-	}
+//
+//	Handler result_local = new Handler() {
+//
+//		@Override
+//		public void handleMessage(Message msg) {
+//			int result = msg.what;
+//			Responds<SecondHouseValue> responde = (Responds<SecondHouseValue>) msg.obj;
+//			switch (result) {
+//			case 0:
+//				showToast("请求失败，请重试", 3000);
+//				break;
+//
+//			default:
+//				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+//					List<SecondHouseValue> value =(List<SecondHouseValue>) responde.getRESPONSE_BODY();
+//					
+//				} else {
+//					showToast("请求失败，请重试", 3000);
+//				}
+//				break;
+//			}
+//
+//		}
+//
+//	};
+//	//FIXME 未知
+//	private void getLocal(final String xid){
+//		Thread thread = new Thread(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				// TODO Auto-generated method stub
+//				Request request = new Request();
+//				if(Container.getCurrentPage()==Page.FORREN){
+//					request.setCommandcode("123");
+//				}else if(Container.getCurrentPage()==Page.OLD){
+//					request.setCommandcode("119");
+//				}else {
+//					request.setCommandcode("119");
+//				}
+//				HashMap<String, String> map = new HashMap<String, String>();
+//				map.put("xid", xid);
+//				request.setREQUEST_BODY(map);
+//				Responds<SecondHouseValue> responds = (Responds<SecondHouseValue>) new HttpConnect()
+//						.httpUrlConnection(request,
+//								new TypeToken<Responds<SecondHouseValue>>() {
+//								}.getType());
+//
+//				if (responds != null) {
+//					result_local.obtainMessage(1, responds).sendToTarget();
+//				}else
+//					result_local.obtainMessage(0).sendToTarget();
+//			}
+//		});
+//		thread.start();
+//	}
 }

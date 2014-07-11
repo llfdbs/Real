@@ -2,12 +2,6 @@ package com.yikang.real.fragment;
 
 import java.util.ArrayList;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.CheckedChange;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.UiThread;
-import org.androidannotations.annotations.ViewById;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -44,7 +38,6 @@ public class NewHouseFragment extends MainFragment implements
 		OnCheckedChangeListener, OnClickListener {
 
 	public int Model = 0;
-	@ViewById
 	public LinearLayout house_topbar;
 	public DropDownListView listview;
 	public CheckBox top_bar1;
@@ -129,7 +122,7 @@ public class NewHouseFragment extends MainFragment implements
 			@Override
 			public void onDropDown() {
 				// TODO Auto-generated method stub
-				listview.onDropDownComplete();
+//				listview.onDropDownComplete();
 			}
 		});
 		
@@ -138,7 +131,7 @@ public class NewHouseFragment extends MainFragment implements
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				listview.onBottomComplete();
+//				listview.onBottomComplete();
 			}
 		});
 	}

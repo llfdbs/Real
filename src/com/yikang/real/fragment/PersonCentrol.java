@@ -13,10 +13,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yikang.real.R;
 import com.yikang.real.activity.History;
 import com.yikang.real.activity.LoginActivity;
+import com.yikang.real.activity.PersonCenter;
 import com.yikang.real.activity.Result;
 import com.yikang.real.adapter.PersonCentrolAdp;
 import com.yikang.real.application.BaseActivity;
@@ -25,7 +27,7 @@ import com.yikang.real.until.ToastTools;
 
 public class PersonCentrol extends Fragment {
 	BaseActivity act;
-	
+
 	@Override
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
@@ -39,50 +41,32 @@ public class PersonCentrol extends Fragment {
 		PersonCentrol fragment = new PersonCentrol();
 		return fragment;
 	}
-	
+
 	public ListView person_centrol;
-	public LinearLayout person_login;
-	
-	String[] data = new String[] { "我的收藏", "浏览记录", "房贷计算器", "关于我们" };
+
+	String[] data = new String[] { "登陆/注册", "我的收藏", "浏览记录", "关于我们" };
 	PersonCentrolAdp adapter = null;
-	
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		View view =LayoutInflater.from(act).inflate(R.layout.person,null);
-		person_centrol =(ListView) view.findViewById(R.id.person_centrol);
-		person_login =(LinearLayout) view.findViewById(R.id.person_login);
-		
-		person_login.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(Container.USER==null){
-					Intent intent = new Intent(act, LoginActivity.class);
-					startActivity(intent);
-				}
-			}
-		});
-		
+		View view = LayoutInflater.from(act).inflate(R.layout.person, null);
+		person_centrol = (ListView) view.findViewById(R.id.person_centrol);
+
 		initData();
 		return view;
 	}
-	
-	
 
 	@Override
 	public void onResume() {
 		// TODO Auto-generated method stub
-		TextView name =	(TextView) person_login.findViewById(R.id.person_name);
-		if(Container.USER==null){
-			name.setText("登录/注册");
-		}else {
-			name.setText(Container.USER.getUsername());
+		if (Container.USER == null) {
+			data[0]="登录/注册";
+		} else {
+			data[0]="用户中心";
 		}
-		
+		adapter.notifyDataSetChanged();
 		super.onResume();
 	}
 
@@ -92,21 +76,27 @@ public class PersonCentrol extends Fragment {
 		person_centrol.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int postion,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int postion, long arg3) {
 				// TODO Auto-generated method stub
-				onItemClicke( postion);
+				onItemClicke(postion);
 			}
 		});
 	}
 
 	public void onItemClicke(int postion) {
 
-	
-
 		Intent intent = new Intent();
 		switch (postion) {
 		case 0:
+			if (Container.USER == null) {
+				intent.setClass(act, LoginActivity.class);
+			} else {
+				intent.setClass(act, PersonCenter.class);
+			}
+			startActivity(intent);
+			break;
+		case 1:
 			if (null == Container.USER || null == Container.USER.getUid()) {
 				ToastTools.showToastResources(act, R.string.login_warn, 2000);
 				return;
@@ -115,7 +105,8 @@ public class PersonCentrol extends Fragment {
 			intent.putExtra("fromwhere", "history");
 			act.startActivity(intent);
 			break;
-		case 1:
+
+		case 2:
 			if (null == Container.USER || null == Container.USER.getUid()) {
 				ToastTools.showToastResources(act, R.string.login_warn, 2000);
 				return;
@@ -124,14 +115,10 @@ public class PersonCentrol extends Fragment {
 			intent.putExtra("fromwhere", "footmark");
 			act.startActivity(intent);
 			break;
-		case 2:
-			intent.setClass(act, Result.class);
-			act.startActivity(intent);
-			break;
-
 		default:
-			intent.setClass(act, Result.class);
-			act.startActivity(intent);
+			// intent.setClass(act, Result.class);
+			// act.startActivity(intent);
+			Toast.makeText(act, "功能暂无", 3000).show();
 			break;
 		}
 	}
