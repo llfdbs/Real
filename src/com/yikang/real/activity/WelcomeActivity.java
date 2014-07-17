@@ -1,10 +1,15 @@
 package com.yikang.real.activity;
 
+import cn.Bean.util.City;
+
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
+import com.yikang.real.until.Container;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -71,7 +76,14 @@ public class WelcomeActivity extends BaseActivity{
 			@Override
 			public void onAnimationEnd(Animation arg0) {
 				// 动画结束时跳转页面
-				redirectTo();
+				Intent _Intent =null;
+				
+				if(Container.getCity()==null){
+					_Intent = new Intent(WelcomeActivity.this, CityList.class);
+				}else {
+					_Intent = new Intent(WelcomeActivity.this, CheckedActivity.class);
+				}
+				redirectTo(_Intent);
 			}
 
 			@Override
@@ -88,8 +100,8 @@ public class WelcomeActivity extends BaseActivity{
 	/**
 	 * 跳转到... 销毁当前欢迎页
 	 */
-	private void redirectTo() {
-		Intent _Intent = new Intent(WelcomeActivity.this, CheckedActivity.class);
+	private void redirectTo(Intent _Intent) {
+		
 		startActivity(_Intent);
 		WelcomeActivity.this.finish();
 	}

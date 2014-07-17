@@ -8,6 +8,7 @@ import java.util.List;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 import cn.Bean.util.City;
 import cn.Bean.util.More;
@@ -82,8 +83,17 @@ public class RealApplication extends Application{
 		super.onCreate();
 		initEngineManager(this);
 		mSingleton = this;
+		SharedPreferences share =getSharedPreferences("city", Context.MODE_PRIVATE);
 		City city = new City();
-		city.setCity("昆明");
+		if(share!=null){
+			city.setCity(share.getString("name", "昆明"));
+			city.setLat(share.getFloat("lat", (float) 24.872058314636));
+			city.setLng(share.getFloat("lng", (float) 102.59540044824));
+		}else{
+			city.setCity("昆明");
+			city.setLat((float) 24.872058314636);
+			city.setLng((float) 102.59540044824);
+		}
 		Container.setCity(city);
 		initImageLoader(getApplicationContext());
 	}

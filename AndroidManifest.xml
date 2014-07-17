@@ -52,6 +52,7 @@
     </uses-permission>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+      <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission> 
 
     <supports-screens
         android:anyDensity="true"
@@ -96,6 +97,7 @@
         <activity android:name="com.yikang.real.activity.History" />
 		<activity android:name="com.yikang.real.activity.PersonCenter"/>
         <activity android:name="com.yikang.real.activity.CityList" />
+        <activity android:name="com.yikang.real.activity.AboutUS"></activity>
         <activity
             android:name="com.yikang.real.map.OverlayDemo"
             android:configChanges="orientation"

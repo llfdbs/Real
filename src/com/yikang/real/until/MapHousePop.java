@@ -22,6 +22,8 @@ import android.widget.Toast;
 import cn.Bean.util.SecondHouseValue;
 
 import com.baidu.mapapi.utils.h;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.adapter.ForrentHouseAdapter;
@@ -118,6 +120,7 @@ public class MapHousePop extends PopupWindow {
 		setContentView(view);
 		setWidth(LayoutParams.MATCH_PARENT);
 		setHeight(createHight());
+		setHeight(LayoutParams.MATCH_PARENT);
 		setFocusable(true);
 		// PopupWindow pop = new PopupWindow(view,300,300,true);
 		setBackgroundDrawable(new BitmapDrawable());

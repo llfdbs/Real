@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -146,6 +146,7 @@ public class ForrentFragments extends MainFragment implements
 		}
 
 	};
+	private HashMap<String, Object> body;
 
 	private void getArea() {
 		new Thread(new Runnable() {
@@ -318,12 +319,18 @@ public class ForrentFragments extends MainFragment implements
 		final HttpConnect conn = new HttpConnect();
 		final Request reques = new Request();
 		reques.setCommandcode("108");
-		HashMap map = new HashMap<String, Object>();
-		map.put("city", Container.getCity().getCity());
-		map.put("desc", "0");
-		map.put("p", 1);
-		map.put("lat", Container.getCity().getLat());
-		map.put("lng", Container.getCity().getLng());
+		body = new HashMap<String, Object>();
+		body.put("desc", map.get("desc"));
+		body.put("price", price);
+		body.put("area", map.get("area"));
+		Log.v(Thread.currentThread().getName(), String.valueOf(page));
+		body.put("p", String.valueOf(page));
+		body.put("age", map.get("age"));
+		body.put("ztype", map.get("ztype"));
+		body.put("rType", map.get("rType"));
+		body.put("businesscCircle", businesscCircle);
+		body.put("lat", lat);
+		body.put("lng", lng);
 		reques.setREQUEST_BODY(map);
 		new Thread(new Runnable() {
 

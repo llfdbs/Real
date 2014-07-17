@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,8 +15,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import cn.Bean.util.Collect;
@@ -239,6 +243,20 @@ public class ForrentDetailsActivity extends BaseActivity {
 			
 			loader.displayImage(HttpConnect.picUrl+fhdb.getIconurl(), head,options);
 		}
+		
+		ImageView iv_call =(ImageView) findViewById(R.id.forrent_call);
+		iv_call.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+	                String number = mob_TV.getText().toString();  
+	                //用intent启动拨打电话  
+	                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+number));  
+	                startActivity(intent);  
+			}
+		});
 	}
 
 	/**

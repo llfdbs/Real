@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yikang.real.R;
+import com.yikang.real.activity.AboutUS;
 import com.yikang.real.activity.History;
 import com.yikang.real.activity.LoginActivity;
 import com.yikang.real.activity.PersonCenter;
@@ -116,9 +117,8 @@ public class PersonCentrol extends Fragment {
 			act.startActivity(intent);
 			break;
 		default:
-			// intent.setClass(act, Result.class);
-			// act.startActivity(intent);
-			Toast.makeText(act, "功能暂无", 3000).show();
+			 intent.setClass(act, AboutUS.class);
+			 act.startActivity(intent);
 			break;
 		}
 	}

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import cn.Bean.util.City;
 import cn.Bean.util.SecondHandHouseDetails;
+
 import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.application.BaseActivity;
@@ -13,10 +15,13 @@ import com.yikang.real.until.Container;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
 import com.yikang.real.web.Responds;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +45,7 @@ public class CityList extends BaseActivity {
 	MyAdapter mAd;
 	public List<String> listTag = new ArrayList<String>();
 	ArrayList<String> list_data = new ArrayList<String>();
-
+	List<City> city_list=null;
 	Handler cityHanlder = new Handler() {
 
 		@Override
@@ -48,6 +53,7 @@ public class CityList extends BaseActivity {
 			// TODO Auto-generated method stub
 			int result = msg.what;
 			if (result == 1) {
+				city_list=(List<City>) msg.obj;
 				list_data
 						.addAll((ArrayList<String>) getListViewData((List<City>) msg.obj));
 				mAd.notifyDataSetChanged();
@@ -74,9 +80,21 @@ public class CityList extends BaseActivity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				System.out.println("List " + arg2);
-				Container.getCity().setCity(list_data.get(arg2));
+				
 				Intent intent = getIntent();
 				intent.setClass(CityList.this, CheckedActivity.class);
+				SharedPreferences share= getSharedPreferences("city", Context.MODE_PRIVATE);
+				Editor editor =share.edit();
+				editor.putString("name", city_list.get(arg2).getCity());
+				editor.putFloat("lat", city_list.get(arg2).getLat());
+				editor.putFloat("lng",city_list.get(arg2).getLng());
+				editor.commit();
+				if(null==Container.getCity()){
+					Container.setCity(city_list.get(arg2));
+					intent.putExtra("city", list_data.get(arg2));
+					openActivity(CheckedActivity.class);
+				}
+				Container.setCity(city_list.get(arg2));;
 				intent.putExtra("city", list_data.get(arg2));
 				setResult(200, intent);
 				finish();

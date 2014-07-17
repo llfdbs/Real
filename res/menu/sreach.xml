@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+     tools:context="com.yikang.real.activity.OldHouseDetailsActivity"
+    >
+    
+        <item
+        android:id="@+id/sreach_map"
+        android:icon="@drawable/sreach"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+    
+</menu>

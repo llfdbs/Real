@@ -84,6 +84,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="5dip"
         android:background="@null"
+        android:id="@+id/forrent_call"
         android:scaleType="centerInside"
         android:src="@drawable/call_phone_select" />
 

@@ -20,6 +20,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
@@ -31,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import cn.Bean.util.SecondHouseMapValue;
 import cn.Bean.util.SecondHouseValue;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -149,17 +153,17 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 		 * 由于MapView在setContentView()中初始化,所以它需要在BMapManager初始化之后
 		 */
 		setContentView(R.layout.activity_overlay);
-		EditText edit =(EditText) findViewById(R.id.map_search);
-		edit.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Bundle bundle =new Bundle();
-				bundle.putString("from", "Map");
-				openActivityForResult(SearchActivity.class,bundle,500);
-			}
-		});
+//		EditText edit =(EditText) findViewById(R.id.map_search);
+//		edit.setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View arg0) {
+//				// TODO Auto-generated method stub
+//				Bundle bundle =new Bundle();
+//				bundle.putString("from", "Map");
+//				openActivityForResult(SearchActivity.class,bundle,500);
+//			}
+//		});
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		requestLocButton = (ImageView) findViewById(R.id.button1);
 		OnClickListener btnClickListener = new OnClickListener() {
@@ -263,9 +267,15 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			// 是手动触发请求或首次定位时，移动到定位点
 			if (isRequest || isFirstLoc) {
 				// 移动地图到定位点
+				if(Container.getCity()!=null){
+					mMapController.animateTo(new GeoPoint(
+							(int) (Container.getCity().getLat() * 1e6),
+							(int) (Container.getCity().getLng() * 1e6)));
+				}else {
 				mMapController.animateTo(new GeoPoint(
 						(int) (24.872058314636 * 1e6),
 						(int) (102.59540044824 * 1e6)));
+				}
 				isRequest = false;
 				getData("9");
 			}
@@ -719,6 +729,34 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			break;
 		}
 	}
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		getMenuInflater().inflate(R.menu.sreach, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case android.R.id.home:
+
+			finish();
+
+			break;
+		case R.id.sreach_map:
+			Bundle bundle =new Bundle();
+			bundle.putString("from", "Map");
+			openActivityForResult(SearchActivity.class,bundle,500);
+			break;
+		}
+		return true;
+	}
+
+	
 //
 //	Handler result_local = new Handler() {
 //

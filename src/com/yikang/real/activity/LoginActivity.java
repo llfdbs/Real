@@ -77,6 +77,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		int titleId = Resources.getSystem().getIdentifier(  
                 "action_bar_title", "id", "android"); 
 		TextView yourTextView = (TextView) findViewById(titleId);
+		actionbar.setHomeButtonEnabled(true);
 		yourTextView.setTextColor(R.color.black);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.top));

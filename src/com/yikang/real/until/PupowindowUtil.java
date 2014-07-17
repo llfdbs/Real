@@ -147,7 +147,8 @@ public class PupowindowUtil {
 		pop.setContentView(view);
 		pop.setOutsideTouchable(true);
 		pop.setWidth(LayoutParams.MATCH_PARENT);
-		pop.setHeight(h);
+//		pop.setHeight(h);
+		pop.setHeight(LayoutParams.MATCH_PARENT);
 		pop.setFocusable(true);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.update();
@@ -207,7 +208,8 @@ public class PupowindowUtil {
 		pop.setContentView(view);
 		pop.setOutsideTouchable(true);
 		pop.setWidth(LayoutParams.MATCH_PARENT);
-		pop.setHeight(h);
+//		pop.setHeight(h);
+		pop.setHeight(LayoutParams.MATCH_PARENT);
 		pop.setFocusable(true);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.update();

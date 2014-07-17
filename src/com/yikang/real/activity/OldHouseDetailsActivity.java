@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -227,13 +229,16 @@ public class OldHouseDetailsActivity extends BaseActivity {
 		// "business":"康乐茶叶市场 、民升超市 、大商汇、 国美电器、 沃尔玛、南亚风情园 广福厨具市场、十一家具",
 		// "image":["Photos/201404/CS1404000003/d07231dc03b147b498986176282cd88e.jpg"]}]}}
 
+		TextView title_TV =(TextView) findViewById(R.id.old_house_title);
+		title_TV.setText(fhdb.getAdd()==null ?"":fhdb.getAdd());
+		
 		TextView floor_TV = (TextView) findViewById(R.id.floor_FV);
 		floor_TV.setText(fhdb.getFloor() == null ? "" : fhdb.getFloor());
 		// 装修
 		TextView fitment_TV = (TextView) findViewById(R.id.fitment_FV);
 		fitment_TV.setText(fhdb.getFitment() == null ? "" : fhdb.getFitment());
 
-		TextView main_mob = (TextView) findViewById(R.id.old_detail_mob);
+		final TextView main_mob = (TextView) findViewById(R.id.old_detail_mob);
 		main_mob.setText(fhdb.getMob() == null ? "" : fhdb.getMob());
 
 		TextView years_TV = (TextView) findViewById(R.id.years_FV);
@@ -280,6 +285,20 @@ public class OldHouseDetailsActivity extends BaseActivity {
 		gallery = (DetialGallery) findViewById(R.id.gallery);
 		gallery.setAdapter(new ImagePagerAdapter(fhdb.getImage()));
 		gallery.setSelection(0);
+		
+		ImageView iv_call =(ImageView) findViewById(R.id.old_call);
+		iv_call.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+	                String number = main_mob.getText().toString();  
+	                //用intent启动拨打电话  
+	                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+number));  
+	                startActivity(intent);  
+			}
+		});
 
 	}
 

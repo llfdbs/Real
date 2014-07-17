@@ -99,6 +99,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
                 "action_bar_title", "id", "android"); 
 		TextView yourTextView = (TextView) findViewById(titleId);
 		yourTextView.setTextColor(R.color.black);
+		actionbar.setHomeButtonEnabled(true);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.top));
 		actionbar.setIcon(R.drawable.back);
