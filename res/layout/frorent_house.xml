@@ -4,7 +4,7 @@
     xmlns:listViewAttr="http://schemas.android.com/apk/res/com.yikang.real"
     android:id="@+id/zhu"
     android:layout_height="match_parent"
-    android:background="@color/background_holo_light"
+    android:background="@color/black75PercentColor"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -34,6 +34,7 @@
 
         <TextView
           style="@style/top_bar_limit"
+          android:background="#c0c0c0"
             />
 
         <LinearLayout
@@ -57,7 +58,9 @@
         </LinearLayout>
 
         <TextView
-            style="@style/top_bar_limit" />
+            style="@style/top_bar_limit" 
+             android:background="#c0c0c0"
+            />
 
         <LinearLayout
             android:id="@+id/house_topbar3"

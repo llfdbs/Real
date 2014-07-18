@@ -38,7 +38,7 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 	private int currentPageScrollStatus;
 	private int drawable[] = {R.drawable.guid01};
 
-	private Boolean statue;
+	private Boolean statue =false;
 
 	private void setStatue(Boolean statue){
 		this.statue= statue;

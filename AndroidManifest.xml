@@ -98,6 +98,7 @@
 		<activity android:name="com.yikang.real.activity.PersonCenter"/>
         <activity android:name="com.yikang.real.activity.CityList" />
         <activity android:name="com.yikang.real.activity.AboutUS"></activity>
+        <activity android:name="com.yikang.real.activity.GuideActivity"></activity>
         <activity
             android:name="com.yikang.real.map.OverlayDemo"
             android:configChanges="orientation"

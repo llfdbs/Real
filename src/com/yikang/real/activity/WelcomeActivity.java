@@ -28,10 +28,10 @@ import android.widget.Button;
  * @author vv
  * 
  */
-public class WelcomeActivity extends BaseActivity{
+public class WelcomeActivity extends BaseActivity {
 	private Button btn_jump = null;
-	private ActionBar actionBar;//导航栏
-	
+	private ActionBar actionBar;// 导航栏
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -39,29 +39,24 @@ public class WelcomeActivity extends BaseActivity{
 		final View view = View.inflate(this, R.layout.welcome, null);
 		// 设置无标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-//		 设置全屏
+		// 设置全屏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+
 		setContentView(view);
-		System.out.println(Build.VERSION.SDK_INT+"  " );
+		System.out.println(Build.VERSION.SDK_INT + "  ");
 
 		MyAnimation(view);
 
-
 	}
-
-	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		 ActionBar action =getSupportActionBar();
-		 action.hide();
+		ActionBar action = getSupportActionBar();
+		action.hide();
 		return true;
 	}
-
-
 
 	/**
 	 * 启动动画类
@@ -76,12 +71,21 @@ public class WelcomeActivity extends BaseActivity{
 			@Override
 			public void onAnimationEnd(Animation arg0) {
 				// 动画结束时跳转页面
-				Intent _Intent =null;
-				
-				if(Container.getCity()==null){
-					_Intent = new Intent(WelcomeActivity.this, CityList.class);
-				}else {
-					_Intent = new Intent(WelcomeActivity.this, CheckedActivity.class);
+
+				SharedPreferences share = getSharedPreferences("footprint", 0);
+				Intent _Intent = null;
+				if (share.getBoolean("frist", false)) {
+
+					if (Container.getCity() == null) {
+						_Intent = new Intent(WelcomeActivity.this,
+								CityList.class);
+					} else {
+						_Intent = new Intent(WelcomeActivity.this,
+								CheckedActivity.class);
+					}
+				} else {
+					_Intent = new Intent(WelcomeActivity.this,
+							GuideActivity.class);
 				}
 				redirectTo(_Intent);
 			}
@@ -101,37 +105,27 @@ public class WelcomeActivity extends BaseActivity{
 	 * 跳转到... 销毁当前欢迎页
 	 */
 	private void redirectTo(Intent _Intent) {
-		
+
 		startActivity(_Intent);
 		WelcomeActivity.this.finish();
 	}
 
-
-
 	@Override
 	protected void initData() {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 	@Override
 	protected void initListeners() {
 		// TODO Auto-generated method stub
-		
+
 	}
-
-
 
 	@Override
 	protected void initActionBar() {
 		// TODO Auto-generated method stub
-		
+
 	}
-
- 
-
-	
 
 }
