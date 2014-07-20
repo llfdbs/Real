@@ -280,7 +280,10 @@ public class ForrentFragments extends MainFragment implements
 	//
 	private PopupWindow createPop(PopStatus status) {
 		PopupWindow pop = null;
-		PupowindowUtil util = new PupowindowUtil(act, act);
+		int bh =CheckedActivity.getButtomHight();
+		int th =zhu.getHeight();
+		int ah =CheckedActivity.getActionBarHeight();
+		PupowindowUtil util = new PupowindowUtil(act, act,ah+bh+th);
 		switch (status) {
 		case Location:
 			if (pop_area == null) {
@@ -331,6 +334,7 @@ public class ForrentFragments extends MainFragment implements
 		body.put("businesscCircle", businesscCircle);
 		body.put("lat", lat);
 		body.put("lng", lng);
+		body.put("tel", Container.getUSER()!=null?Container.getUSER().getUsername():"");
 		reques.setREQUEST_BODY(map);
 		new Thread(new Runnable() {
 

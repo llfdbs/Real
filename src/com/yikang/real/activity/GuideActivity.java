@@ -8,12 +8,17 @@ import com.yikang.real.activity.adapter.ViewPagerAdapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -36,7 +41,7 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 	// 记录当前选中位置
 	private int currentIndex;
 	private int currentPageScrollStatus;
-	private int drawable[] = {R.drawable.guid01};
+	private int drawable[] = {R.drawable.guide1800,R.drawable.guide2800,R.drawable.guide3800};
 
 	private Boolean statue =false;
 
@@ -46,8 +51,13 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// 设置无标题
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		// 设置全屏
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.guide);
-
+		
 		// 初始化页面
 		initViews();
 
@@ -62,10 +72,6 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 		// 初始化引导图片列表
 		addView(drawable);
 		// 初始化引导图片列表
-//		views.add(inflater.inflate(R.layout.what_new_one, null));
-//		views.add(inflater.inflate(R.layout.what_new_two, null));
-//		views.add(inflater.inflate(R.layout.what_new_three, null));
-//		views.add(inflater.inflate(R.layout.what_new_four, null));
         
 		// 初始化Adapter
 		vpAdapter = new ViewPagerAdapter(views,this);
@@ -89,7 +95,7 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 		LinearLayout ll = (LinearLayout) findViewById(R.id.ll);
 
 		dots = new ImageView[views.size()];
-
+		Log.v("guide views lenght ",String.valueOf(views.size()));
 		// 循环取得小点图片
 		for (int i = 0; i < views.size(); i++) {
 			dots[i] = (ImageView) ll.getChildAt(i);
@@ -136,8 +142,12 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 		setCurrentDot(arg0);
 	}
 	private void goHome() {
+		SharedPreferences share = getSharedPreferences("footprint", 0);
+		Editor edit =share.edit();
+		edit.putBoolean("frist", true);
+		edit.commit();
 		// 跳转
-		Intent intent = new Intent(GuideActivity.this, CheckedActivity.class);
+		Intent intent = new Intent(GuideActivity.this, CityList.class);
 		startActivity(intent);
 		finish();
 	}
@@ -146,12 +156,6 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 		View view = LayoutInflater.from(GuideActivity.this).inflate(R.layout.what_new_one, null);
 		ImageView image = (ImageView)view.findViewById(R.id.image);
 		image.setBackgroundResource(id);
-		ImageView start = (ImageView)view.findViewById(R.id.iv_start_main);
-		if(b==true){
-			start.setVisibility(View.VISIBLE);
-		}else{
-			start.setVisibility(View.GONE);
-		}
 		return view;
 	}
 }

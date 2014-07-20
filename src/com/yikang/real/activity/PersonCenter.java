@@ -34,7 +34,7 @@ public class PersonCenter extends BaseActivity{
 		TextView text =(TextView) findViewById(R.id.usercenter_username);
 		text.setText(Container.getUSER().getUsername());
 		Button unlogin = (Button) findViewById(R.id.unlogin);
-		Button change =(Button) findViewById(R.id.change);
+//		Button change =(Button) findViewById(R.id.change);
 		
 		unlogin.setOnClickListener(new OnClickListener() {
 			
@@ -45,14 +45,14 @@ public class PersonCenter extends BaseActivity{
 				finish();
 			}
 		});
-		change .setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		change .setOnClickListener(new OnClickListener() {
+//			
+//			@Override
+//			public void onClick(View v) {
+//				// TODO Auto-generated method stub
+//				showToast("修改成功", 3000);
+//			}
+//		});
 	}
 	
 	
@@ -78,6 +78,7 @@ public class PersonCenter extends BaseActivity{
 		yourTextView.setTextColor(R.color.black);
 		actionbar.setBackgroundDrawable(getResources().getDrawable(
 				R.drawable.top));
+		actionbar.setHomeButtonEnabled(true);
 		actionbar.setTitle("用户中心");
 		actionbar.setIcon(R.drawable.back);
 	}

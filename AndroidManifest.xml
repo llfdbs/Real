@@ -107,7 +107,7 @@
         </activity>
         <activity android:name="com.baidu.mapapi.search.PlaceCaterActivity" >
         </activity>
-
+	<activity android:name="com.yikang.real.activity.PicActivity"></activity>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

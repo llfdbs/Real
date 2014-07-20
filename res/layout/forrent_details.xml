@@ -124,8 +124,7 @@
                         android:layout_weight="5" >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/detail_text"
                             android:text="面积: "
                             android:textSize="14sp" />
 
@@ -143,8 +142,7 @@
                         android:layout_weight="4" >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/detail_text"
                             android:text="朝向: "
                             android:textSize="14sp" />
 
@@ -169,8 +167,7 @@
                         android:layout_weight="5" >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/detail_text"
                             android:text="楼层: "
                             android:textSize="14sp" />
 
@@ -188,8 +185,7 @@
                         android:layout_weight="4" >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/detail_text"
                             android:text="类型: "
                             android:textSize="14sp" />
 
@@ -216,13 +212,12 @@
                 android:layout_marginTop="10dip" >
 
                 <TextView
-                           style="@style/detail_text"
-                    android:text="房东电话: "
-                    />
+                    style="@style/detail_text"
+                    android:text="房东电话: " />
 
                 <TextView
                     android:id="@+id/forrent_main_mob"
-                        style="@style/detail_text" />
+                    style="@style/detail_text" />
             </LinearLayout>
 
             <TextView
@@ -247,8 +242,7 @@
                         android:layout_marginTop="10dip" >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/detail_text"
                             android:text="小区: "
                             android:textSize="14sp" />
 
@@ -261,16 +255,21 @@
                             android:textSize="14sp" />
                     </LinearLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="1dip"
+                        android:background="#E3E3E3" />
+
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dip"
                         android:layout_marginLeft="20dip"
-                        android:layout_marginTop="10dip" >
+                        android:layout_marginTop="10dip"
+                        android:orientation="horizontal" >
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            style="@style/detail_text"
                             android:text="地址: "
                             android:textSize="14sp" />
 
@@ -279,20 +278,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dip"
+                            android:layout_weight="1"
                             android:textColor="#000000"
                             android:textSize="14sp" />
+
+                        <ImageView
+                            android:layout_width="40dip"
+                            android:layout_height="40dip"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/dingwei" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <ImageView
-                    android:layout_width="80dip"
-                    android:layout_height="60dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="20dip"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/dingwei" />
             </FrameLayout>
 
             <TextView
@@ -308,8 +304,7 @@
                 android:layout_marginTop="10dip" >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        style="@style/detail_text"
                     android:text="房间搭配: "
                     android:textSize="14sp" />
 
@@ -335,8 +330,7 @@
                 android:layout_marginTop="10dip" >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                      style="@style/detail_text"
                     android:text="小区信息: "
                     android:textSize="14sp" />
 
@@ -362,8 +356,7 @@
                 android:layout_marginTop="10dip" >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                        style="@style/detail_text"
                     android:text="周边设备:"
                     android:textSize="14sp" />
 
@@ -388,11 +381,10 @@
                 android:layout_marginLeft="20dip"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dip"
-                android:gravity="center_vertical" >
+                 >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                      style="@style/detail_text"
                     android:text="交通环境: "
                     android:textSize="14sp" />
 

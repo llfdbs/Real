@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,8 +52,11 @@ public class CheckedActivity extends BaseActivity implements
 
 	public EditText search;
 
+	private static RadioGroup main_radio;
 	Fragment[] fragments;
 	MyAdapter mAdapter;
+	
+	private static LinearLayout topbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,17 +67,28 @@ public class CheckedActivity extends BaseActivity implements
 		mTab1.performClick();
 	}
 
+	public static int getButtomHight(){
+		return main_radio.getHeight();
+	}
+	
+	public static int getActionBarHeight(){
+		return topbar.getHeight();
+	} 
+	
 	private void findView() {
 		mTab1 = (RadioButton) findViewById(R.id.radio_button0);
 		mTab2 = (RadioButton) findViewById(R.id.radio_button1);
 //		mTab3 = (RadioButton) findViewById(R.id.radio_button2);
 		mTab4 = (RadioButton) findViewById(R.id.radio_button3);
+		main_radio =(RadioGroup) findViewById(R.id.main_radio);
+		
+		
 		pager = (ViewPager) findViewById(R.id.pager);
 		mTab1.setOnCheckedChangeListener(this);
 		mTab2.setOnCheckedChangeListener(this);
 //		mTab3.setOnCheckedChangeListener(this);
 		mTab4.setOnCheckedChangeListener(this);
-
+		topbar= (LinearLayout) findViewById(R.id.topbar);
 		localcity = (TextView) findViewById(R.id.topbar_local);
 		map = (TextView) findViewById(R.id.topbar_map);
 		search = (EditText) findViewById(R.id.topbar_search);
@@ -89,6 +105,8 @@ public class CheckedActivity extends BaseActivity implements
 	private void setlocation(){
 		localcity.setText(Container.getCity().getCity());
 	}
+	
+
 
 	private void AfterView() {
 		ForrentFragments forrent = new ForrentFragments();
@@ -213,7 +231,6 @@ public class CheckedActivity extends BaseActivity implements
 		case 501:
 			if(responds==200){
 				setlocation();
-				showToast(intent.getStringExtra("city"), Toast.LENGTH_LONG);
 			}
 			break;
 

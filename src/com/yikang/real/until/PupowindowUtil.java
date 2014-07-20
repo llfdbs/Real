@@ -7,39 +7,28 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Handler;
-import android.os.Message;
+import android.graphics.drawable.ColorDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 import cn.Bean.util.Area;
 import cn.Bean.util.More;
 import cn.Bean.util.MoreValue;
-import cn.Bean.util.SecondHouseValue;
 
-import com.google.gson.reflect.TypeToken;
 import com.yikang.real.R;
 import com.yikang.real.activity.CheckedActivity;
 import com.yikang.real.adapter.AreaAdapter;
 import com.yikang.real.adapter.AreaAdapterTwo;
 import com.yikang.real.adapter.MoreAdapter;
 import com.yikang.real.adapter.MoreAdapterTwo;
-import com.yikang.real.adapter.NewHouseAdapter;
-import com.yikang.real.application.BaseActivity;
 import com.yikang.real.imp.PopWindowCallBack;
-import com.yikang.real.web.HttpConnect;
-import com.yikang.real.web.Request;
-import com.yikang.real.web.Responds;
 
 public class PupowindowUtil {
 
@@ -55,13 +44,17 @@ public class PupowindowUtil {
 	MoreAdapterTwo more_two;
 	HashMap<Integer, Integer> more_check = new HashMap<Integer, Integer>();
 	
-	public PupowindowUtil(Context context, Activity act) {
+	public PupowindowUtil(Context context, Activity act,int height) {
 		this.context = context;
 		inflate = LayoutInflater.from(context);
 		DisplayMetrics metrie = new DisplayMetrics();
 		act.getWindowManager().getDefaultDisplay().getMetrics(metrie);
-		int height = metrie.heightPixels;
-		h = (height / 5) * 3;
+		int hi = metrie.heightPixels;
+//		if(height==0){
+			h = (hi / 5) * 3;
+//		}else {
+//			h=hi-height;
+//		}
 	}
 
 	// 单list的popu
@@ -147,8 +140,8 @@ public class PupowindowUtil {
 		pop.setContentView(view);
 		pop.setOutsideTouchable(true);
 		pop.setWidth(LayoutParams.MATCH_PARENT);
-//		pop.setHeight(h);
-		pop.setHeight(LayoutParams.MATCH_PARENT);
+		pop.setHeight(h);
+//		pop.setHeight(LayoutParams.MATCH_PARENT);
 		pop.setFocusable(true);
 		pop.setBackgroundDrawable(new BitmapDrawable());
 		pop.update();
@@ -202,16 +195,14 @@ public class PupowindowUtil {
 			}
 		});
 		lv2.setAdapter(more_two);
-
-		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, h);
-		view.setLayoutParams(params);
 		pop.setContentView(view);
 		pop.setOutsideTouchable(true);
 		pop.setWidth(LayoutParams.MATCH_PARENT);
-//		pop.setHeight(h);
-		pop.setHeight(LayoutParams.MATCH_PARENT);
+		pop.setHeight(h);
+		ColorDrawable dw = new ColorDrawable(-00000);
+//		pop.setHeight(LayoutParams.MATCH_PARENT);
 		pop.setFocusable(true);
-		pop.setBackgroundDrawable(new BitmapDrawable());
+		pop.setBackgroundDrawable(dw);
 		pop.update();
 		return pop;
 	}

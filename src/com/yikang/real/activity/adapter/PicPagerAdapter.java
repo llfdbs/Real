@@ -31,15 +31,13 @@ import android.widget.ImageView;
  * 
  * 
  */
-public class ViewPagerAdapter extends PagerAdapter {
+public class PicPagerAdapter extends PagerAdapter {
 
 	// 界面列表
 	private List<View> views;
 	private Activity activity;
 
-	private static final String SHAREDPREFERENCES_NAME = "first_pref";
-
-	public ViewPagerAdapter(List<View> views, Activity activity) {
+	public PicPagerAdapter(List<View> views, Activity activity) {
 		this.views = views;
 		this.activity = activity;
 	}
@@ -50,9 +48,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 		((ViewPager) arg0).removeView(views.get(arg1));
 	}
 
-	@Override
-	public void finishUpdate(View arg0) {
-	}
 
 	// 获得当前界面数
 	@Override
@@ -70,26 +65,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 		return views.get(arg1);
 	}
 
-	private void goHome() {
-		// 跳转
-		Intent intent = new Intent(activity, CheckedActivity.class);
-		activity.startActivity(intent);
-		activity.finish();
-	}
 
 	/**
 	 * 
 	 * method desc：设置已经引导过了，下次启动不用再次引导
 	 */
-	private void setGuided() {
-		SharedPreferences preferences = activity.getSharedPreferences(
-				SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
-		Editor editor = preferences.edit();
-		// 存入数据
-		editor.putBoolean("isFirstIn", false);
-		// 提交修改
-		editor.commit();
-	}
+
 
 	// 判断是否由对象生成界面
 	@Override
@@ -97,17 +78,5 @@ public class ViewPagerAdapter extends PagerAdapter {
 		return (arg0 == arg1);
 	}
 
-	@Override
-	public void restoreState(Parcelable arg0, ClassLoader arg1) {
-	}
-
-	@Override
-	public Parcelable saveState() {
-		return null;
-	}
-
-	@Override
-	public void startUpdate(View arg0) {
-	}
 
 }

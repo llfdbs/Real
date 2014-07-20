@@ -98,7 +98,7 @@ public class PersonCentrol extends Fragment {
 			startActivity(intent);
 			break;
 		case 1:
-			if (null == Container.USER || null == Container.USER.getUid()) {
+			if (null == Container.USER || null == Container.USER.getUsername()) {
 				ToastTools.showToastResources(act, R.string.login_warn, 2000);
 				return;
 			}
@@ -108,7 +108,7 @@ public class PersonCentrol extends Fragment {
 			break;
 
 		case 2:
-			if (null == Container.USER || null == Container.USER.getUid()) {
+			if (null == Container.USER || null == Container.USER.getUsername()) {
 				ToastTools.showToastResources(act, R.string.login_warn, 2000);
 				return;
 			}

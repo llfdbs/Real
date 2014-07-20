@@ -139,7 +139,7 @@ public class NewHouseFragment extends MainFragment implements
 	//
 	private PopupWindow createPop(PopStatus status) {
 		PopupWindow pop = null;
-		PupowindowUtil util = new PupowindowUtil(act, act);
+		PupowindowUtil util = new PupowindowUtil(act, act,0);
 		switch (status) {
 		case Location:
 //			pop = util.getListPopu(act,((RealApplication) act.getApplication())

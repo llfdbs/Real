@@ -85,4 +85,11 @@ public class Container {
 			.showStubImage(R.drawable.image_src)
 			.cacheInMemory().cacheOnDisc()
 			.build();
+	
+	final public static DisplayImageOptions adUrl_options = new DisplayImageOptions.Builder()
+	.showImageForEmptyUri(R.drawable.welcome)
+	.showImageOnFail(R.drawable.welcome)
+	.showStubImage(R.drawable.welcome)
+	.cacheInMemory().cacheOnDisc()
+	.build();
 }

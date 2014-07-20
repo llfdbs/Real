@@ -3,6 +3,8 @@ package com.yikang.real.activity;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +23,7 @@ import com.yikang.real.application.BaseActivity;
 import com.yikang.real.application.RealApplication;
 import com.yikang.real.bean.User;
 import com.yikang.real.until.Container;
+import com.yikang.real.until.Container.Share;
 import com.yikang.real.until.Util;
 import com.yikang.real.web.HttpConnect;
 import com.yikang.real.web.Request;
@@ -53,7 +56,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		RealApplication.initImageLoader(getApplicationContext());
 	}
 
-	
 	private void findview() {
 		login = (Button) findViewById(R.id.login);
 		login_username = (EditText) findViewById(R.id.login_username);
@@ -74,8 +76,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 
 		actionbar = getSupportActionBar();
-		int titleId = Resources.getSystem().getIdentifier(  
-                "action_bar_title", "id", "android"); 
+		int titleId = Resources.getSystem().getIdentifier("action_bar_title",
+				"id", "android");
 		TextView yourTextView = (TextView) findViewById(titleId);
 		actionbar.setHomeButtonEnabled(true);
 		yourTextView.setTextColor(R.color.black);
@@ -90,7 +92,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	Handler loginhandler =new Handler(){
+	Handler loginhandler = new Handler() {
 
 		@Override
 		public void handleMessage(Message msg) {
@@ -104,9 +106,18 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 			default:
 				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
-					User user =new User();
+					SharedPreferences share = getSharedPreferences("user", 0);
+					Editor edit = share.edit();
+					edit.putString("tel", login_username.getText().toString());
+					edit.putString(
+							"id",
+							String.valueOf(responde.getRESPONSE_BODY()
+									.get("list").get(0).getLid()));
+					edit.commit();
+					User user = new User();
 					user.setUsername(login_username.getText().toString());
-					user.setUid(String.valueOf(responde.getRESPONSE_BODY().get("list").get(0).getLid()));
+					user.setUid(String.valueOf(responde.getRESPONSE_BODY()
+							.get("list").get(0).getLid()));
 					Container.setUSER(user);
 					finish();
 				} else {
@@ -115,31 +126,31 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				break;
 			}
 		}
-		
+
 	};
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.login:
-			if(login_username.getText().length()==0){
+			if (login_username.getText().length() == 0) {
 				login_username.setError("账号不能为空");
-				return ;
+				return;
 			}
-			if(login_pwd.getText().length()==0){
+			if (login_pwd.getText().length() == 0) {
 				login_pwd.setError("密码不能为空");
-				return ;
+				return;
 			}
-			if(Util.isMobileNO(login_username.getText().toString())){
+			if (Util.isMobileNO(login_username.getText().toString())) {
 				login_username.setError("账号必须是手机号");
-				return ;
+				return;
 			}
 			final HttpConnect conn = new HttpConnect();
 			final Request reques = new Request();
 			reques.setCommandcode("111");
 			HashMap map = new HashMap<String, String>();
-			map.put("username",login_username.getText().toString());
-			map.put("password",login_pwd.getText().toString());
+			map.put("username", login_username.getText().toString());
+			map.put("password", login_pwd.getText().toString());
 			reques.setREQUEST_BODY(map);
 			new Thread(new Runnable() {
 
@@ -147,16 +158,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				public void run() {
 					// TODO Auto-generated method stub
 					Responds<Login> responds = (Responds<Login>) conn
-							.httpUrlConnection(
-									reques,
+							.httpUrlConnection(reques,
 									new TypeToken<Responds<Login>>() {
 									}.getType());
-					if(responds!=null){
+					if (responds != null) {
 						loginhandler.obtainMessage(1, responds).sendToTarget();
-					}else {
+					} else {
 						loginhandler.obtainMessage(0).sendToTarget();
 					}
-					
+
 				}
 			}).start();
 			break;

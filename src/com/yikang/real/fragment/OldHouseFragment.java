@@ -249,8 +249,10 @@ public class OldHouseFragment extends MainFragment implements
 
 	// 生成pop
 	private PopupWindow createPop(PopStatus status) {
-
-		PupowindowUtil util = new PupowindowUtil(act, act);
+		int bh =CheckedActivity.getButtomHight();
+		int th =zhu.getHeight();
+		int ah =CheckedActivity.getActionBarHeight();
+		PupowindowUtil util = new PupowindowUtil(act, act,ah+bh+th);
 		switch (status) {
 		case Location:
 			if (pop_area == null) {
@@ -296,6 +298,7 @@ public class OldHouseFragment extends MainFragment implements
 				body.put("businesscCircle", businesscCircle);
 				body.put("lat", lat);
 				body.put("lng", lng);
+				body.put("tel", Container.getUSER()!=null?Container.getUSER().getUsername():"");
 				request.setREQUEST_BODY(body);
 				Responds<SecondHouseValue> response = (Responds<SecondHouseValue>) new HttpConnect()
 						.httpUrlConnection(request,

@@ -22,9 +22,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import cn.Bean.util.Collect;
 import cn.Bean.util.OldHouseDetailsBean;
 import cn.Bean.util.SecondHouseValue;
@@ -92,8 +94,6 @@ public class OldHouseDetailsActivity extends BaseActivity {
 						Container.RESULT);
 				if (data.get(0).getState().equals("1")) {
 					showToast("收藏成功", 2000);
-				} else {
-					showToast("不要重复收藏", 2000);
 				}
 				findView();
 				break;
@@ -285,7 +285,25 @@ public class OldHouseDetailsActivity extends BaseActivity {
 		gallery = (DetialGallery) findViewById(R.id.gallery);
 		gallery.setAdapter(new ImagePagerAdapter(fhdb.getImage()));
 		gallery.setSelection(0);
-		
+		gallery.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int postions,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent =new Intent(OldHouseDetailsActivity.this,PicActivity.class);
+				if(fhdb.getImage().size()>0){
+					String s[] =new String[fhdb.getImage().size()];
+					for(int i=0;i<fhdb.getImage().size();i++){
+						s[i]=fhdb.getImage().get(i);
+					}
+					intent.putExtra("urls", s);
+					intent.putExtra("count", postions);
+					startActivity(intent);
+				}
+				
+			}
+		});
 		ImageView iv_call =(ImageView) findViewById(R.id.old_call);
 		iv_call.setOnClickListener(new OnClickListener() {
 			

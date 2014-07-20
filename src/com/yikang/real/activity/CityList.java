@@ -29,6 +29,7 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -45,7 +46,7 @@ public class CityList extends BaseActivity {
 	MyAdapter mAd;
 	public List<String> listTag = new ArrayList<String>();
 	ArrayList<String> list_data = new ArrayList<String>();
-	List<City> city_list=null;
+	List<City> city_list = null;
 	Handler cityHanlder = new Handler() {
 
 		@Override
@@ -53,7 +54,7 @@ public class CityList extends BaseActivity {
 			// TODO Auto-generated method stub
 			int result = msg.what;
 			if (result == 1) {
-				city_list=(List<City>) msg.obj;
+				city_list = (List<City>) msg.obj;
 				list_data
 						.addAll((ArrayList<String>) getListViewData((List<City>) msg.obj));
 				mAd.notifyDataSetChanged();
@@ -73,34 +74,37 @@ public class CityList extends BaseActivity {
 		setContentView(R.layout.main);
 		listView = (ListView) findViewById(R.id.listView);
 		TextView local = (TextView) findViewById(R.id.main_local);
-		local.setText(Container.getCity().getCity());
-		
-		
+		local.setText(Container.getCity() != null ? Container.getCity()
+				.getCity() : "昆明");
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				System.out.println("List " + arg2);
-				
+
 				Intent intent = getIntent();
 				intent.setClass(CityList.this, CheckedActivity.class);
-				SharedPreferences share= getSharedPreferences("city", Context.MODE_PRIVATE);
-				Editor editor =share.edit();
+				SharedPreferences share = getSharedPreferences("city",
+						Context.MODE_PRIVATE);
+				Editor editor = share.edit();
 				editor.putString("name", city_list.get(arg2).getCity());
 				editor.putFloat("lat", city_list.get(arg2).getLat());
-				editor.putFloat("lng",city_list.get(arg2).getLng());
+				editor.putFloat("lng", city_list.get(arg2).getLng());
 				editor.commit();
-				if(null==Container.getCity()){
+				if (null == Container.getCity()) {
 					Container.setCity(city_list.get(arg2));
 					intent.putExtra("city", list_data.get(arg2));
 					openActivity(CheckedActivity.class);
+					finish();
 				}
-				Container.setCity(city_list.get(arg2));;
+				System.out.println(Container.getCity().getCity());
+				Container.setCity(city_list.get(arg2));
 				intent.putExtra("city", list_data.get(arg2));
 				setResult(200, intent);
 				finish();
 			}
 		});
-
+		initActionBar();
 		init();
 	}
 
@@ -214,4 +218,28 @@ public class CityList extends BaseActivity {
 		yourTextView.setTextColor(R.color.black);
 		actionbar.setTitle("城市列表");
 	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case android.R.id.home:
+
+			if (Container.getCity() == null) {
+				City city = new City();
+				city.setCity("昆明");
+				city.setLat((float) 24.872058314636);
+				city.setLng((float) 102.59540044824);
+				Container.setCity(city);
+				openActivity(CheckedActivity.class);
+				finish();
+			} else {
+				finish();
+				
+			}
+			break;
+		}
+		return true;
+	}
+
 }
