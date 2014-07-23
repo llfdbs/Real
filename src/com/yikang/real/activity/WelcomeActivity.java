@@ -1,26 +1,33 @@
 package com.yikang.real.activity;
 
-import cn.Bean.util.City;
+import java.util.HashMap;
 
-import com.yikang.real.R;
-import com.yikang.real.application.BaseActivity;
-import com.yikang.real.until.Container;
-
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import cn.Bean.util.Adurl;
+
+import com.google.gson.reflect.TypeToken;
+import com.yikang.real.R;
+import com.yikang.real.application.BaseActivity;
+import com.yikang.real.until.Container;
+import com.yikang.real.web.HttpConnect;
+import com.yikang.real.web.Request;
+import com.yikang.real.web.Responds;
 
 /**
  * 欢迎页
@@ -31,7 +38,63 @@ import android.widget.Button;
 public class WelcomeActivity extends BaseActivity {
 	private Button btn_jump = null;
 	private ActionBar actionBar;// 导航栏
+	private ImageView iv_adurl;
+	
+	Handler advert =new Handler(){
 
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			int result = msg.what;
+			Responds<Adurl> responde = (Responds<Adurl>) msg.obj;
+			switch (result) {
+			case 0:
+				showToast("请求失败，请重试", 3000);
+				break;
+
+			default:
+				if (responde.getRESPONSE_CODE_INFO().equals("成功")) {
+					String url=responde.getRESPONSE_BODY().get("list").get(0).getAdurl3();
+					imageLoader.displayImage(url, iv_adurl, Container.adUrl_options);
+				
+				} else {
+					showToast("请求失败，请重试", 3000);
+				}
+				break;
+			}
+		}
+		
+	};
+	
+	private void Request() {
+		Thread citylist = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				// 获取网络城市列表
+				final HttpConnect conn = new HttpConnect();
+				final Request reques = new Request();
+				reques.setCommandcode("130");
+				HashMap map = new HashMap<String, String>();
+				reques.setREQUEST_BODY(map);
+				Responds<Adurl> responds = (Responds<Adurl>) conn
+						.httpUrlConnection(reques,
+								new TypeToken<Responds<Adurl>>() {
+								}.getType());
+				if (responds != null) {
+					advert.obtainMessage(1,
+							responds.getRESPONSE_BODY().get("list"))
+							.sendToTarget();
+				}
+				advert.obtainMessage(0).sendToTarget();
+			}
+		});
+		citylist.start();
+	}
+
+	
+	
 	@Override
 	protected void onCreate(Bundle arg0) {
 		// TODO Auto-generated method stub
@@ -45,8 +108,17 @@ public class WelcomeActivity extends BaseActivity {
 
 		setContentView(view);
 		System.out.println(Build.VERSION.SDK_INT + "  ");
-
-		MyAnimation(view);
+		ImageView bg =(ImageView) view.findViewById(R.id.welcome_bg);
+		iv_adurl =(ImageView) view.findViewById(R.id.welcome_adurl);
+		iv_adurl.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				_jump();
+			}
+		});
+		MyAnimation(bg);
 
 	}
 
@@ -61,7 +133,7 @@ public class WelcomeActivity extends BaseActivity {
 	/**
 	 * 启动动画类
 	 */
-	private void MyAnimation(View view) {
+	private void MyAnimation(final View view) {
 		// 渐变展示启动屏,从透明到不透明
 		AlphaAnimation aa = new AlphaAnimation(0.3f, 1.0f);
 		// 持续时间3秒
@@ -75,19 +147,14 @@ public class WelcomeActivity extends BaseActivity {
 				SharedPreferences share = getSharedPreferences("footprint", 0);
 				Intent _Intent = null;
 				if (share.getBoolean("frist", false)) {
-
-					if (Container.getCity() == null) {
-						_Intent = new Intent(WelcomeActivity.this,
-								CityList.class);
-					} else {
-						_Intent = new Intent(WelcomeActivity.this,
-								CheckedActivity.class);
-					}
+					view.setVisibility(View.GONE);
+					iv_adurl.setVisibility(View.VISIBLE);
+				
 				} else {
 					_Intent = new Intent(WelcomeActivity.this,
 							GuideActivity.class);
+					redirectTo(_Intent);
 				}
-				redirectTo(_Intent);
 			}
 
 			@Override
@@ -101,6 +168,18 @@ public class WelcomeActivity extends BaseActivity {
 		});
 	}
 
+	private void _jump(){
+		Intent _Intent = null;
+		if (Container.getCity() == null) {
+			_Intent = new Intent(WelcomeActivity.this,
+					CityList.class);
+		} else {
+			_Intent = new Intent(WelcomeActivity.this,
+					CheckedActivity.class);
+		}
+		redirectTo(_Intent);
+	}
+	
 	/**
 	 * 跳转到... 销毁当前欢迎页
 	 */

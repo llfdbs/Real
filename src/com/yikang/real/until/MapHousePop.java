@@ -44,24 +44,26 @@ public class MapHousePop extends PopupWindow {
 	ListView list;
 	ProgressBar bar;
 	TextView title;
-	
+	int height = 0;
+
 	public static ArrayList<SecondHouseValue> getData_newHouse() {
 		return data_newHouse;
 	}
 
-	public static void setData_newHouse(ArrayList<SecondHouseValue> data_newHouse) {
+	public static void setData_newHouse(
+			ArrayList<SecondHouseValue> data_newHouse) {
 		MapHousePop.data_newHouse = data_newHouse;
 	}
-	
-	public MapHousePop(Activity context, String xid,
-			String commandcode) {
+
+	public MapHousePop(Activity context, String xid, String commandcode,
+			int height) {
 		super(context);
 		inflate = LayoutInflater.from(context);
 		this.context = context;
 		this.xid = String.valueOf(xid);
 		this.commandcode = commandcode;
 		data_newHouse = new ArrayList<SecondHouseValue>();
-
+		this.height = height;
 	}
 
 	Handler getHouse = new Handler() {
@@ -81,7 +83,7 @@ public class MapHousePop extends PopupWindow {
 
 					List<SecondHouseValue> data = responde.getRESPONSE_BODY()
 							.get(Container.RESULT);
-					if(data!=null&&data.size()>0){
+					if (data != null && data.size() > 0) {
 						title.setText(data.get(0).getCommunity());
 					}
 					data_newHouse.addAll(data);
@@ -104,13 +106,13 @@ public class MapHousePop extends PopupWindow {
 		list = (ListView) view.findViewById(R.id.map_house);
 		bar = (ProgressBar) view.findViewById(R.id.map_house_bar);
 		data_newHouse.clear();
-		if(commandcode.equals("123")){
+		if (commandcode.equals("123")) {
 			adapter = new ForrentHouseAdapter(context, data_newHouse);
-		}else{
-		adapter = new NewHouseAdapter(context, data_newHouse);
+		} else {
+			adapter = new NewHouseAdapter(context, data_newHouse);
 		}
 		list.setAdapter(adapter);
-		if(data_newHouse.size()==0){
+		if (data_newHouse.size() == 0) {
 			getData();
 		}
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, 100);
@@ -124,17 +126,17 @@ public class MapHousePop extends PopupWindow {
 		setFocusable(true);
 		// PopupWindow pop = new PopupWindow(view,300,300,true);
 		setBackgroundDrawable(new BitmapDrawable());
-//		update();
+		// update();
 
 	}
-	
-	public void setItemOnclick(OnItemClickListener onItemClick){
-		if(onItemClick!=null){
+
+	public void setItemOnclick(OnItemClickListener onItemClick) {
+		if (onItemClick != null) {
 			list.setOnItemClickListener(onItemClick);
 		}
 	}
-	
-	private void getData(){
+
+	private void getData() {
 		new Thread(new Runnable() {
 
 			@Override
@@ -156,14 +158,13 @@ public class MapHousePop extends PopupWindow {
 			}
 		}).start();
 	}
-	
 
 	private int createHight() {
 		DisplayMetrics metrie = new DisplayMetrics();
 		context.getWindowManager().getDefaultDisplay().getMetrics(metrie);
-		int height = metrie.heightPixels;
-		int h = (height / 5) * 3;
-
+		int hi = metrie.heightPixels;
+		int h = (hi / 5) * 3;
 		return h;
+		
 	}
 }

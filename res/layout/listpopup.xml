@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
+    android:background="#f5f5f5"
     android:orientation="vertical" >
     
 <ListView 
     android:id="@+id/listpopup"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:divider="@color/holo_blue_bright"
+    android:divider="#c0c0c0"
     android:dividerHeight="1dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"

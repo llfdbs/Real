@@ -36,4 +36,30 @@ public class PublicDb {
 		editor.commit();
 	}
 	
+	public void delete (Context context,SecondHouseValue value,String db_key){
+		Gson g =new Gson();
+		if(Container.USER==null){
+			return ;
+		}
+		SharedPreferences share =context.getSharedPreferences(Container.USER.getUsername(), 0);
+		String sha= share.getString(db_key, null);
+		ArrayList<SecondHouseValue> list;
+		if(sha==null){
+			list=new ArrayList<SecondHouseValue>();
+		}else {
+			Type type =new TypeToken<ArrayList<SecondHouseValue>>(){}.getType();
+			list= g.fromJson(sha, type);
+		}
+		for(SecondHouseValue v :list){
+			if(v.getNid().equals(value.getNid())){
+				list.remove(v);
+				break;
+			}
+		}
+		sha =g.toJson(list);
+		Editor editor =share.edit();
+		editor.putString(db_key, sha);
+		editor.commit();
+	}
+	
 }

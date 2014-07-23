@@ -4,7 +4,9 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import cn.Bean.util.SecondHouseValue;
@@ -81,6 +84,38 @@ public class ForrentHistory extends Fragment{
 				bundle.putSerializable(Share.FORRENT.getType(), data.get(arg2));
 				intent.putExtras(bundle);
 				startActivity(intent);
+			}
+		});
+		
+		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View view,
+					final int postions, long arg3) {
+				// TODO Auto-generated method stub
+				 AlertDialog.Builder dialog =new AlertDialog.Builder(act);
+				dialog.setTitle("提示");
+				dialog.setMessage("删除该条记录");
+				dialog.setNegativeButton("取消", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface di, int arg1) {
+						// TODO Auto-generated method stub
+						di.dismiss();
+					}
+				});
+				dialog.setPositiveButton("确定", new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface arg0, int s) {
+						// TODO Auto-generated method stub
+						new PublicDb().delete(act, data.get(postions), Share.FORRENT_FOOTMARK.getType());
+						data.remove(postions);
+						adapter.notifyDataSetChanged();
+					}
+				});
+				dialog.create().show();
+				return true;
 			}
 		});
 	}

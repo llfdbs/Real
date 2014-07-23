@@ -1,7 +1,6 @@
 package com.yikang.real.map;
 
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +26,12 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.Bean.util.City;
 import cn.Bean.util.SecondHouseMapValue;
 import cn.Bean.util.SecondHouseValue;
-import cn.sharesdk.framework.ShareSDK;
-import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -275,6 +272,11 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				mMapController.animateTo(new GeoPoint(
 						(int) (24.872058314636 * 1e6),
 						(int) (102.59540044824 * 1e6)));
+				City city =new City();
+				city.setCity("昆明");
+				city.setLat((float) 24.872058314636);
+				city.setLng((float) 102.59540044824);
+				Container.setCity(city);
 				}
 				isRequest = false;
 				getData("9");
@@ -655,7 +657,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 			}else if(Container.getCurrentPage()==Page.OLD){
 				commandcode= "119";
 			}
-			pop2 =new MapHousePop(this,  value.getMid(), commandcode);
+			pop2 =new MapHousePop(this,  value.getMid(), commandcode,0);
 
 			pop2.init();
 			pop2.setItemOnclick(this);
@@ -712,7 +714,7 @@ public class OverlayDemo extends BaseActivity implements ClickBack,OnItemClickLi
 				}else if(Container.getCurrentPage()==Page.OLD){
 					commandcode= "119";
 				}
-				pop2 =new MapHousePop(this,  xid, commandcode);
+				pop2 =new MapHousePop(this,  xid, commandcode,0);
 				pop2.init();
 				pop2.setItemOnclick(this);
 				DisplayMetrics metrie = new DisplayMetrics();

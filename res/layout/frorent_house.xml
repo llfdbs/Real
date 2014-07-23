@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:listViewAttr="http://schemas.android.com/apk/res/com.yikang.real"
     android:id="@+id/zhu"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black75PercentColor"
+    android:background="#f4f4f4"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -14,18 +14,19 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-             android:id="@+id/house_topbar1"
-	         style="@style/top_bar_linear" >
+            android:id="@+id/house_topbar1"
+            style="@style/top_bar_linear" >
 
             <CheckBox
-                android:button="@null"
                 android:id="@+id/top_bar1"
-                android:gravity="center"
-                android:textSize="10pt"
-                android:background="@null"
-                android:text="22"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@null"
+                android:gravity="center"
+                android:text="22"
+                android:textColor="@color/black"
+                android:textSize="10pt" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -33,24 +34,23 @@
         </LinearLayout>
 
         <TextView
-          style="@style/top_bar_limit"
-          android:background="#c0c0c0"
-            />
+            style="@style/top_bar_limit"
+            android:background="#c0c0c0" />
 
         <LinearLayout
             android:id="@+id/house_topbar2"
             style="@style/top_bar_linear" >
 
-            <CheckBox android:text="22"
-                 android:id="@+id/top_bar2"
+            <CheckBox
+                android:id="@+id/top_bar2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
                 android:button="@null"
                 android:gravity="center"
-                 android:textSize="10pt"
-                android:background="@null"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                
-                />
+                android:text="22"
+                android:textColor="@color/black"
+                android:textSize="10pt" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -58,40 +58,42 @@
         </LinearLayout>
 
         <TextView
-            style="@style/top_bar_limit" 
-             android:background="#c0c0c0"
-            />
+            style="@style/top_bar_limit"
+            android:background="#c0c0c0" />
 
         <LinearLayout
             android:id="@+id/house_topbar3"
             style="@style/top_bar_linear" >
 
-            <CheckBox 
-                android:button="@null"
-                 android:id="@+id/top_bar3"
-                 android:gravity="center"
-                 android:textSize="10pt"
-                android:background="@null"
+            <CheckBox
+                android:id="@+id/top_bar3"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:button="@null"
                 android:ellipsize="end"
-                android:layout_height="wrap_content" />
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="10pt" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
+
     <cn.trinea.android.common.view.DropDownListView
-        android:background="@android:color/background_light"
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/background_light"
         android:divider="@color/background_holo_dark"
         android:dividerHeight="1dp"
         android:drawSelectorOnTop="false"
+        listViewAttr:isAutoLoadOnBottom="true"
         listViewAttr:isDropDownStyle="true"
-        listViewAttr:isOnBottomStyle="true"
-        listViewAttr:isAutoLoadOnBottom="true" />
-    
-  <!--   <include  layout="@layout/refreshview"/> -->
+        listViewAttr:isOnBottomStyle="true" />
+
+    <!-- <include  layout="@layout/refreshview"/> -->
+
 </LinearLayout>

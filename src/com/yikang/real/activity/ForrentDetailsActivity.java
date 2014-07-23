@@ -17,6 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -174,7 +176,25 @@ public class ForrentDetailsActivity extends BaseActivity {
 
 		gallery.setAdapter(new ImagePagerAdapter(fhdb.getImage()));
 		gallery.setSelection(0);
+		gallery.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int postions,
+					long arg3) {
+				// TODO Auto-generated method stub
+				Intent intent =new Intent(ForrentDetailsActivity.this,PicActivity.class);
+				if(fhdb.getImage().size()>0){
+					String s[] =new String[fhdb.getImage().size()];
+					for(int i=0;i<fhdb.getImage().size();i++){
+						s[i]=fhdb.getImage().get(i);
+					}
+					intent.putExtra("urls", s);
+					intent.putExtra("count", postions);
+					startActivity(intent);
+				}
+				
+			}
+		});
 		title.setText(fhdb.getCom() == null ? "" : fhdb.getCom());
 		// zujin = (TextView) findViewById(R.id.zujin);
 		// zujin.setText(fh.getPrice()==null?"":fh.getPrice()+"/月");
@@ -301,16 +321,13 @@ public class ForrentDetailsActivity extends BaseActivity {
 			Responds<Collect> responde = (Responds<Collect>) msg.obj;
 			switch (result) {
 			case 0:
-				showToast("请求失败", 2000);
 				break;
 			default:
 				List<Collect> data = responde.getRESPONSE_BODY().get(
 						Container.RESULT);
 				if (data.get(0).getState().equals("1")) {
 					showToast("收藏成功", 2000);
-				} else {
-					showToast("不要重复收藏", 2000);
-				}
+				} 
 				break;
 			}
 		}

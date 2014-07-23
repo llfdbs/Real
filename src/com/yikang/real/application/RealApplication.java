@@ -22,6 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.yikang.real.R;
+import com.yikang.real.bean.User;
 import com.yikang.real.until.Container;
 import com.yikang.real.until.ToastTools;
 
@@ -86,12 +87,15 @@ public class RealApplication extends Application{
 			city.setCity(share.getString("name", "昆明"));
 			city.setLat(share.getFloat("lat", (float) 24.872058314636));
 			city.setLng(share.getFloat("lng", (float) 102.59540044824));
-		}else{
-			city.setCity("昆明");
-			city.setLat((float) 24.872058314636);
-			city.setLng((float) 102.59540044824);
 		}
 		Container.setCity(city);
+		SharedPreferences share2 =getSharedPreferences("user", 0);
+		if(share2!=null&&share2.getString("tel", null)!=null){
+			User user =new User();
+			user.setUsername(share.getString("tel", "15639932022"));
+			user.setUid(share.getString("id", ""));
+			Container.setUSER(user);
+		}
 		initImageLoader(getApplicationContext());
 	}
 
