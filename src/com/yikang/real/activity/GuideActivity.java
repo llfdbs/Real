@@ -147,7 +147,7 @@ public class GuideActivity extends Activity implements OnPageChangeListener {
 		edit.putBoolean("frist", true);
 		edit.commit();
 		// 跳转
-		Intent intent = new Intent(GuideActivity.this, CityList.class);
+		Intent intent = new Intent(GuideActivity.this, CheckedActivity.class);
 		startActivity(intent);
 		finish();
 	}
